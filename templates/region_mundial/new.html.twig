@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RegionMundial{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Create new RegionMundial</h1>
+
+    {{ include('region_mundial/_form.html.twig') }}
+
+    <a href="{{ path('region_mundial_index') }}">back to list</a>
+{% endblock %}

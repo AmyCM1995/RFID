@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PaisCorrespondencia{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Edit PaisCorrespondencia</h1>
+
+    {{ include('pais_correspondencia/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('pais_correspondencia_index') }}">back to list</a>
+
+    {{ include('pais_correspondencia/_delete_form.html.twig') }}
+{% endblock %}

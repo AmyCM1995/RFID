@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ProvinciaCuba{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Create new ProvinciaCuba</h1>
+
+    {{ include('provincia_cuba/_form.html.twig') }}
+
+    <a href="{{ path('provincia_cuba_index') }}">back to list</a>
+{% endblock %}

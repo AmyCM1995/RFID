@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FechasNoCorrespondencia{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Fechas no correspondencia</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ fechas_no_correspondencium.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ fechas_no_correspondencium.fecha ? fechas_no_correspondencium.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Es_anual</th>
+                <td>{{ fechas_no_correspondencium.esAnual ? 'Sí' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ fechas_no_correspondencium.descripcion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('fechas_no_correspondencia_index') }}">back to list</a>
+
+    <a href="{{ path('fechas_no_correspondencia_edit', {'id': fechas_no_correspondencium.id}) }}">edit</a>
+
+    {{ include('fechas_no_correspondencia/_delete_form.html.twig') }}
+{% endblock %}

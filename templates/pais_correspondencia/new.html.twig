@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PaisCorrespondencia{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Create new PaisCorrespondencia</h1>
+
+    {{ include('pais_correspondencia/_form.html.twig') }}
+
+    <a href="{{ path('pais_correspondencia_index') }}">back to list</a>
+{% endblock %}

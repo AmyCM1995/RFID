@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FechasNoCorrespondencia index{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Fechas de no correspondencia</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+               {#<th>Id</th>#}
+                <th>Fecha</th>
+                <th>Anual</th>
+                <th>Descripción</th>
+                <th>Provincias afectadas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fechas_no_correspondencium in fechas_no_correspondencias %}
+            <tr>
+                {#<td>{{ fechas_no_correspondencium.id }}</td>#}
+                <td>{{ fechas_no_correspondencium.fecha ? fechas_no_correspondencium.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ fechas_no_correspondencium.esAnual ? 'Sí' : 'No' }}</td>
+                <td>{{ fechas_no_correspondencium.descripcion }}</td>
+                <td>
+                    {% for provincia in fechas_no_correspondencium.provincia %}
+                        {{ provincia.nombre }}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('fechas_no_correspondencia_edit', {'id': fechas_no_correspondencium.id}) }}">Editar</a>
+                </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No existen fechas de no correspondencia</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+        <button class="btn bg-primary" id="corresponsal-btns">
+            <a href="{{ path('fechas_no_correspondencia_new') }}">Nuevo</a>
+        </button>
+        {#<button class="btn bg-primary" id="corresponsal-btns">
+            <a href="{{ path('fechas_no_correspondencia_edit', {'id': fechas_no_correspondencium.id}) }}">Editar</a>
+        </button>#}
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Correos de Cuba{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        {% if app.user.username is not defined %}
+            {{ render(path('app_login' )) }}
+            {% else %}
+
+
+
+            {#*************************************** Barra de navegacion **********************************#}
+
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-white bg-white">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#"></a>
+                        <img src="{{ asset('img/SIGEP.jpg.png') }}" alt="CORREOS DE CUBA" style="width: 10%">
+
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <div class="Date&Time ml-auto"><a>{{ "now"| date("d/m/Y") }}</a></div>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="dropdown">
+                                    <button class="dropdown-btn">
+                                        <a>{{app.user.username ?? 'Anonymous user'}}</a>
+                                        <br/>
+                                        {%  if  app.user.roles[0] == 'ROLE_ADMIN' %}
+                                            <a>Administrador</a>
+                                        {% elseif  app.user.roles[0] == 'ROLE_ESPECIALISTA_DC' %}
+                                            <a>Especialista de Desarrollo y Calidad</a>
+                                        {% elseif  app.user.roles[0] == 'ROLE_CORRESPONSAL' %}
+                                            <a>Corresponsal</a>
+                                        {% elseif  app.user.roles[0] == 'ROLE_OBSERVADOR' %}
+                                            <a>Observador</a>
+                                        {% endif %}
+                                    </button>
+                                    <div class="dropdown-content">
+                                        <a href="{{ path('principal') }}">Notificaciones</a>
+                                        <a href="#">Ajustes</a>
+                                        <a href="{{ path('app_login')}}">Cerrar Sesión</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+            <div id="wrapper">
+
+                {#//************************************* Barra lateral **********************************#}
+
+                {% block sidebar %}
+                    <ul class="sidebar navbar-nav">
+                        {%  if is_granted('ROLE_ADMIN') %}
+                        <li class="sidebtns">
+                            <div class="sidebar-btns"><a href="#">Trazas</a></div>
+                        {% endif %}
+                            {%  if is_granted('ROLE_ADMIN') %}
+                        <li class="sidebtns">
+                            <div class="sidebar-btns"><a href="#">Salvas y Restauras</a></div>
+                        {% endif %}
+                            {%  if is_granted('ROLE_ADMIN') %}
+                        <li class="sidebtns">
+                            <div class="sidebar-btns"><a href="{{path('g_m_s_r_f_i_d_usuario_index')}}">Usuarios</a></div>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_CORRESPONSAL') %}
+                        <li class="dropdown-sidebar">
+                            <div class="dropdown-sidebar-btn"><a>Plan de Imposición</a></div>
+                            <div class="dropdown-sidebar-content">
+                                <a href="{{path('plan_de_imposicion_index')}}">Plan actual</a>
+                                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+                                <a href="{{ path('plan_imposicion_persistir') }}">Importar</a>
+                                {% endif %}
+                                <a href="#">Estadísticas</a>
+                            </div>
+                        </li>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+                        {#<li class="sidebtns">
+                            <button class="sidebar-btns"><a href="#">Lecturas</a></button>
+                        <li class="sidebtns">
+                            <button class="sidebar-btns"><a href="#">Lectores RFID</a></button>
+                        </li>#}
+                        {% endif %}
+
+                        {% if is_granted('ROLE_OBSERVADOR') %}
+                        <li class="dropdown-sidebar">
+                            <div class="dropdown dropdown-sidebar-btn"><a>Nomencladores</a></div>
+                            <div class="dropdown-sidebar-content">
+                                <a href="{{path('fechas_no_correspondencia_index')}}">Fechas de no correspondencia</a>
+                                <a href="{{ path('corresponsal_index') }}">Corresponsales</a>
+                                <a href="{{ path('equipo_corresponsales_index') }}">Equipos</a>
+                                <a href="{{ path('provincia_cuba_index') }}">Provincias de Cuba</a>
+                                <a href="{{ path('pais_correspondencia_index') }}">País</a>
+                                <a href="{{ path('region_mundial_index') }}">Región Mundial</a>
+                                <a href="{{ path('importaciones_index') }}">Importaciones</a>
+                            </div>
+                        </li>
+                        <li class="dropdown-sidebar">
+                            <div class="dropdown-sidebar-btn"><a>Reportes</a></div>
+                            <div class="dropdown-sidebar-content">
+                                <a href="#">Plan de Imposición</a>
+                                <a href="#">Nomencladores</a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                {% endblock %}
+
+                {#************************************* Content Wrapper **********************************#}
+
+                <div id="contenido">
+                    {% block contenido %} {% endblock %}
+                </div>
+
+            </div>
+        {% endif %}
+        {% endblock %}
+
+
+        {% block javascripts %}
+            <script src="{{ asset('js/jquery-3.4.1.slim.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.js') }}"></script>
+        {% endblock %}
+
+    </body>
+</html>

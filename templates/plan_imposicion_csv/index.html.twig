@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PlanImposicionCSVController!{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+
+   {# <table class="table">
+        <thead>
+        <tr>
+            {#<th>Id</th>
+            <th>Fecha</th>
+            <th>Fecha dia</th>
+            <th>Fecha dia</th>
+            <th>Fecha dia</th>
+            {#<th>acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for plan_imposicion_csv in plan_imposicion_csvs %}
+            <tr>
+                <td>{{ plan_imposicion_csv.id }}</td>
+                <td>{{ plan_imposicion_csv.fecha ? plan_imposicion_csv.fecha|date('d-m-Y') : '' }}</td>
+                <td>{{ plan_imposicion_csv.fechadia }}</td>
+                <td>{{ plan_imposicion_csv.envio11 }}</td>
+                <td>{{ plan_imposicion_csv.envio12 }}</td>
+                <td>{{ plan_imposicion_csv.envio21 }}</td>
+                <td>{{ plan_imposicion_csv.envio22 }}</td>
+                <td>{{ plan_imposicion_csv.envio31 }}</td>
+                <td>{{ plan_imposicion_csv.envio32 }}</td>
+                {#<td>
+                    <a href="#">Mostrar</a>
+                    <a href="#">Eliminar</a>
+                    {{ include('plan_imposicion_csv/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No se encontraron registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    #}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endblock %}

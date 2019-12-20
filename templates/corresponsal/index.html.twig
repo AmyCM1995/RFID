@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Corresponsales{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Corresponsales</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Dirección</th>
+                <th>Equipo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for corresponsal in corresponsals %}
+            {%  if  corresponsal.esActivo == true %}
+                <tr>
+                    {# <td>{{ corresponsal.id }}</td> #}
+                    <td>{{ corresponsal.codigo }}</td>
+                    <td>{{ corresponsal.nombre }}</td>
+                    <td>{{ corresponsal.apellidos }}</td>
+                    <td>{{ corresponsal.correo }}</td>
+                    <td>{{ corresponsal.direccion }}</td>
+                    <td>
+                        {% for equipo in corresponsal.equipo %}
+                            {{ equipo.codigo }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {#<a href="{{ path('corresponsal_show', {'id': corresponsal.id}) }}">Mostrar</a>#}
+                        <a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">Modificar</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="5">No existen corresponsales</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+    <button class="btn bg-primary" id="corresponsal-btns">
+        <a href="{{ path('corresponsal_new') }}">Añadir</a>
+    </button>
+    <button class="btn bg-primary" id="corresponsal-btns">
+        <a href="#">Acciones</a>
+    </button>
+    {% endif %}
+{% endblock %}
+

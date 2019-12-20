@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PaisCorrespondencia{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>PaisCorrespondencia</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pais_correspondencium.id }}</td>
+            </tr>
+            <tr>
+                <th>Codigo</th>
+                <td>{{ pais_correspondencium.codigo }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ pais_correspondencium.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Region</th>
+                <td>{{ pais_correspondencium.region }}</td>
+            </tr>
+            <tr>
+                <th>Es_activo</th>
+                <td>{{ pais_correspondencium.esActivo ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('pais_correspondencia_index') }}">back to list</a>
+
+    <a href="{{ path('pais_correspondencia_edit', {'id': pais_correspondencium.id}) }}">edit</a>
+
+    {{ include('pais_correspondencia/_delete_form.html.twig') }}
+{% endblock %}

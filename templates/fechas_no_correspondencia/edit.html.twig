@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fechas no correspondencia{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Fechas no correspondencia</h1>
+
+    {{ include('fechas_no_correspondencia/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('fechas_no_correspondencia_index') }}">Regresar</a>
+
+    {{ include('fechas_no_correspondencia/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ProvinciaCuba{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Edit ProvinciaCuba</h1>
+
+    {{ include('provincia_cuba/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('provincia_cuba_index') }}">back to list</a>
+
+    {{ include('provincia_cuba/_delete_form.html.twig') }}
+{% endblock %}

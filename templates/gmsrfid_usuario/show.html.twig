@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GMSRFIDUsuario{% endblock %}
+
+{% block contenido %}
+    <h1>GMSRFIDUsuario</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ g_m_s_r_f_i_d_usuario.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ g_m_s_r_f_i_d_usuario.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Correo</th>
+                <td>{{ g_m_s_r_f_i_d_usuario.correo }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ g_m_s_r_f_i_d_usuario.roles ? g_m_s_r_f_i_d_usuario.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ g_m_s_r_f_i_d_usuario.password }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('g_m_s_r_f_i_d_usuario_index') }}">back to list</a>
+
+    <a href="{{ path('g_m_s_r_f_i_d_usuario_edit', {'id': g_m_s_r_f_i_d_usuario.id}) }}">edit</a>
+
+    {{ include('g_m_s_r_f_i_d_usuario/_delete_form.html.twig') }}
+{% endblock %}

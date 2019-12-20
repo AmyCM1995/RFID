@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProvinciaCuba index{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>ProvinciaCuba index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+               {# <th>Id</th>#}
+                <th>Nombre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for provincia_cuba in provincia_cubas %}
+            {%  if  provincia_cuba.esActivo == true %}
+                <tr>
+                   {# <td>{{ provincia_cuba.id }}</td>#}
+                    <td>{{ provincia_cuba.nombre }}</td>
+                    <td>
+                        <a href="{{ path('provincia_cuba_show', {'id': provincia_cuba.id}) }}">show</a>
+                        <a href="{{ path('provincia_cuba_edit', {'id': provincia_cuba.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {%  endif %}
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('provincia_cuba_new') }}">Create new</a>
+{% endblock %}

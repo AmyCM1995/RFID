@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PrincipalController!{% endblock %}
+{% block style %}
+    .content { overflow-x: hidden; width: 100%; font: 12px/1.5 sans-serif; }
+    .content code { background: #F5F5F5; padding-top: 5px; padding-bottom: 80px; }
+{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <div class="content">
+        <h1>Notificaciones</h1>
+
+        <table class="table-info">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <br>
+
+{% endblock %}

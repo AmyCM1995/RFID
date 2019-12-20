@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+    {{ form_row(form.fecha) }}
+    {{ form_row(form.es_anual) }}
+    {{ form_row(form.descripcion) }}
+    {{ form_row(form.provincia) }}
+   <div class="btn bg-primary">
+      <a {{ button_label|default('Save') }}>Aceptar</a>
+   </div>
+
+{{ form_end(form) }}

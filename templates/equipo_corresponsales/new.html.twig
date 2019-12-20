@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EquipoCorresponsales{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Create new EquipoCorresponsales</h1>
+
+    {{ include('equipo_corresponsales/_form.html.twig') }}
+
+    <a href="{{ path('equipo_corresponsales_index') }}">back to list</a>
+{% endblock %}

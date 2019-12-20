@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuarios{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Usuarios</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre </th>
+                <th>Correo </th>
+                <th>Roles </th>
+                {#<th>Password</th>#}
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for g_m_s_r_f_i_d_usuario in g_m_s_r_f_i_d_usuarios %}
+            <tr>
+                <td>{{ g_m_s_r_f_i_d_usuario.id }}</td>
+                <td>{{ g_m_s_r_f_i_d_usuario.nombre }}</td>
+                <td>{{ g_m_s_r_f_i_d_usuario.correo }}</td>
+                <td>{{ g_m_s_r_f_i_d_usuario.roles ? g_m_s_r_f_i_d_usuario.roles|json_encode : '' }}</td>
+                {#<td>{{ g_m_s_r_f_i_d_usuario.password }}</td>#}
+                <td>
+                    <a href="{{ path('g_m_s_r_f_i_d_usuario_show', {'id': g_m_s_r_f_i_d_usuario.id}) }}">show</a>
+                    <a href="{{ path('g_m_s_r_f_i_d_usuario_edit', {'id': g_m_s_r_f_i_d_usuario.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No existen usuarios</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('app_register') }}">Nuevo usuario</a>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RegionMundial index{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>RegionMundial index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Descripcion</th>
+                <th>Tarifa</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for region_mundial in region_mundials %}
+            <tr>
+                <td>{{ region_mundial.id }}</td>
+                <td>{{ region_mundial.numero }}</td>
+                <td>{{ region_mundial.descripcion }}</td>
+                <td>{{ region_mundial.tarifa }}</td>
+                <td>
+                    <a href="{{ path('region_mundial_show', {'id': region_mundial.id}) }}">show</a>
+                    <a href="{{ path('region_mundial_edit', {'id': region_mundial.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('region_mundial_new') }}">Create new</a>
+{% endblock %}

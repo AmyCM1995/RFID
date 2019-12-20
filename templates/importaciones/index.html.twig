@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Importaciones index{% endblock %}
+
+{% block contenido %}
+    <h1>Importaciones</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {#<th>Id</th>#}
+                <th>Fecha_importado</th>
+                <th>Fecha_inicio_plan</th>
+                <th>Fecha_fin_plan</th>
+                <th>Ciclo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for importacione in importaciones %}
+            <tr>
+                {#<td>{{ importacione.id }}</td>#}
+                <td>{{ importacione.fechaImportado ? importacione.fechaImportado|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ importacione.fechaInicioPlan }}</td>
+                <td>{{ importacione.fechaFinPlan }}</td>
+                <td>{{ importacione.ciclo }}</td>
+                <td>
+                    <a href="{{ path('importaciones_show', {'id': importacione.id}) }}">Mostrar</a>
+                    <a href="{{ path('importaciones_edit', {'id': importacione.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no se encontraron registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+        <button class="btn bg-primary" id="corresponsal-btns">
+            <a href="{{ path('importaciones_new') }}">Nuevo</a>
+        </button>
+        <button class="btn bg-primary" id="corresponsal-btns">
+            <a href="#">Acciones</a>
+        </button>
+    {% endif %}
+
+{% endblock %}

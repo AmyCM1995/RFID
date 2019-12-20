@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EquipoCorresponsales index{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Equipo de corresponsales</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {#<th>Id</th>#}
+                <th>Código</th>
+                <th>Miembros</th>
+                <th>Coordinador</th>
+                <th>Corresponsales</th>
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipo_corresponsale in equipo_corresponsales %}
+            {%  if  equipo_corresponsale.esActivo == true %}
+                <tr>
+                    {#<td>{{ equipo_corresponsale.id }}</td>#}
+                    <td>{{ equipo_corresponsale.codigo }}</td>
+                    <td>{{ equipo_corresponsale.cantidadMiembros }}</td>
+                    <td>{{ equipo_corresponsale.CorresponsalCoordinador.nombre }}</td>
+                    <td>
+                        {% for corresponsals in equipo_corresponsale.corresponsals %}
+                            {{ corresponsals.nombre }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('equipo_corresponsales_edit', {'id': equipo_corresponsale.id}) }}">edit</a>
+                    </td>
+
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="4">No se encontraron registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+        <button class="btn bg-primary" id="corresponsal-btns">
+            <a href="{{ path('equipo_corresponsales_new') }}">Nuevo</a>
+        </button>
+        <button class="btn bg-primary" id="corresponsal-btns">
+            <a href="#">Acciones</a>
+        </button>
+    {% endif %}
+
+{% endblock %}

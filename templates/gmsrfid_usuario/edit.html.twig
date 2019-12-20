@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit GMSRFIDUsuario{% endblock %}
+
+{% block contenido %}
+    <h1>Edit GMSRFIDUsuario</h1>
+
+    {{ include('g_m_s_r_f_i_d_usuario/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('g_m_s_r_f_i_d_usuario_index') }}">back to list</a>
+
+    {{ include('g_m_s_r_f_i_d_usuario/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit EquipoCorresponsales{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Edit EquipoCorresponsales</h1>
+
+    {{ include('equipo_corresponsales/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('equipo_corresponsales_index') }}">back to list</a>
+
+    {{ include('equipo_corresponsales/_delete_form.html.twig') }}
+{% endblock %}

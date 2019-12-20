@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PlanDeImposicion{% endblock %}
+
+{% block body %}
+    <h1>Create new PlanDeImposicion</h1>
+
+    {{ include('plan_de_imposicion/_form.html.twig') }}
+
+    <a href="{{ path('plan_de_imposicion_index') }}">back to list</a>
+{% endblock %}
