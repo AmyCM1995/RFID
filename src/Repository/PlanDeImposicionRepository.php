@@ -35,18 +35,6 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
         ;
     }
 
-    /**
-     * @return PlanDeImposicion[] Returns an array of PlanDeImposicion objects
-     */
-    public function planesConLosDistintosCorresponsales(){
-        $em = $this->getEntityManager();
-        $query = $em->createQuery(
-          'SELECT DISTINCT cod_corresponsal_id
-          FROM planDeImposicion'
-        );
-        return $query->getResult();
-    }
-
 
     /*
     public function findOneBySomeField($value): ?PlanDeImposicion

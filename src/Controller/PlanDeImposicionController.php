@@ -30,10 +30,7 @@ class PlanDeImposicionController extends AbstractController
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findOneByImportacion();
         $plan_de_imposicions = $planDeImposicionRepository->findByImposicion($importacionUltima->getId());
-        $planDeDistintosCorresonsales = $planDeImposicionRepository->planesConLosDistintosCorresponsales();
-        echo $planDeDistintosCorresonsales[0]->getCodCorresponsal()->getId();
-        echo $planDeDistintosCorresonsales[1]->getCodCorresponsal()->getId();
-        echo $planDeDistintosCorresonsales[2]->getCodCorresponsal()->getId();
+        $planDeDistintosCorresonsales = $this->buscarPlanesConDistintosCorresponsales($plan_de_imposicions);
         $corresponsales = $this->buscarCorresponsalesId($planDeDistintosCorresonsales);
 
         return $this->render('plan_de_imposicion/index.html.twig', [
@@ -270,7 +267,28 @@ class PlanDeImposicionController extends AbstractController
         return $resultado;
     }
 
-    public function buscarCorresponsalesId(PlanDeImposicion $planDeDistintosCorresonsales){
+    public function buscarPlanesConDistintosCorresponsales($plan){
+        $esta = false;
+        $size = 1;
+        $planesDistintosCorresponsales = [$plan[0]];
+        for($i=0; $i<sizeof($plan); $i++){
+            for($j=0; $j<$size; $j++){
+                if($plan[$i]->getCodCorresponsal()->getId() == $planesDistintosCorresponsales[$j]->getCodCorresponsal()->getId()){
+                    $esta = true;
+                    break;
+                }else{
+                    $esta = false;
+                }
+            }
+            if($esta == false){
+                $planesDistintosCorresponsales[$size] = $plan[$i];
+                $size++;
+            }
+        }
+        return$planesDistintosCorresponsales;
+    }
+
+    public function buscarCorresponsalesId($planDeDistintosCorresonsales){
         $em = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corresponsales = null;
         for($i=0; $i<sizeof($planDeDistintosCorresonsales); $i++){
