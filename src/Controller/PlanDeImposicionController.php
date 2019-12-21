@@ -28,21 +28,12 @@ class PlanDeImposicionController extends AbstractController
      */
     public function index(PlanDeImposicionRepository $planDeImposicionRepository): Response
     {
-        $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
-        $importacionUltima = $importacionRepositorio->findOneByImportacion();
-        $plan_de_imposicions = $planDeImposicionRepository->findByImposicion($importacionUltima->getId());
-        $planDeDistintosCorresonsales = $this->buscarPlanesConDistintosCorresponsales($plan_de_imposicions);
-        $corresponsales = $this->buscarCorresponsalesId($planDeDistintosCorresonsales);
-        $planesCorr1 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[0]);
-        $planesCorr2 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[1]);
-        $planesCorr3 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[2]);
-        $planescsv = [null];
-        $pos = 0;
-        while($this->existePlan($planesCorr1)){
-            $csv = $this->generarPlanDeImposicionCSV($plan_de_imposicions, $planesCorr1, $planesCorr2, $planesCorr3);
-            $planescsv[$pos] = $csv;
-            $pos++;
-        }
+        $importacionUltima = $this->principal1();
+        $plan_de_imposicions = $this->principal2($importacionUltima);
+        $corresponsales = $this->principal3($plan_de_imposicions);
+        //cojer los plan csv de la bd
+        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $planescsv = $csvReposirotio->findAll();
         return $this->render('plan_de_imposicion/index.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltima,
@@ -246,12 +237,50 @@ class PlanDeImposicionController extends AbstractController
 
                 }
             }
+            //*****************************************Plan de imposicion CSV
+            $importacionUltima = $this->principal1();
+            $plan_de_imposicions = $this->principal2($importacionUltima);
+            $corresponsales = $this->principal3($plan_de_imposicions);
+            $planesCorr1 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[0]);
+            $planesCorr2 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[1]);
+            $planesCorr3 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[2]);
+            $planescsv = [null];
+            $pos = 0;
+            while($this->existePlan($planesCorr1)){
+                $csv = $this->generarPlanDeImposicionCSV($plan_de_imposicions, $planesCorr1, $planesCorr2, $planesCorr3);
+                $planescsv[$pos] = $csv;
+                $pos++;
+            }
+            //borrar los csv anteriores
+            $this->persistirCSV($planescsv);
+
         }
 
         return $this->render('plan_imposicion_csv/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+    public function borrarCSVAnteriores(){
+        $repositorio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $entityManager = $this->getDoctrine()->getManager();
+        $anterioresCSV = $repositorio->findAll();
+        for($i=0; $i<sizeof($anterioresCSV); $i++){
+            $entityManager->remove($anterioresCSV[$i]);
+            $entityManager->flush();
+
+        }
+    }
+
+    public function persistirCSV($planescsv){
+        $entityManager = $this->getDoctrine()->getManager();
+        for($i=0; $i<sizeof($planescsv);$i++){
+            $entityManager->persist($planescsv[$i]);
+            $entityManager->flush();
+        }
+
+    }
+
 
     public function persistirPlanDeImposicion(PlanDeImposicion $plan, Corresponsal $corresponsal, $envio){
         $entityManager = $this->getDoctrine()->getManager();
@@ -375,6 +404,21 @@ class PlanDeImposicionController extends AbstractController
             }
         }
         return $existe;
+    }
+    public function principal1(){
+        $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
+        $importacionUltima = $importacionRepositorio->findOneByImportacion();
+        return $importacionUltima;
+    }
+    public function principal2($importacionUltima){
+        $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $plan_de_imposicions = $planDeImposicionRepositorio->findByImposicion($importacionUltima->getId());
+        return $plan_de_imposicions;
+    }
+    public function principal3($plan_de_imposicions){
+        $planDeDistintosCorresonsales = $this->buscarPlanesConDistintosCorresponsales($plan_de_imposicions);
+        $corresponsales = $this->buscarCorresponsalesId($planDeDistintosCorresonsales);
+        return $corresponsales;
     }
 
 }

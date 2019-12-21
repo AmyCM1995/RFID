@@ -32,14 +32,6 @@ class PlanImposicionCSVController extends AbstractController
             'plan_imposicion_csvs' => $planImposicionCsv -> findAll(),
         ]);
     }
-
-
-
-
-
-
-
-
     /**
      * @Route("/{id}", name="plan_imposicion_c_s_v_delete", methods={"DELETE"})
      * @param Request $request
@@ -56,6 +48,8 @@ class PlanImposicionCSVController extends AbstractController
 
         return $this->redirectToRoute('plan_imposicion_c_s_v');
     }
+
+
 
 
 

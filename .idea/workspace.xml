@@ -4,9 +4,8 @@
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PlanImposicionCSVController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanImposicionCSVController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/PlanImposicionCsv.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/PlanImposicionCsv.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -218,7 +217,7 @@
       <workItem from="1574874795298" duration="67977000" />
       <workItem from="1576015900216" duration="5780000" />
       <workItem from="1576093520432" duration="89167000" />
-      <workItem from="1576535148196" duration="63262000" />
+      <workItem from="1576535148196" duration="67881000" />
     </task>
     <servers />
   </component>
