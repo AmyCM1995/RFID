@@ -11,9 +11,8 @@
     <body>
         {% block body %}
         {% if app.user.username is not defined %}
-            logouth_path
-            {# render(path('app_login' )) #}
-        {% else %}
+            {{ render(path('app_login' )) }}
+            {% else %}
 
 
 

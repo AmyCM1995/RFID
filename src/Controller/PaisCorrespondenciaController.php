@@ -26,6 +26,16 @@ class PaisCorrespondenciaController extends AbstractController
     }
 
     /**
+     * @Route("/añadir", name="pais_correspondencia_añadir", methods={"GET"})
+     */
+    public function añadir(PaisCorrespondenciaRepository $paisCorrespondenciaRepository): Response
+    {
+        return $this->render('pais_correspondencia/añadir.html.twig', [
+            'pais_correspondencias' => $paisCorrespondenciaRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/new", name="pais_correspondencia_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -77,6 +87,20 @@ class PaisCorrespondenciaController extends AbstractController
             'pais_correspondencium' => $paisCorrespondencium,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/activar", name="pais_correspondencia_activar", methods={"GET","POST"})
+     */
+    public function activar(PaisCorrespondencia $paisCorrespondencium): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->find(PaisCorrespondencia::class, $paisCorrespondencium->getId());
+        $paisCorrespondencium->setEsActivo(true);
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('pais_correspondencia_index');
     }
 
     /**

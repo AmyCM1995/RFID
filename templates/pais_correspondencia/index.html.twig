@@ -34,7 +34,7 @@
             {% endif %}
         {% else %}
             <tr>
-                <td colspan="5">No existen países de correspondencia</td>
+                <td colspan="5">No existen países de correspondencia activos</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -42,7 +42,7 @@
 
     {% if is_granted('ROLE_ESPECIALISTA_DC') %}
         <button class="btn bg-primary" id="corresponsal-btns">
-            <a href="{{ path('pais_correspondencia_new') }}">Nuevo</a>
+            <a href="{{ path('pais_correspondencia_añadir') }}">Añadir</a>
         </button>
         <button class="btn bg-primary" id="corresponsal-btns">
             <a href="#">Acciones</a>
