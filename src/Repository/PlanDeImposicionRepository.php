@@ -29,7 +29,7 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
             ->andWhere('p.importacion = :val')
             ->setParameter('val', $value)
             ->orderBy('p.id', 'ASC')
-            ->setMaxResults(100)
+            ->setMaxResults(1000)
             ->getQuery()
             ->getResult()
         ;

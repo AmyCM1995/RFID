@@ -6,6 +6,7 @@ use App\Entity\Corresponsal;
 use App\Entity\Importaciones;
 use App\Entity\PaisCorrespondencia;
 use App\Entity\PlanDeImposicion;
+use App\Entity\PlanImposicionCsv;
 use App\Form\PlanDeImposicionType;
 use App\Repository\PlanDeImposicionRepository;
 use League\Csv\Reader;
@@ -32,9 +33,18 @@ class PlanDeImposicionController extends AbstractController
         $plan_de_imposicions = $planDeImposicionRepository->findByImposicion($importacionUltima->getId());
         $planDeDistintosCorresonsales = $this->buscarPlanesConDistintosCorresponsales($plan_de_imposicions);
         $corresponsales = $this->buscarCorresponsalesId($planDeDistintosCorresonsales);
-
+        $planesCorr1 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[0]);
+        $planesCorr2 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[1]);
+        $planesCorr3 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[2]);
+        $planescsv = [null];
+        $pos = 0;
+        while($this->existePlan($planesCorr1)){
+            $csv = $this->generarPlanDeImposicionCSV($plan_de_imposicions, $planesCorr1, $planesCorr2, $planesCorr3);
+            $planescsv[$pos] = $csv;
+            $pos++;
+        }
         return $this->render('plan_de_imposicion/index.html.twig', [
-            'plan_de_imposicions' => $plan_de_imposicions,
+            'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltima,
             'corresponsales' =>$corresponsales,
         ]);
@@ -296,4 +306,75 @@ class PlanDeImposicionController extends AbstractController
         }
         return $corresponsales;
     }
+
+    public function buscarPlanesPorCorresponsales($plan, $corresponsal){
+        $Plancorr = null;
+        $size = 0;
+        for($i=0; $i<sizeof($plan); $i++){
+            if($plan[$i]->getCodCorresponsal()->getCodigo() == $corresponsal->getCodigo()){
+                $Plancorr[$size] = $plan[$i];
+                $size++;
+            }
+        }
+        return $Plancorr;
+    }
+
+
+    public function generarPlanDeImposicionCSV($plan, &$planesCorr1, &$planesCorr2, &$planesCorr3){
+        $planCSV = new PlanImposicionCsv();
+        $i = 0;
+        while($planesCorr1[$i] == null){
+            $i++;
+        }
+        $planCSV->setFecha($planesCorr1[$i]->getFecha());
+        $planCSV->setEnvio11($planesCorr1[$i]->getCodEnvio());
+        $planesCorr1[$i] = null;
+        for($i=0; $i<sizeof($planesCorr1); $i++){
+            if($planesCorr1[$i] != null){
+                if($planesCorr1[$i]->getFecha() == $planCSV->getFecha()){
+                    $planCSV->setEnvio12($planesCorr1[$i]->getCodEnvio());
+                    $planesCorr1[$i] = null;
+                }
+            }
+        }
+        for ($i=0; $i<sizeof($planesCorr2); $i++){
+            if($planesCorr2[$i] != null){
+                if($planesCorr2[$i]->getFecha() == $planCSV->getFecha()){
+                    if($planCSV->getEnvio21() == null){
+                        $planCSV->setEnvio21($planesCorr2[$i]->getCodEnvio());
+                        $planesCorr2[$i] = null;
+                    }else{
+                        $planCSV->setEnvio22($planesCorr2[$i]->getCodEnvio());
+                        $planesCorr2[$i] = null;
+                        break;
+                    }
+                }
+            }
+        }
+        for ($i=0; $i<sizeof($planesCorr3); $i++){
+            if($planesCorr3[$i] != null){
+                if($planesCorr3[$i]->getFecha() == $planCSV->getFecha()){
+                    if($planCSV->getEnvio31() == null){
+                        $planCSV->setEnvio31($planesCorr3[$i]->getCodEnvio());
+                        $planesCorr3[$i] = null;
+                    }else{
+                        $planCSV->setEnvio32($planesCorr3[$i]->getCodEnvio());
+                        $planesCorr3[$i] = null;
+                        break;
+                    }
+                }
+            }
+        }
+        return $planCSV;
+    }
+    public function existePlan($planesCorr1){
+        $existe = false;
+        for($i=0; $i<sizeof($planesCorr1); $i++){
+            if($planesCorr1[$i] != null){
+                $existe = true;
+            }
+        }
+        return $existe;
+    }
+
 }
