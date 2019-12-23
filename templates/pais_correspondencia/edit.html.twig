@@ -4,11 +4,11 @@
 
 {% block contenido %}
     {{ parent() }}
-    <h1>Edit PaisCorrespondencia</h1>
+    <h1>Pais de correspondencia</h1>
 
     {{ include('pais_correspondencia/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('pais_correspondencia_index') }}">back to list</a>
+    <a href="{{ path('pais_correspondencia_index') }}">Regresar</a>
 
     {{ include('pais_correspondencia/_delete_form.html.twig') }}
 {% endblock %}

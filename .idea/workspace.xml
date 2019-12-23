@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/pais_correspondencia/añadir.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/persistir.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PaisCorrespondenciaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PaisCorrespondenciaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pais_correspondencia/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pais_correspondencia/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/importaciones/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/importaciones/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pais_correspondencia/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pais_correspondencia/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -218,7 +220,7 @@
       <workItem from="1574874795298" duration="67977000" />
       <workItem from="1576015900216" duration="5780000" />
       <workItem from="1576093520432" duration="89167000" />
-      <workItem from="1576535148196" duration="70748000" />
+      <workItem from="1576535148196" duration="75952000" />
     </task>
     <servers />
   </component>
