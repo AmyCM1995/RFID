@@ -7,6 +7,7 @@ use App\Entity\Importaciones;
 use App\Entity\PaisCorrespondencia;
 use App\Entity\PlanDeImposicion;
 use App\Entity\PlanImposicionCsv;
+use App\Entity\Totales;
 use App\Form\PlanDeImposicionType;
 use App\Repository\PlanDeImposicionRepository;
 use League\Csv\Reader;
@@ -28,9 +29,9 @@ class PlanDeImposicionController extends AbstractController
      */
     public function index(PlanDeImposicionRepository $planDeImposicionRepository): Response
     {
-        $importacionUltima = $this->principal1();
-        $plan_de_imposicions = $this->principal2($importacionUltima);
-        $corresponsales = $this->principal3($plan_de_imposicions);
+        $importacionUltima = $this->utimaImportacion();
+        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
+        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
         //cojer los plan csv de la bd
         $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
         $planescsv = $csvReposirotio->findAll();
@@ -238,9 +239,9 @@ class PlanDeImposicionController extends AbstractController
                 }
             }
             //*****************************************Plan de imposicion CSV
-            $importacionUltima = $this->principal1();
-            $plan_de_imposicions = $this->principal2($importacionUltima);
-            $corresponsales = $this->principal3($plan_de_imposicions);
+            $importacionUltima = $this->utimaImportacion();
+            $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
+            $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
             $planesCorr1 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[0]);
             $planesCorr2 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[1]);
             $planesCorr3 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[2]);
@@ -251,9 +252,14 @@ class PlanDeImposicionController extends AbstractController
                 $planescsv[$pos] = $csv;
                 $pos++;
             }
-            //borrar los csv anteriores
+            $this->borrarCSVAnteriores();
             $this->persistirCSV($planescsv);
-
+            //********************************************Estadísticas
+            $paises = $this->paisesDelPlan($plan_de_imposicions);
+            $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
+            $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
+            $this->borrarTotalesAnteriores();
+            $this->persistirTotales($totales);
         }
 
         return $this->render('plan_imposicion_csv/index.html.twig', [
@@ -405,20 +411,159 @@ class PlanDeImposicionController extends AbstractController
         }
         return $existe;
     }
-    public function principal1(){
+    public function utimaImportacion(){
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findOneByImportacion();
         return $importacionUltima;
     }
-    public function principal2($importacionUltima){
+    public function planesDeImposicionActuales($importacionUltima){
         $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $plan_de_imposicions = $planDeImposicionRepositorio->findByImposicion($importacionUltima->getId());
         return $plan_de_imposicions;
     }
-    public function principal3($plan_de_imposicions){
+    public function corresponsalesdelPlan($plan_de_imposicions){
         $planDeDistintosCorresonsales = $this->buscarPlanesConDistintosCorresponsales($plan_de_imposicions);
         $corresponsales = $this->buscarCorresponsalesId($planDeDistintosCorresonsales);
         return $corresponsales;
+    }
+
+    public function paisesDelPlan($plan_de_imposicions){
+        $paises = [$plan_de_imposicions[0]->getCodPais()];
+        $size = 1;
+        for($i=1; $i<sizeof($plan_de_imposicions); $i++){
+            if($plan_de_imposicions[$i]->getCodPais()!= null){
+                if($this->existePais($paises, $plan_de_imposicions[$i]->getCodPais()) == false){
+                    $paises[$size] = $plan_de_imposicions[$i]->getCodPais();
+                    $size++;
+                }
+            }
+        }
+        return $paises;
+    }
+    public function existePais($paises, $pais){
+        $existe = false;
+        for($i=0; $i<sizeof($paises); $i++){
+                if($paises[$i]->getId() == $pais->getId()){
+                    $existe = true;
+                    break;
+                }
+        }
+        return $existe;
+    }
+    public function enviosCorresponsalesEnviosDelPlan($plan_de_imposicions){
+        $envios = [$plan_de_imposicions[0]->getCodEnvio()];
+        $size = 1;
+        for($i=1; $i<sizeof($plan_de_imposicions); $i++){
+            if($this->existeEnvio($envios, $plan_de_imposicions[$i]->getCodEnvio()) == false){
+                $envios[$size] = $plan_de_imposicions[$i]->getCodEnvio();
+                $size++;
+            }
+        }
+        return $envios;
+    }
+    public function existeEnvio($envios, $envio){
+        $existe = false;
+        for($i=0; $i<sizeof($envios); $i++){
+            if($envios[$i] == $envio){
+                $existe = true;
+                break;
+            }
+        }
+        return $existe;
+    }
+    public function CantidadEnviosEntreCorresponsales(Corresponsal $cCuba, $cDest, $planesActuales){
+        $total = 0;
+        for($i=0; $i<sizeof($planesActuales); $i++){
+            if($planesActuales[$i]->getCodCorresponsal()->getId() == $cCuba->getId()){
+                if($planesActuales[$i]->getCodEnvio() == $cDest){
+                    $total++;
+                }
+            }
+        }
+        return $total;
+    }
+    public function CantidadEnviosCorresponsalPais($corr, $pais, $planesActuales){
+        $total = 0;
+        for($i=0; $i<sizeof($planesActuales); $i++){
+            if($planesActuales[$i]->getCodCorresponsal()->getId() == $corr->getId()){
+                if($planesActuales[$i]->getCodPais()->getCodigo() == $pais->getCodigo()){
+                    $total++;
+                }
+            }
+        }
+        return $total;
+    }
+    public  function CantidadEnviosPorCorresponsal (Corresponsal $c, $planesActuales){
+        $total = 0;
+        for($i=0; $i<sizeof($planesActuales); $i++){
+            if($planesActuales[$i]->getCodCorresponsal()->getId() == $c->getId()){
+                $total++;
+            }
+        }
+        return $total;
+    }
+    public function CantidadEnviosPorPais ($pais, $planesActuales){
+        $total = 0;
+        for($i=0; $i<sizeof($planesActuales); $i++){
+            if($planesActuales[$i]->getCodPais()->getCodigo() == $pais->getCodigo()){
+                $total++;
+            }
+        }
+        return $total;
+    }
+    public function generarTotales($corresponsales, $envios, $paises, $plan){
+        $totales=[new Totales()];
+        $size = 0;
+        for($i=0; $i<sizeof($corresponsales); $i++){
+            for($j=0; $j<sizeof($envios); $j++){
+                $t = new Totales();
+                $t->setCorresponsalCuba($corresponsales[$i]->getCodigo());
+                $t->setCorresponsalDestino($envios[$j]);
+                $t->setTotalEnvios($this->CantidadEnviosEntreCorresponsales($corresponsales[$i], $envios[$j], $plan));
+                $totales[$size]=$t;
+                $size++;
+            }
+            for($k=0; $k<sizeof($paises); $k++){
+                $t = new Totales();
+                $t->setCorresponsalCuba($corresponsales[$i]->getCodigo());
+                $t->setCorresponsalDestino($paises[$k]->getCodigo());
+                $t->setTotalEnvios($this->CantidadEnviosCorresponsalPais($corresponsales[$i], $paises[$k], $plan));
+                $totales[$size]=$t;
+                $size++;
+            }
+            $t = new Totales();
+            $t->setCorresponsalCuba($corresponsales[$i]->getCodigo());
+            $t->setTotalEnvios($this->CantidadEnviosPorCorresponsal($corresponsales[$i], $plan));
+            $totales[$size]=$t;
+            $size++;
+        }
+        for($l=0; $l<sizeof($paises); $l++){
+            $t = new Totales();
+            $t->setCorresponsalDestino($paises[$l]->getCodigo());
+            $t->setTotalEnvios($this->CantidadEnviosPorPais($paises[$l], $plan));
+            $totales[$size]=$t;
+            $size++;
+        }
+        return $totales;
+    }
+
+    public function persistirTotales($totales){
+        $entityManager = $this->getDoctrine()->getManager();
+        for($i=0; $i<sizeof($totales);$i++){
+            $entityManager->persist($totales[$i]);
+            $entityManager->flush();
+        }
+
+    }
+    public function borrarTotalesAnteriores(){
+        $repositorio = $this->getDoctrine()->getRepository(Totales::class);
+        $entityManager = $this->getDoctrine()->getManager();
+        $anterioresTotales = $repositorio->findAll();
+        for($i=0; $i<sizeof($anterioresTotales); $i++){
+            $entityManager->remove($anterioresTotales[$i]);
+            $entityManager->flush();
+
+        }
     }
 
 }

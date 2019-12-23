@@ -80,7 +80,7 @@
                                 {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                                 <a href="{{ path('plan_imposicion_persistir') }}">Importar</a>
                                 {% endif %}
-                                <a href="#">Estadísticas</a>
+                                <a href="{{ path('totales') }}">Estadísticas</a>
                             </div>
                         </li>
                         {% endif %}
