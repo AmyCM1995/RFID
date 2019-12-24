@@ -19,22 +19,22 @@ class PaisCorrespondenciaRepository extends ServiceEntityRepository
         parent::__construct($registry, PaisCorrespondencia::class);
     }
 
-    // /**
-    //  * @return PaisCorrespondencia[] Returns an array of PaisCorrespondencia objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return PaisCorrespondencia[] Returns an array of PaisCorrespondencia objects
+      */
+
+    public function findByActivo()
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('p.es_activo = :val')
+            ->setParameter('val', true)
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
 
     public function findOneByCodigo($value): ?PaisCorrespondencia
