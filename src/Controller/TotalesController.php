@@ -45,10 +45,49 @@ class TotalesController extends AbstractController
         $totaless = $totalesRepositorio->findAll();
         $corresponsalesCubanos = $this->buscarCorresponsalesCubanos($totaless);
         $paisesDestino = $this->buscarPaises($this->buscarCodigoPaíses($totaless));
+        $enviosTotales = $this->enviosTotales($totaless);
+        $corresponsalesDestino = $this->buscarCorresponsalesDestino($totaless);
+        $paisesDestino065 = $this->paisesDestinoTarifas($paisesDestino, 0.65);
+        $paisesDestino075 = $this->paisesDestinoTarifas($paisesDestino, 0.75);
+        $totalEnvios065 = $this->totalEnviosCorresponsalesTarifa($totaless, $corresponsalesCubanos, $paisesDestino065);
+        $totalEnvios075 = $this->totalEnviosCorresponsalesTarifa($totaless, $corresponsalesCubanos, $paisesDestino075);
+        $totalesC1 = $this->totalEnviosCorresponsal($this->tablaTotalesCorresponsal($totaless, $corresponsalesCubanos[0], $corresponsalesDestino));
+        $totalesC2 = $this->totalEnviosCorresponsal($this->tablaTotalesCorresponsal($totaless, $corresponsalesCubanos[1], $corresponsalesDestino));
+        $totalesC3 = $this->totalEnviosCorresponsal($this->tablaTotalesCorresponsal($totaless, $corresponsalesCubanos[2], $corresponsalesDestino));
+        $total065 = $this->totalArreglo($totalEnvios065);
+        $total075 = $this->totalArreglo($totalEnvios075);
+        //*******************************Transpondedores
+        $totalesPaisesC1 = $this->arrTotalCorresponsalesPaises($totalesRepositorio, $corresponsalesCubanos[0], $paisesDestino);
+        $totalesPaisesC2 = $this->arrTotalCorresponsalesPaises($totalesRepositorio, $corresponsalesCubanos[1], $paisesDestino);
+        $totalesPaisesC3 = $this->arrTotalCorresponsalesPaises($totalesRepositorio, $corresponsalesCubanos[2], $paisesDestino);
+
+
         return $this->render('totales/materiales.html.twig',[
+            'totalesc1' => $totalesC1,
+            'totalesc2' => $totalesC2,
+            'totalesc3' => $totalesC3,
+            'totalesPaisesC1' => $totalesPaisesC1,
+            'totalesPaisesC2' => $totalesPaisesC2,
+            'totalesPaisesC3' => $totalesPaisesC3,
+            'totalEnvios065' => $totalEnvios065,
+            'totalEnvios075' => $totalEnvios075,
+            'total065' => $total065,
+            'total075' => $total075,
             'corresponsalesCubanos' => $corresponsalesCubanos,
             'paisesDestino' => $paisesDestino,
+            'totalEnvios' => $enviosTotales,
         ]);
+    }
+
+
+    public function arrTotalCorresponsalesPaises($repositorio, $corresponsal, $paisesDestino){
+        $arr = [];
+        $size = 0;
+        for($i=0; $i<sizeof($paisesDestino); $i++){
+            $arr[$size] = $repositorio->findOneByCorresponsalDestino($corresponsal, $paisesDestino[$i]->getCodigo())->getTotalEnvios();
+            $size++;
+        }
+        return $arr;
     }
 
     public function buscarCorresponsalesCubanos($totaless){
@@ -64,6 +103,19 @@ class TotalesController extends AbstractController
         }
         return $corresponsalesCuba;
     }
+
+    public function paisesDestinoTarifas($paises, $tarifa){
+        $paisesTarifa = [];
+        $size = 0;
+        for($i=0; $i<sizeof($paises); $i++){
+            if($paises[$i]->getRegion()->getTarifa() == $tarifa){
+                $paisesTarifa[$size] = $paises[$i];
+                $size++;
+            }
+        }
+        return $paisesTarifa;
+    }
+
     public function existeCorresponsalCuba($corresponsalesCuba, $c){
         $existe = false;
         for($i=0; $i<sizeof($corresponsalesCuba); $i++){
@@ -161,6 +213,14 @@ class TotalesController extends AbstractController
         }
         return $totales;
     }
+    public function totalEnviosCorresponsal($tablaCorresponsalesCorresponsal){
+        $total = 0;
+        for($i=0; $i<sizeof($tablaCorresponsalesCorresponsal); $i++){
+            $total += $tablaCorresponsalesCorresponsal[$i];
+        }
+        return $total;
+    }
+
     public function enviosTotales($totaless){
         $total = 0;
         for($i=0; $i<sizeof($totaless); $i++){
@@ -186,5 +246,32 @@ class TotalesController extends AbstractController
             }
         }
         return $totalesPaises;
+    }
+    public function totalEnviosCorresponsalTarifa($totaless, $corresponsal, $paisesTarifa){
+        $totalEnvios = 0;
+        for($i=0; $i<sizeof($paisesTarifa); $i++){
+            for($j=0; $j<sizeof($totaless); $j++){
+                if($totaless[$j]->getCorresponsalDestino() == $paisesTarifa[$i]->getCodigo() && $totaless[$j]->getCorresponsalCuba() == $corresponsal){
+                    $totalEnvios += $totaless[$j]->getTotalEnvios();
+                }
+            }
+        }
+        return $totalEnvios;
+    }
+    public function totalEnviosCorresponsalesTarifa($totaless, $corresponsalesCuba, $paisesaTarifa){
+        $total = [];
+        $size = 0;
+        for($i=0; $i<sizeof($corresponsalesCuba); $i++){
+            $total[$size] = $this->totalEnviosCorresponsalTarifa($totaless, $corresponsalesCuba[$i], $paisesaTarifa);
+            $size++;
+        }
+        return $total;
+    }
+    public function totalArreglo ($t){
+        $total = 0;
+        for($i=0; $i<sizeof($t); $i++){
+            $total += $t[$i];
+        }
+        return $total;
     }
 }

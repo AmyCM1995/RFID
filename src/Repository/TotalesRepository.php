@@ -19,32 +19,36 @@ class TotalesRepository extends ServiceEntityRepository
         parent::__construct($registry, Totales::class);
     }
 
-    // /**
-    //  * @return Totales[] Returns an array of Totales objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Totales[] Returns an array of Totales objects
+      */
+
+    public function findByCorresponsalDestino($value1, $value2)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('t.corresponsalCuba = :val')
+            ->andWhere('t.corresponsalDestino = :v')
+            ->setParameter('val', $value1)
+            ->setParameter('v', $value2)
             ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(100)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Totales
+
+
+    public function findOneByCorresponsalDestino($value1, $value2): ?Totales
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('t.corresponsalCuba = :val')
+            ->andWhere('t.corresponsalDestino = :v')
+            ->setParameter('val', $value1)
+            ->setParameter('v', $value2)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

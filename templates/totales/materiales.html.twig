@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TotalesController!{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Materiales</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            {% for corresponsalesCubanos in corresponsalesCubanos %}
+                <th>{{ corresponsalesCubanos }}</th>
+            {% endfor %}
+            <th>Totales</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Sobres</th>
+            <td>{{ totalesc1 }}</td>
+            <td>{{ totalesc2 }}</td>
+            <td>{{ totalesc3 }}</td>
+            <td>{{ totalEnvios }}</td>
+        </tr>
+        <tr>
+            <th>Sellos 65c</th>
+            {% for totalEnvios065 in totalEnvios065 %}
+                <td>{{ totalEnvios065 }}</td>
+            {% endfor %}
+            <td>{{ total065 }}</td>
+        </tr>
+        <tr>
+            <th>Sellos 75c</th>
+            {% for totalEnvios075 in totalEnvios075 %}
+                <td>{{ totalEnvios075 }}</td>
+            {% endfor %}
+            <td>{{ total075 }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Transpondedores</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            {% for corresponsalesCubanos in corresponsalesCubanos %}
+                <th>{{ corresponsalesCubanos }}</th>
+            {% endfor %}
+            <th>Totales</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for paisDestino in paisesDestino %}
+                {% set size = loop.index %}
+                {% set total = 0 %}
+                    <th>CU -> {{ paisDestino.codigo }}</th>
+                {% for totalPaisesC1 in totalesPaisesC1 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC1 }}</td>
+                        {% set total = total + totalPaisesC1 %}
+                    {% endif %}
+                {% endfor %}
+                {% for totalPaisesC2 in totalesPaisesC2 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC2 }}</td>
+                        {% set total = total + totalPaisesC2 %}
+                    {% endif %}
+                {% endfor %}
+                {% for totalPaisesC3 in totalesPaisesC3 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC3 }}</td>
+                        {% set total = total + totalPaisesC3 %}
+                    {% endif %}
+                {% endfor %}
+                <td>{{ total }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h3>Cartas GMS</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            {% for corresponsalesCubanos in corresponsalesCubanos %}
+                <th>{{ corresponsalesCubanos }}</th>
+            {% endfor %}
+            <th>Totales</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for paisDestino in paisesDestino %}
+            {% set size = loop.index %}
+            {% set total = 0 %}
+            <th>CU -> {{ paisDestino.codigo }}</th>
+            {% for totalPaisesC1 in totalesPaisesC1 %}
+                {% if loop.index == size %}
+                    <td>{{ totalPaisesC1 }}</td>
+                    {% set total = total + totalPaisesC1 %}
+                {% endif %}
+            {% endfor %}
+            {% for totalPaisesC2 in totalesPaisesC2 %}
+                {% if loop.index == size %}
+                    <td>{{ totalPaisesC2 }}</td>
+                    {% set total = total + totalPaisesC2 %}
+                {% endif %}
+            {% endfor %}
+            {% for totalPaisesC3 in totalesPaisesC3 %}
+                {% if loop.index == size %}
+                    <td>{{ totalPaisesC3 }}</td>
+                    {% set total = total + totalPaisesC3 %}
+                {% endif %}
+            {% endfor %}
+            <td>{{ total }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
