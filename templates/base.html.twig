@@ -42,8 +42,8 @@
                                         {% endif %}
                                     </button>
                                     <div class="dropdown-content">
-                                        <a href="{{ path('principal') }}">Notificaciones</a>
-                                        <a href="#">Ajustes</a>
+                                        {#<a href="{{ path('principal') }}">Notificaciones</a>
+                                        <a href="#">Ajustes</a>#}
                                         <a href="{{ path('app_login')}}">Cerrar Sesión</a>
                                     </div>
                                 </li>
@@ -80,7 +80,8 @@
                                 {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                                 <a href="{{ path('plan_imposicion_persistir') }}">Importar</a>
                                 {% endif %}
-                                <a href="{{ path('totales') }}">Estadísticas</a>
+                                <a href="{{ path('totales') }}">Estadísticas (Totales)</a>
+                                <a href="{{ path('materiales') }}">Estadísticas (Materiales)</a>
                             </div>
                         </li>
                         {% endif %}
@@ -106,13 +107,13 @@
                                 <a href="{{ path('importaciones_index') }}">Importaciones</a>
                             </div>
                         </li>
-                        <li class="dropdown-sidebar">
+                        {#<li class="dropdown-sidebar">
                             <div class="dropdown-sidebar-btn"><a>Reportes</a></div>
                             <div class="dropdown-sidebar-content">
                                 <a href="#">Plan de Imposición</a>
                                 <a href="#">Nomencladores</a>
                             </div>
-                        </li>
+                        </li>#}
                         {% endif %}
                     </ul>
                 {% endblock %}

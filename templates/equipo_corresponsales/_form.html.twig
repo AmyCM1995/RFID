@@ -1,4 +1,6 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn bg-primary" id="corresponsal-btns">
+    <a style="color: #FFFFFF">{{ button_label|default('Aceptar') }}</a>
+</button>
 {{ form_end(form) }}

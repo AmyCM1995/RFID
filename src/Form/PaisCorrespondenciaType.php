@@ -18,12 +18,13 @@ class PaisCorrespondenciaType extends AbstractType
 
         $builder
             ->add('codigo', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Código'])
             ->add('nombre', TextType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
             ->add('region', EntityType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
                 'class' => RegionMundial::class,
+                'label' => 'Región Mundial',
                 'query_builder' => function (EntityRepository $er){
                     return $er->createQueryBuilder('r')->orderBy('r.descripcion', 'ASC');
                 },

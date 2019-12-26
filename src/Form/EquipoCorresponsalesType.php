@@ -18,11 +18,11 @@ class EquipoCorresponsalesType extends AbstractType
     {
         $builder
             ->add('codigo', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Código'])
             ->add('cantidadMiembros', NumberType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Cantidad de Miembros'])
             ->add('CorresponsalCoordinador', EntityType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Coordinador',
                 'class'=> Corresponsal::class,
                 'query_builder' => function (EntityRepository $er){
                     return $er->createQueryBuilder('r')->orderBy('r.nombre', 'ASC');
@@ -32,7 +32,7 @@ class EquipoCorresponsalesType extends AbstractType
                 'required' => true,
                 ])
             ->add('corresponsals', EntityType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Corresponsales',
                 'class'=> Corresponsal::class,
                 'query_builder' => function (EntityRepository $er){
                     return $er->createQueryBuilder('r')->orderBy('r.nombre', 'ASC');

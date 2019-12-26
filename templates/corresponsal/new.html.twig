@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Corresponsal!{% endblock %}
+{% block title %}Nuevo Corresponsal!{% endblock %}
 
 {% block contenido %}
     {{ parent() }}
-    <h1>Create new Corresponsal</h1>
+    <h1>Nuevo Corresponsal</h1>
 
     {{ include('corresponsal/_form.html.twig') }}
 
-    <a href="{{ path('corresponsal_index') }}">back to list</a>
+    <button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 2px">
+    <a href="{{ path('corresponsal_index') }}">Regresar</a>
+    </button>
 {% endblock %}

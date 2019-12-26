@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Fechas de interrupciones en la correspondencia</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Anual</th>
+            <th>Descripción</th>
+            <th>Provincias afectadas</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for fechas_no_correspondencium in fechas_no_correspondencias %}
+            <tr>
+                {#<td>{{ fechas_no_correspondencium.id }}</td>#}
+                <td>{{ fechas_no_correspondencium.fecha ? fechas_no_correspondencium.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ fechas_no_correspondencium.esAnual ? 'Sí' : 'No' }}</td>
+                <td>{{ fechas_no_correspondencium.descripcion }}</td>
+                <td>
+                    {% for provincia in fechas_no_correspondencium.provincia %}
+                        {{ provincia.nombre }}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No existen fechas de no correspondencia</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

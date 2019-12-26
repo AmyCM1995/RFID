@@ -15,5 +15,6 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     DataDog\AuditBundle\DataDogAuditBundle::class => ['all' => true],
-    BM\BackupManagerBundle\BMBackupManagerBundle::class =>['all'=> true],
+    BM\BackupManagerBundle\BMBackupManagerBundle::class => ['all' => true],
+    Core23\DompdfBundle\Core23DompdfBundle::class => ['all' => true],
 ];

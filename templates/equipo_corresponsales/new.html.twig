@@ -5,9 +5,10 @@
 {% block contenido %}
     {{ parent() }}
 
-    <h1>Create new EquipoCorresponsales</h1>
+    <h1>Crear nuevo equipo de corresponsales</h1>
 
     {{ include('equipo_corresponsales/_form.html.twig') }}
-
-    <a href="{{ path('equipo_corresponsales_index') }}">back to list</a>
+    <button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 2px">
+    <a href="{{ path('equipo_corresponsales_index') }}">Regresar</a>
+    </button>
 {% endblock %}

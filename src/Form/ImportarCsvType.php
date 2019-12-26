@@ -16,9 +16,11 @@ class ImportarCsvType extends AbstractType{
     {
         $builder
             ->add('save', SubmitType::class, [
+                'label' => 'Importar',
                 'attr' => [
                     'class' => 'btn btn-success'
-                ]
+                ],
+
             ])
         ;
     }

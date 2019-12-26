@@ -44,7 +44,7 @@
 }
 
 .dropdown:hover > .dropdown-content {
-    height:111px;
+    height: fit-content;
 }
 
 .dropdown-content > a {
@@ -79,7 +79,7 @@
 .sidebar {
     background: rgba(16, 167, 182, 0.41);
     width: 225px !important;
-    height: 700px;
+    height: 2500px;
 }
 
 html, body{

@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 /**
  * @Route("/fechas/no/correspondencia")
@@ -90,5 +92,38 @@ class FechasNoCorrespondenciaController extends AbstractController
         }
 
         return $this->redirectToRoute('fechas_no_correspondencia_index');
+    }
+
+    /**
+     * @Route("/", name="fechas_no_correspondencia_pdf", methods={"GET"})
+     */
+    public function pdf_Fechas(FechasNoCorrespondenciaRepository $fechasNoCorrespondenciaRepository): Response
+    {
+        ob_start();
+        $fechas = $fechasNoCorrespondenciaRepository->findAll();
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(ob_get_clean());
+        $dompdf->render();
+        $dompdf->stream();
+
+        /*require_once 'dompdf/Autoloader.php';
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        $dompdf = new Dompdf($pdfOptions);
+
+        $html = $this->render('fechas_no_correspondencia/pdf_Fechas.html.twig', [
+            'fechas_no_correspondencias' => $fechasNoCorrespondenciaRepository->findAll(),
+        ]);
+
+        $dompdf->setPaper('A4' , 'portrait');
+        $dompdf->render();
+        $output = $dompdf->output();
+        $publicDirectory = $this->get('kernel')->getProjectDir().'/public';
+        $pdfFilepath = $publicDirectory.'/fechasNoCorrespondencia.pdf';
+        file_put_contents($pdfFilepath, $output);
+
+        return new Response("El pdf se generó correctamente!");*/
     }
 }

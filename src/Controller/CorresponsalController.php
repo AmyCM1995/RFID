@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 /**
  * @Route("/corresponsal")
@@ -41,6 +43,24 @@ class CorresponsalController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('corresponsal_index');
+
+            //**********************************************************PDF
+            $pdfOptions = new Options();
+            $pdfOptions->set('defaultFont', 'Arial');
+
+            $dompdf = new Dompdf($pdfOptions);
+
+            $html = $this->render('corresponsal/pdf_nuevoCorresponsal.html.twig', [
+                'corresponsal' => $corresponsal,
+            ]);
+
+            $dompdf->setPaper('A4' , 'portrait');
+            $dompdf->render();
+            $output = $dompdf->output();
+            $publicDirectory = $this->get('kernel')->getProjectDir().'/public';
+            $pdfFilepath = $publicDirectory.'/NuevoCorresponsal.pdf';
+            file_put_contents($pdfFilepath, $output);
+
         }
 
         return $this->render('corresponsal/new.html.twig', [
@@ -69,6 +89,23 @@ class CorresponsalController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            //**************************************PDF
+            $pdfOptions = new Options();
+            $pdfOptions->set('defaultFont', 'Arial');
+
+            $dompdf = new Dompdf($pdfOptions);
+
+            $html = $this->render('corresponsal/pdf_editarCorresponsal.html.twig', [
+                'corresponsal' => $corresponsal,
+            ]);
+
+            $dompdf->setPaper('A4' , 'portrait');
+            $dompdf->render();
+            $output = $dompdf->output();
+            $publicDirectory = $this->get('kernel')->getProjectDir().'/public';
+            $pdfFilepath = $publicDirectory.'/CambjosCorresponsal.pdf';
+            file_put_contents($pdfFilepath, $output);
 
             return $this->redirectToRoute('corresponsal_index');
         }

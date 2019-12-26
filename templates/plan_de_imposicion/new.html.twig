@@ -6,6 +6,7 @@
     <h1>Create new PlanDeImposicion</h1>
 
     {{ include('plan_de_imposicion/_form.html.twig') }}
-
-    <a href="{{ path('plan_de_imposicion_index') }}">back to list</a>
+<button class="btn bg-primary" id="corresponsal-btns">
+    <a href="{{ path('plan_de_imposicion_index') }}">Regresar</a>
+</button>
 {% endblock %}

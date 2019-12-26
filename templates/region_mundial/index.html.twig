@@ -5,37 +5,39 @@
 {% block contenido %}
     {{ parent() }}
 
-    <h1>RegionMundial index</h1>
+    <h1>Región Mundial</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Numero</th>
-                <th>Descripcion</th>
+
+                <th>Número</th>
+                <th>Descripción</th>
                 <th>Tarifa</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for region_mundial in region_mundials %}
             <tr>
-                <td>{{ region_mundial.id }}</td>
+
                 <td>{{ region_mundial.numero }}</td>
                 <td>{{ region_mundial.descripcion }}</td>
                 <td>{{ region_mundial.tarifa }}</td>
                 <td>
-                    <a href="{{ path('region_mundial_show', {'id': region_mundial.id}) }}">show</a>
-                    <a href="{{ path('region_mundial_edit', {'id': region_mundial.id}) }}">edit</a>
+                    {#<a href="{{ path('region_mundial_show', {'id': region_mundial.id}) }}">show</a>#}
+                    <a href="{{ path('region_mundial_edit', {'id': region_mundial.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">No se encontraron regiones</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('region_mundial_new') }}">Create new</a>
+    <button class="btn bg-primary" id="corresponsal-btns">
+        <a href="{{ path('region_mundial_new') }}">Nueva</a>
+    </button>
 {% endblock %}

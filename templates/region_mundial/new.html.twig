@@ -5,9 +5,11 @@
 {% block contenido %}
     {{ parent() }}
 
-    <h1>Create new RegionMundial</h1>
+    <h1>Crear nueva región mundial</h1>
 
     {{ include('region_mundial/_form.html.twig') }}
 
-    <a href="{{ path('region_mundial_index') }}">back to list</a>
+<button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 3px">
+    <a href="{{ path('region_mundial_index') }}">Regresar</a>
+</button>
 {% endblock %}

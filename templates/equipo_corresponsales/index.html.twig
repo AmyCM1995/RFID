@@ -5,7 +5,7 @@
 {% block contenido %}
     {{ parent() }}
 
-    <h1>Equipo de corresponsales</h1>
+    <h1>Equipos de corresponsales</h1>
 
     <table class="table">
         <thead>
@@ -33,7 +33,7 @@
                         {% endfor %}
                     </td>
                     <td>
-                        <a href="{{ path('equipo_corresponsales_edit', {'id': equipo_corresponsale.id}) }}">edit</a>
+                        <a href="{{ path('equipo_corresponsales_edit', {'id': equipo_corresponsale.id}) }}">Editar</a>
                     </td>
 
                 </tr>
@@ -50,9 +50,9 @@
         <button class="btn bg-primary" id="corresponsal-btns">
             <a href="{{ path('equipo_corresponsales_new') }}">Nuevo</a>
         </button>
-        <button class="btn bg-primary" id="corresponsal-btns">
+        {#<button class="btn bg-primary" id="corresponsal-btns">
             <a href="#">Acciones</a>
-        </button>
+        </button>#}
     {% endif %}
 
 {% endblock %}

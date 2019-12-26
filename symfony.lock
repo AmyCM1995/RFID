@@ -11,6 +11,9 @@
             "ref": "ae7e2e6cebb46c0adede771d3d9b8c540879920c"
         }
     },
+    "core23/dompdf-bundle": {
+        "version": "2.6.0"
+    },
     "data-dog/audit-bundle": {
         "version": "v0.1.16"
     },
@@ -93,6 +96,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "dompdf/dompdf": {
+        "version": "v0.8.2"
+    },
     "easycorp/easy-log-handler": {
         "version": "1.0",
         "recipe": {
@@ -135,6 +141,12 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
+    "phenx/php-font-lib": {
+        "version": "0.5.1"
+    },
+    "phenx/php-svg-lib": {
+        "version": "v0.3.3"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"
     },
@@ -155,6 +167,9 @@
     },
     "psr/log": {
         "version": "1.1.0"
+    },
+    "sabberworm/php-css-parser": {
+        "version": "8.3.0"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",

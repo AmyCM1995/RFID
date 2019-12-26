@@ -5,11 +5,17 @@
 {% block contenido %}
     {{ parent() }}
 
-    <h1>Edit EquipoCorresponsales</h1>
+    <h1>Editar equipo de corresponsales</h1>
 
-    {{ include('equipo_corresponsales/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('equipo_corresponsales/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
-    <a href="{{ path('equipo_corresponsales_index') }}">back to list</a>
+    <div class="row ">
+        <ul style="margin-left: 15px; padding: 0">
+            <div style="margin-top: 2px">{{ include('equipo_corresponsales/_delete_form.html.twig') }}</div>
 
-    {{ include('equipo_corresponsales/_delete_form.html.twig') }}
+            <button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 3px; padding-left: 0">
+                <a href="{{ path('equipo_corresponsales_index') }}" style="margin-left: 10px">Regresar</a>
+            </button>
+        </ul>
+    </div>
 {% endblock %}

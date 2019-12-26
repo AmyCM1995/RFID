@@ -27,9 +27,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('corresponsal_index') }}">back to list</a>
 
-    <a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">edit</a>
+
+    <a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">Editar</a>
 
     {{ include('corresponsal/_delete_form.html.twig') }}
+    <a href="{{ path('corresponsal_index') }}">Regresar</a>
 {% endblock %}

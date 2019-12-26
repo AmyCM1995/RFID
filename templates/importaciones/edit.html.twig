@@ -2,12 +2,21 @@
 
 {% block title %}Edit Importaciones{% endblock %}
 
-{% block body %}
-    <h1>Edit Importaciones</h1>
+{% block contenido %}
+    <h1>Editar importaciones</h1>
 
-    {{ include('importaciones/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('importaciones/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
-    <a href="{{ path('importaciones_index') }}">back to list</a>
 
-    {{ include('importaciones/_delete_form.html.twig') }}
+
+
+    <div class="row ">
+        <ul style="margin-left: 15px; padding: 0">
+            <div style="margin-top: 2px">{{ include('importaciones/_delete_form.html.twig') }}</div>
+
+            <button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 3px; padding-left: 0">
+                <a href="{{ path('importaciones_index') }}" style="margin-left: 10px">Regresar</a>
+            </button>
+        </ul>
+    </div>
 {% endblock %}

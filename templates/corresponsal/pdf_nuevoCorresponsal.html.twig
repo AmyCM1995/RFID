@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Se ha añadido un nuevo corresponsal</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Código</th>
+            <td>{{ corresponsal.codigo }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ corresponsal.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Apellidos</th>
+            <td>{{ corresponsal.apellidos }}</td>
+        </tr>
+        <tr>
+            <th>Dirección</th>
+            <td>{{ corresponsal.direccion }}</td>
+        </tr>
+        <tr>
+            <th>Correo</th>
+            <td>{{ corresponsal.correo }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

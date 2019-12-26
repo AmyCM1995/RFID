@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\UnicodeString;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 /**
  * @Route("/plan/de/imposicion")
@@ -114,9 +116,9 @@ class PlanDeImposicionController extends AbstractController
     public function persistir(Request $request){
         $form = $this->createFormBuilder()
             ->add('file', FileType::class, [
-                'mapped' => false,
+                'mapped' => false, 'label' => ' '
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [ 'label' => 'Guardar'])
             ->getForm();
         $form->handleRequest($request);
 
@@ -260,6 +262,8 @@ class PlanDeImposicionController extends AbstractController
             $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
             $this->borrarTotalesAnteriores();
             $this->persistirTotales($totales);
+
+            return $this->render('plan_imposicion_csv/importacion_correcta.html.twig');
         }
 
         return $this->render('plan_imposicion_csv/index.html.twig', [
@@ -413,7 +417,7 @@ class PlanDeImposicionController extends AbstractController
     }
     public function utimaImportacion(){
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
-        $importacionUltima = $importacionRepositorio->findOneByImportacion();
+        $importacionUltima = $importacionRepositorio->findUltimaImportacion();
         return $importacionUltima;
     }
     public function planesDeImposicionActuales($importacionUltima){
@@ -564,6 +568,46 @@ class PlanDeImposicionController extends AbstractController
             $entityManager->flush();
 
         }
+    }
+
+    /**
+     * @Route("/", name="plan_de_imposicion_pdf", methods={"GET"})
+     */
+    public function pdf_PlanDeImposicion(PlanDeImposicionRepository $planDeImposicionRepository): Response
+    {
+        require 'vendor/autoload.php';
+
+        /*$importacionUltima = $this->utimaImportacion();
+        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
+        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
+        //coge los planes csv de la bd
+        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $planescsv = $csvReposirotio->findAll();
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        $dompdf = new Dompdf($pdfOptions);
+
+        $html = $this->render('plan_de_imposicion/index.html.twig', [
+            'plan_de_imposicion_csvs' => $planescsv,
+            'importacion' => $importacionUltima,
+            'corresponsales' =>$corresponsales,
+        ]);
+
+        $dompdf->setPaper('A4' , 'portrait');
+        $dompdf->render();
+        $output = $dompdf->output();
+        $publicDirectory = $this->get('kernel')->getProjectDir().'/public';
+        $pdfFilepath = $publicDirectory.'/planDeImposicion.pdf';
+        file_put_contents($pdfFilepath, $output);*/
+
+
+
+
+
+
+        return new Response("El pdf se generó correctamente!");
     }
 
 }

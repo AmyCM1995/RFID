@@ -17,14 +17,14 @@ class CorresponsalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('codigo', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+            ->add('codigo', TextType::class,  [
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Código',])
             ->add('nombre', TextType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
             ->add('apellidos', TextType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
             ->add('direccion',  TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Dirección',])
             ->add('correo', EmailType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
             /*->add('equipo', EntityType::class, [

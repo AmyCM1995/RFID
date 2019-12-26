@@ -22,10 +22,10 @@ class FechasNoCorrespondenciaType extends AbstractType
     {
 
         $builder
-            ->add('fecha', DateType::class)
-            ->add('es_anual', CheckboxType::class, ['required' => false, ] )
+            ->add('fecha', DateType::class, ['label' => 'Fecha'])
+            ->add('es_anual', CheckboxType::class, ['required' => false, 'label' => 'Anual'] )
             ->add('descripcion', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Descripción',])
             ->add('provincia', EntityType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
                 'class'=> ProvinciaCuba::class,

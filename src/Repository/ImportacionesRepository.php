@@ -47,14 +47,9 @@ class ImportacionesRepository extends ServiceEntityRepository
         ;
     }
     */
-    public function findOneByImportacion(){
+    public function findUltimaImportacion(){
         $importaciones = $this->findAll();
-        $i = $importaciones[0];
-        for($j=1; $j>sizeof($importaciones); $j++){
-            if($importaciones[$j]->getFechaImportado()->diff($i->getFechaImportado()) > 0){
-                $i = $importaciones[$j];
-            }
-        }
-        return $i;
+        $size = sizeof($importaciones)-1;
+        return $importaciones[$size];
     }
 }

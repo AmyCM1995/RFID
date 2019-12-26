@@ -5,14 +5,14 @@
 {% block contenido %}
     {{ parent() }}
 
-    <h1>ProvinciaCuba index</h1>
+    <h1>Provincias de Cuba</h1>
 
     <table class="table">
         <thead>
             <tr>
                {# <th>Id</th>#}
                 <th>Nombre</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -22,18 +22,21 @@
                    {# <td>{{ provincia_cuba.id }}</td>#}
                     <td>{{ provincia_cuba.nombre }}</td>
                     <td>
-                        <a href="{{ path('provincia_cuba_show', {'id': provincia_cuba.id}) }}">show</a>
-                        <a href="{{ path('provincia_cuba_edit', {'id': provincia_cuba.id}) }}">edit</a>
+                       {# <a href="{{ path('provincia_cuba_show', {'id': provincia_cuba.id}) }}">show</a>#}
+                        <a href="{{ path('provincia_cuba_edit', {'id': provincia_cuba.id}) }}">Editar</a>
                     </td>
                 </tr>
             {%  endif %}
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">No se encontraron provincias</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('provincia_cuba_new') }}">Create new</a>
+    <button class="btn bg-primary" id="corresponsal-btns">
+        <a href="{{ path('provincia_cuba_new') }}">Nueva</a>
+    </button>
+
 {% endblock %}

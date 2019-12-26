@@ -15,11 +15,11 @@ class RegionMundialType extends AbstractType
     {
         $builder
             ->add('numero', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Número'])
             ->add('descripcion', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Descripción'])
             ->add('tarifa', MoneyType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Tarifa'])
         ;
     }
 

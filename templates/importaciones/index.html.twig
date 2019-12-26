@@ -13,7 +13,7 @@
                 <th>Fecha_inicio_plan</th>
                 <th>Fecha_fin_plan</th>
                 <th>Ciclo</th>
-                <th>actions</th>
+                {#<th>Acciones</th>#}
             </tr>
         </thead>
         <tbody>
@@ -25,8 +25,8 @@
                 <td>{{ importacione.fechaFinPlan }}</td>
                 <td>{{ importacione.ciclo }}</td>
                 <td>
-                    <a href="{{ path('importaciones_show', {'id': importacione.id}) }}">Mostrar</a>
-                    <a href="{{ path('importaciones_edit', {'id': importacione.id}) }}">Editar</a>
+                    {#<a href="{{ path('importaciones_show', {'id': importacione.id}) }}">Mostrar</a>#}
+                    {#<a href="{{ path('importaciones_edit', {'id': importacione.id}) }}">Editar</a>#}
                 </td>
             </tr>
         {% else %}
@@ -38,12 +38,12 @@
     </table>
 
     {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-        <button class="btn bg-primary" id="corresponsal-btns">
-            <a href="{{ path('importaciones_new') }}">Nuevo</a>
+        {#<button class="btn bg-primary" id="corresponsal-btns">
+            <a href="{{ path('importaciones_new') }}">Nueva</a>
         </button>
         <button class="btn bg-primary" id="corresponsal-btns">
             <a href="#">Acciones</a>
-        </button>
+        </button>#}
     {% endif %}
 
 {% endblock %}

@@ -5,11 +5,19 @@
 {% block contenido %}
     {{ parent() }}
 
-    <h1>Edit RegionMundial</h1>
+    <h1>Editar región mundial</h1>
 
-    {{ include('region_mundial/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('region_mundial/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
-    <a href="{{ path('region_mundial_index') }}">back to list</a>
 
-    {{ include('region_mundial/_delete_form.html.twig') }}
+    <div class="row ">
+        <ul style="margin-left: 15px; padding: 0">
+            <div style="margin-top: 3px">{{ include('region_mundial/_delete_form.html.twig') }}</div>
+
+            <button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 3px; padding-left: 0">
+                <a href="{{ path('region_mundial_index') }}" style="margin-left: 10px">Regresar</a>
+            </button>
+        </ul>
+    </div>
+
 {% endblock %}

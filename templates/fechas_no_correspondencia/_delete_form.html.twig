@@ -1,5 +1,7 @@
 <form method="post" action="{{ path('fechas_no_correspondencia_delete', {'id': fechas_no_correspondencium.id}) }}" onsubmit="return confirm('Seguro de que desea borrar la esta fecha?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ fechas_no_correspondencium.id) }}">
-    <button class="btn bg-primary">Borrar</button>
+    <button class="btn bg-primary">
+        <a style="color: #FFFFFF">Borrar</a>
+    </button>
 </form>

@@ -1,0 +1,59 @@
+--.{% extends 'base.html.twig' %}
+{% block contenido %}
+    <h3>Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h3>
+    <h5>Dimensión {{ importacion.dimension }}</h5>
+    <h5>Ciclo {{ importacion.ciclo }}</h5>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            {% for corresponsal in corresponsales %}
+                <th>{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for plan_de_imposicion_csv in plan_de_imposicion_csvs %}
+            <tr>
+                {% if plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Monday' %}
+                    <td>Lunes</td>
+                {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Tuesday' %}
+                    <td>Martes</td>
+                {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Wednesday' %}
+                    <td>Miércoles</td>
+                {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Thursday' %}
+                    <td>Jueves</td>
+                {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Friday' %}
+                    <td>Viernes</td>
+                {% endif %}
+                <td>{{ plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('d-m-y') : '' }}</td>
+
+                {# *******************************ENVIOS**************************************#}
+                {% if plan_de_imposicion_csv.envio12 != null %}
+                    <td>{{ [plan_de_imposicion_csv.envio11,plan_de_imposicion_csv.envio12]|join(' y ') }}</td>
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio11 }}</td>
+                {% endif %}
+
+                {% if plan_de_imposicion_csv.envio22 != null %}
+                    <td>{{ [plan_de_imposicion_csv.envio21,plan_de_imposicion_csv.envio22]|join(' y ') }}</td>
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio21 }}</td>
+                {% endif %}
+
+                {% if plan_de_imposicion_csv.envio32 != null %}
+                    <td>{{ [plan_de_imposicion_csv.envio31,plan_de_imposicion_csv.envio32]|join(' y ') }}</td>
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio31 }}</td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No se encontraron registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
