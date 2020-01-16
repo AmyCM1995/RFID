@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CorresponsalType extends AbstractType
 {
@@ -18,13 +20,21 @@ class CorresponsalType extends AbstractType
     {
         $builder
             ->add('codigo', TextType::class,  [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Código',])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;', 
+				'maxlength' => 4, 'minlength' => 4, 'title' => 'El  código contiene 4 caracteres, debe comenzar por CU y luego, el número correspondiente'),
+                'label' => 'Código', 'data' => 'CU',])
             ->add('nombre', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0', 'pattern' => '[a-zA-Z]+',
+                    'title' => 'El nombre debe contener solo letras'),
+                'constraints' => [ new Length(['max' => 100])]])
             ->add('apellidos', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0', 'pattern' => '[a-zA-Z]+',
+                    'title' => 'Los apellidos deben contener solo letras'),
+                'constraints' => [ new Length(['max' => 100])]])
             ->add('direccion',  TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Dirección',])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0', 'pattern' => '[a-zA-Z0-9]+',
+                    'title' => 'La dirección debe contener solo letras y números'), 'label' => 'Dirección',
+                'constraints' => [ new Length(['max' => 255])]])
             ->add('correo', EmailType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
             /*->add('equipo', EntityType::class, [

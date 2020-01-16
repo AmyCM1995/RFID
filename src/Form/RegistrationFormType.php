@@ -25,7 +25,8 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('nombre' , TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;')])
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;', 'pattern' => '[a-zA-Z]+',
+                    'title' => 'El nombre debe contener solo letras')])
             ->add('correo', EmailType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
                 'constraints' => [

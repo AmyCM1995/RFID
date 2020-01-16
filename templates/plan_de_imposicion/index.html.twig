@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PlanDeImposicion index{% endblock %}
+{% block title %}{{ parent() }}{% endblock %}
 
 {% block contenido %}
     <h3>Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h3>
