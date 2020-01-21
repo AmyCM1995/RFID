@@ -180,62 +180,78 @@ class PlanDeImposicionController extends AbstractController
                         $envio12 = $c2->before(';');
                         $envio1= null;
                         $envio2 = null;
-                        if($envio12->length() > 4){
-                            $envio1 = $envio12->slice(0, 4);
-                            $envio2 = $envio12->slice(4, 4);
-                        }else{
-                            $envio1 = $envio12;
+                        if($envio12->length() > 1){
+                            if($envio12->length() > 4){
+                                $envio1 = $envio12->slice(0, 4);
+                                $envio2 = $envio12->slice(4, 4);
+                            }else{
+                                $envio1 = $envio12;
+                            }
                         }
                         $c3 = $c2->after(';');
                         $envio34 = $c3->before(';');
                         $envio3 = null;
                         $envio4 = null;
-                        if($envio34->length() > 4){
-                            $envio3 = $envio34->slice(0, 4);
-                            $envio4 = $envio34->slice(4, 4);
-                        }else{
-                            $envio3 = $envio34;
+                        if($envio34->length() > 1){
+                            if($envio34->length() > 4){
+                                $envio3 = $envio34->slice(0, 4);
+                                $envio4 = $envio34->slice(4, 4);
+                            }else{
+                                $envio3 = $envio34;
+                            }
                         }
                         $envio56 = $c3->after(';');
                         $envio5 = null;
                         $envio6 = null;
-                        if($envio56->length() > 4){
-                            $envio5 = $envio56->slice(0, 4);
-                            $envio6 = $envio56->slice(4, 4);
-                        }else{
-                            $envio5 = $envio56;
+                        if($envio56->length() > 1){
+                            if($envio56->length() > 4){
+                                $envio5 = $envio56->slice(0, 4);
+                                $envio6 = $envio56->slice(4, 4);
+                            }else{
+                                $envio5 = $envio56;
+                            }
                         }
 
-                        $plan = new PlanDeImposicion();
-                        $plan->setImportacion($importacion);
-                        $plan->setFecha(new \DateTime($f));
-                        $this->persistirPlanDeImposicion($plan, $corresponsales[0], $envio1);
-                        if($envio2 != ""){
-                            $plan1 = new PlanDeImposicion();
-                            $plan1->setImportacion($importacion);
-                            $plan1->setFecha(new \DateTime($f));
-                            $this->persistirPlanDeImposicion($plan1, $corresponsales[0], $envio2);
+
+                        if($envio1 != null){
+                            $plan = new PlanDeImposicion();
+                            $plan->setImportacion($importacion);
+                            $plan->setFecha(new \DateTime($f));
+                            $this->persistirPlanDeImposicion($plan, $corresponsales[0], $envio1);
+                            if($envio2 != ""){
+                                $plan1 = new PlanDeImposicion();
+                                $plan1->setImportacion($importacion);
+                                $plan1->setFecha(new \DateTime($f));
+                                $this->persistirPlanDeImposicion($plan1, $corresponsales[0], $envio2);
+                            }
                         }
-                        $plan2 = new PlanDeImposicion();
-                        $plan2->setImportacion($importacion);
-                        $plan2->setFecha(new \DateTime($f));
-                        $this->persistirPlanDeImposicion($plan2, $corresponsales[1], $envio3);
-                        if($envio4 != ""){
-                            $plan3 = new PlanDeImposicion();
-                            $plan3->setImportacion($importacion);
-                            $plan3->setFecha(new \DateTime($f));
-                            $this->persistirPlanDeImposicion($plan3, $corresponsales[1], $envio4);
+
+                        if($envio3 != null){
+                            $plan2 = new PlanDeImposicion();
+                            $plan2->setImportacion($importacion);
+                            $plan2->setFecha(new \DateTime($f));
+                            $this->persistirPlanDeImposicion($plan2, $corresponsales[1], $envio3);
+                            if($envio4 != ""){
+                                $plan3 = new PlanDeImposicion();
+                                $plan3->setImportacion($importacion);
+                                $plan3->setFecha(new \DateTime($f));
+                                $this->persistirPlanDeImposicion($plan3, $corresponsales[1], $envio4);
+                            }
                         }
-                        $plan4 = new PlanDeImposicion();
-                        $plan4->setImportacion($importacion);
-                        $plan4->setFecha(new \DateTime($f));
-                        $this->persistirPlanDeImposicion($plan4, $corresponsales[2], $envio5);
-                        if($envio6 != ""){
-                            $plan5 = new PlanDeImposicion();
-                            $plan5->setImportacion($importacion);
-                            $plan5->setFecha(new \DateTime($f));
-                            $this->persistirPlanDeImposicion($plan5, $corresponsales[2], $envio6);
+
+                        if($envio5 != null){
+                            $plan4 = new PlanDeImposicion();
+                            $plan4->setImportacion($importacion);
+                            $plan4->setFecha(new \DateTime($f));
+                            $this->persistirPlanDeImposicion($plan4, $corresponsales[2], $envio5);
+                            if($envio6 != ""){
+                                $plan5 = new PlanDeImposicion();
+                                $plan5->setImportacion($importacion);
+                                $plan5->setFecha(new \DateTime($f));
+                                $this->persistirPlanDeImposicion($plan5, $corresponsales[2], $envio6);
+                            }
                         }
+
                     }
 
                 }
