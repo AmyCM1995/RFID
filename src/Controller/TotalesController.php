@@ -141,6 +141,9 @@ class TotalesController extends AbstractController
                 }
             }
         }
+        //ordenar arreglo
+        usort($corresponsalesDestino, "strnatcmp");
+
         return $corresponsalesDestino;
     }
     public function existeCorresponsalDestino($corresponsalesDestino, $c){
