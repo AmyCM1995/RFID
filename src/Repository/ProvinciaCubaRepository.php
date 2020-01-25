@@ -19,6 +19,16 @@ class ProvinciaCubaRepository extends ServiceEntityRepository
         parent::__construct($registry, ProvinciaCuba::class);
     }
 
+    public function findAllByNombre(){
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.es_activo = :val')
+            ->setParameter('val', true)
+            ->addOrderBy('p.nombre', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return ProvinciaCuba[] Returns an array of ProvinciaCuba objects
     //  */

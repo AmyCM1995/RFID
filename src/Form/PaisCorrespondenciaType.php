@@ -21,7 +21,7 @@ class PaisCorrespondenciaType extends AbstractType
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0',
                     'maxlength' => 2, 'minlength' => 2, 'title' => 'El  código contiene 2 caracteres'), 'label' => 'Código'])
             ->add('nombre', TextType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;', 'pattern' => '[a-zA-Z]+',
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;',
                     'title' => 'El nombre debe contener solo letras')])
             ->add('region', EntityType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),

@@ -15,7 +15,9 @@
                 <th>Miembros</th>
                 <th>Coordinador</th>
                 <th>Corresponsales</th>
+                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                 <th>Acciones</th>
+                {% endif %}
 
             </tr>
         </thead>
@@ -32,9 +34,11 @@
                             {{ corresponsals.nombre }}
                         {% endfor %}
                     </td>
+            {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
                         <a href="{{ path('equipo_corresponsales_edit', {'id': equipo_corresponsale.id}) }}">Editar</a>
                     </td>
+            {% endif %}
 
                 </tr>
             {% endif %}

@@ -35,6 +35,25 @@ class PaisCorrespondenciaRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findAllByNombre(){
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.es_activo = :val')
+            ->setParameter('val', true)
+            ->addOrderBy('p.nombre', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function findAllByNombreAndDelete(){
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.es_activo = :val')
+            ->setParameter('val', false)
+            ->addOrderBy('p.nombre', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
 
     public function findOneByCodigo($value): ?PaisCorrespondencia

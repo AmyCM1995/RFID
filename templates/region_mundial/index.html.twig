@@ -14,7 +14,9 @@
                 <th>Número</th>
                 <th>Descripción</th>
                 <th>Tarifa</th>
+                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                 <th>Acciones</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -24,10 +26,12 @@
                 <td>{{ region_mundial.numero }}</td>
                 <td>{{ region_mundial.descripcion }}</td>
                 <td>{{ region_mundial.tarifa }}</td>
+                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                 <td>
                     {#<a href="{{ path('region_mundial_show', {'id': region_mundial.id}) }}">show</a>#}
                     <a href="{{ path('region_mundial_edit', {'id': region_mundial.id}) }}">Editar</a>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -37,7 +41,9 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_ESPECIALISTA_DC') %}
     <button class="btn bg-primary" id="corresponsal-btns">
         <a href="{{ path('region_mundial_new') }}">Nueva</a>
     </button>
+    {% endif %}
 {% endblock %}

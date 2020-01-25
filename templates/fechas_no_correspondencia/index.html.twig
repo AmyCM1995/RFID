@@ -14,7 +14,9 @@
                 <th>Anual</th>
                 <th>Descripción</th>
                 <th>Provincias afectadas</th>
+                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                 <th>Acciones</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -29,9 +31,11 @@
                         {{ provincia.nombre }}
                     {% endfor %}
                 </td>
+                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                 <td>
                     <a href="{{ path('fechas_no_correspondencia_edit', {'id': fechas_no_correspondencium.id}) }}">Editar</a>
                 </td>
+                {% endif %}
 
             </tr>
         {% else %}

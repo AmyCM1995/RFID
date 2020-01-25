@@ -14,7 +14,7 @@
                 <th>Correo </th>
                 <th>Roles </th>
                 {#<th>Password</th>#}
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -26,8 +26,8 @@
                 <td>{{ g_m_s_r_f_i_d_usuario.roles ? g_m_s_r_f_i_d_usuario.roles|json_encode : '' }}</td>
                 {#<td>{{ g_m_s_r_f_i_d_usuario.password }}</td>#}
                 <td>
-                    <a href="{{ path('g_m_s_r_f_i_d_usuario_show', {'id': g_m_s_r_f_i_d_usuario.id}) }}">show</a>
-                    <a href="{{ path('g_m_s_r_f_i_d_usuario_edit', {'id': g_m_s_r_f_i_d_usuario.id}) }}">edit</a>
+                    <a href="{{ path('g_m_s_r_f_i_d_usuario_show', {'id': g_m_s_r_f_i_d_usuario.id}) }}">Mostrar</a>
+                    <a href="{{ path('g_m_s_r_f_i_d_usuario_edit', {'id': g_m_s_r_f_i_d_usuario.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}

@@ -23,7 +23,7 @@ class ProvinciaCubaController extends AbstractController
     public function index(ProvinciaCubaRepository $provinciaCubaRepository): Response
     {
         return $this->render('provincia_cuba/index.html.twig', [
-            'provincia_cubas' => $provinciaCubaRepository->findAll(),
+            'provincia_cubas' => $provinciaCubaRepository->findAllByNombre(),
         ]);
     }
 

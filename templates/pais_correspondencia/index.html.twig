@@ -13,7 +13,9 @@
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Región</th>
-               <th>Acciones</th>
+                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+                <th>Acciones</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -27,9 +29,11 @@
                         <td>{{pais_correspondencium.region.descripcion}}</td>
                     {% endif %}
                     {#<td>{{ pais_correspondencium.esActivo ? 'Sí' : 'No' }}</td>#}
+            {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
                         <a href="{{ path('pais_correspondencia_edit', {'id': pais_correspondencium.id}) }}">Editar</a>
                     </td>
+            {% endif %}
                 </tr>
             {% endif %}
         {% else %}

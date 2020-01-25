@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PaisCorrespondencia;
 use App\Form\PaisCorrespondenciaType;
 use App\Repository\PaisCorrespondenciaRepository;
+use http\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,7 @@ class PaisCorrespondenciaController extends AbstractController
     public function index(PaisCorrespondenciaRepository $paisCorrespondenciaRepository): Response
     {
         return $this->render('pais_correspondencia/index.html.twig', [
-            'pais_correspondencias' => $paisCorrespondenciaRepository->findAll(),
+            'pais_correspondencias' => $paisCorrespondenciaRepository->findAllByNombre(),
         ]);
     }
 
@@ -31,7 +32,7 @@ class PaisCorrespondenciaController extends AbstractController
     public function añadir(PaisCorrespondenciaRepository $paisCorrespondenciaRepository): Response
     {
         return $this->render('pais_correspondencia/añadir.html.twig', [
-            'pais_correspondencias' => $paisCorrespondenciaRepository->findAll(),
+            'pais_correspondencias' => $paisCorrespondenciaRepository->findAllByNombreAndDelete(),
         ]);
     }
 
@@ -41,17 +42,18 @@ class PaisCorrespondenciaController extends AbstractController
     public function new(Request $request): Response
     {
         $paisCorrespondencium = new PaisCorrespondencia();
-        $paisCorrespondencium ->setEsActivo(true);
+        $paisCorrespondencium ->setEsActivo(false);
         $form = $this->createForm(PaisCorrespondenciaType::class, $paisCorrespondencium);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($paisCorrespondencium);
-            $entityManager->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($paisCorrespondencium);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('pais_correspondencia_index');
-        }
+                return $this->redirectToRoute('pais_correspondencia_añadir');
+
+    }
 
         return $this->render('pais_correspondencia/new.html.twig', [
             'pais_correspondencium' => $paisCorrespondencium,
@@ -117,5 +119,18 @@ class PaisCorrespondenciaController extends AbstractController
         }
 
         return $this->redirectToRoute('pais_correspondencia_index');
+    }
+
+    public function verificarNoExistenciaCodigo(PaisCorrespondencia $pais){
+        $em = $this->getDoctrine()->getManager()->getRepository(PaisCorrespondencia::class);
+        $p = $em->findAll();
+        $existe = false;
+        for($i=0; $i<sizeof($p); $i++){
+            if($p[$i]->getCodigo() == $pais->getCodigo()){
+                $existe = true;
+                break;
+            }
+        }
+        return $existe;
     }
 }

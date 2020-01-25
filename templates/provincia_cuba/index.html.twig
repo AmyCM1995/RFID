@@ -12,7 +12,9 @@
             <tr>
                {# <th>Id</th>#}
                 <th>Nombre</th>
+                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                 <th>Acciones</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -21,10 +23,12 @@
                 <tr>
                    {# <td>{{ provincia_cuba.id }}</td>#}
                     <td>{{ provincia_cuba.nombre }}</td>
+            {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
                        {# <a href="{{ path('provincia_cuba_show', {'id': provincia_cuba.id}) }}">show</a>#}
                         <a href="{{ path('provincia_cuba_edit', {'id': provincia_cuba.id}) }}">Editar</a>
                     </td>
+            {% endif %}
                 </tr>
             {%  endif %}
         {% else %}

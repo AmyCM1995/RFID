@@ -9,8 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>NombreRol</th>
-                <th>actions</th>
+                <th>Rol</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -18,18 +18,22 @@
             <tr>
                 <td>{{ rol.id }}</td>
                 <td>{{ rol.nombreRol }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
                 <td>
-                    <a href="{{ path('rol_show', {'id': rol.id}) }}">show</a>
-                    <a href="{{ path('rol_edit', {'id': rol.id}) }}">edit</a>
+                    <a href="{{ path('rol_show', {'id': rol.id}) }}">Mostrar</a>
+                    <a href="{{ path('rol_edit', {'id': rol.id}) }}">Editar</a>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">No se encontraron registros</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('rol_new') }}">Create new</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('rol_new') }}">Nuevo</a>
+    {% endif %}
 {% endblock %}
