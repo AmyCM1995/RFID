@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Importaciones;
 use App\Entity\PaisCorrespondencia;
 use App\Repository\TotalesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +26,10 @@ class TotalesController extends AbstractController
         $totalesC2 = $this->tablaTotalesCorresponsal($totaless, $corresponsalesCubanos[1], $corresponsalesDestino);
         $totalesC3 = $this->tablaTotalesCorresponsal($totaless, $corresponsalesCubanos[2], $corresponsalesDestino);
         $enviosTotales = $this->enviosTotales($totaless);
+
+        $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
+        $importacionUltima = $importacionRepositorio->findUltimaImportacion();
+
         return $this->render('totales/index.html.twig', [
             'totalesc1' => $totalesC1,
             'totalesc2' => $totalesC2,
@@ -34,6 +39,7 @@ class TotalesController extends AbstractController
             'paisesDestino' => $paisesDestino,
             'totalesPaises' => $totalesPaises,
             'totalEnvios' => $enviosTotales,
+            'importacion' => $importacionUltima,
         ]);
     }
 
@@ -61,6 +67,8 @@ class TotalesController extends AbstractController
         $totalesPaisesC2 = $this->arrTotalCorresponsalesPaises($totalesRepositorio, $corresponsalesCubanos[1], $paisesDestino);
         $totalesPaisesC3 = $this->arrTotalCorresponsalesPaises($totalesRepositorio, $corresponsalesCubanos[2], $paisesDestino);
 
+        $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
+        $importacionUltima = $importacionRepositorio->findUltimaImportacion();
 
         return $this->render('totales/materiales.html.twig',[
             'totalesc1' => $totalesC1,
@@ -76,6 +84,7 @@ class TotalesController extends AbstractController
             'corresponsalesCubanos' => $corresponsalesCubanos,
             'paisesDestino' => $paisesDestino,
             'totalEnvios' => $enviosTotales,
+            'importacion' => $importacionUltima,
         ]);
     }
 
