@@ -1,8 +1,7 @@
---.{% extends 'base.html.twig' %}
-{% block contenido %}
-    <h3>Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h3>
-    <h5>Dimensión {{ importacion.dimension }}</h5>
-    <h5>Ciclo {{ importacion.ciclo }}</h5>
+ {% block contenido %}
+    <h3 align="center">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h3>
+    <h5 align="center">Dimensión {{ importacion.dimension }}</h5>
+    <h5 align="center">Ciclo {{ importacion.ciclo }}</h5>
 
     <table class="table">
         <thead>
@@ -48,10 +47,6 @@
                 {% else %}
                     <td>{{ plan_de_imposicion_csv.envio31 }}</td>
                 {% endif %}
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">No se encontraron registros</td>
             </tr>
         {% endfor %}
         </tbody>

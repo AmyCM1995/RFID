@@ -587,43 +587,61 @@ class PlanDeImposicionController extends AbstractController
     }
 
     /**
-     * @Route("/", name="plan_de_imposicion_pdf", methods={"GET"})
+     * @Route("/pdf/plan/imposicion", name="plan_de_imposicion_pdf", methods={"GET"})
      */
     public function pdf_PlanDeImposicion(PlanDeImposicionRepository $planDeImposicionRepository): Response
     {
-        require 'vendor/autoload.php';
-
-        /*$importacionUltima = $this->utimaImportacion();
-        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
-        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
-        //coge los planes csv de la bd
-        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
-        $planescsv = $csvReposirotio->findAll();
-
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
-
         $dompdf = new Dompdf($pdfOptions);
+        //****************************************
+        $importacionUltima = $this->utimaImportacion();
+        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
+        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
+        //cojer los plan csv de la bd
+        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $planescsv = $csvReposirotio->findAll();
+        //****************************************
+        $html = $this->renderView('plan_de_imposicion/pdf_planImposicion.html.twig', [
+            'plan_de_imposicion_csvs' => $planescsv,
+            'importacion' => $importacionUltima,
+            'corresponsales' =>$corresponsales,
+            ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream("PI.pdf", [
+            "Attachment" => true
+        ]);
+    }
 
-        $html = $this->render('plan_de_imposicion/index.html.twig', [
+    /**
+     * @Route("/pdf/plan/estadisticas", name="plan_estadisticas_pdf", methods={"GET"})
+     */
+    public function pdf_PlanEstadisticas(PlanDeImposicionRepository $planDeImposicionRepository): Response
+    {
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOptions);
+        //****************************************
+        $importacionUltima = $this->utimaImportacion();
+        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
+        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
+        //cojer los plan csv de la bd
+        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $planescsv = $csvReposirotio->findAll();
+        //****************************************
+        $html = $this->renderView('plan_de_imposicion/pdf_planEstadisticas.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltima,
             'corresponsales' =>$corresponsales,
         ]);
-
-        $dompdf->setPaper('A4' , 'portrait');
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $output = $dompdf->output();
-        $publicDirectory = $this->get('kernel')->getProjectDir().'/public';
-        $pdfFilepath = $publicDirectory.'/planDeImposicion.pdf';
-        file_put_contents($pdfFilepath, $output);*/
-
-
-
-
-
-
-        return new Response("El pdf se generó correctamente!");
+        $dompdf->stream("PI.pdf", [
+            "Attachment" => true
+        ]);
     }
 
 }

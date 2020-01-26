@@ -95,35 +95,24 @@ class FechasNoCorrespondenciaController extends AbstractController
     }
 
     /**
-     * @Route("/", name="fechas_no_correspondencia_pdf", methods={"GET"})
+     * @Route("/fechas/pdf", name="fechas_no_correspondencia_pdf", methods={"GET"})
      */
     public function pdf_Fechas(FechasNoCorrespondenciaRepository $fechasNoCorrespondenciaRepository): Response
     {
-        ob_start();
-        $fechas = $fechasNoCorrespondenciaRepository->findAll();
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml(ob_get_clean());
-        $dompdf->render();
-        $dompdf->stream();
-
-        /*require_once 'dompdf/Autoloader.php';
-
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
-
         $dompdf = new Dompdf($pdfOptions);
-
-        $html = $this->render('fechas_no_correspondencia/pdf_Fechas.html.twig', [
-            'fechas_no_correspondencias' => $fechasNoCorrespondenciaRepository->findAll(),
+        //****************************************
+        $fechas = $fechasNoCorrespondenciaRepository->findAll();
+        //****************************************
+        $html = $this->renderView('fechas_no_correspondencia/pdf_Fechas.html.twig', [
+            'fechas_no_correspondencias' => $fechas,
         ]);
-
-        $dompdf->setPaper('A4' , 'portrait');
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $output = $dompdf->output();
-        $publicDirectory = $this->get('kernel')->getProjectDir().'/public';
-        $pdfFilepath = $publicDirectory.'/fechasNoCorrespondencia.pdf';
-        file_put_contents($pdfFilepath, $output);
-
-        return new Response("El pdf se generó correctamente!");*/
+        $dompdf->stream("Fechas.pdf", [
+            "Attachment" => true
+        ]);
     }
 }
