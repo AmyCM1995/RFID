@@ -9,7 +9,9 @@ use App\Entity\PlanDeImposicion;
 use App\Entity\PlanImposicionCsv;
 use App\Entity\Totales;
 use App\Form\PlanDeImposicionType;
+use App\Repository\CorresponsalRepository;
 use App\Repository\PlanDeImposicionRepository;
+use App\Repository\TotalesRepository;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -31,9 +33,12 @@ class PlanDeImposicionController extends AbstractController
      */
     public function index(PlanDeImposicionRepository $planDeImposicionRepository): Response
     {
+        $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $importacionUltima = $this->utimaImportacion();
-        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
-        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
+        $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima);
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
         //cojer los plan csv de la bd
         $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
         $planescsv = $csvReposirotio->findAll();
@@ -332,35 +337,9 @@ class PlanDeImposicionController extends AbstractController
         return $resultado;
     }
 
-    public function buscarPlanesConDistintosCorresponsales($plan){
-        $esta = false;
-        $size = 1;
-        $planesDistintosCorresponsales = [$plan[0]];
-        for($i=0; $i<sizeof($plan); $i++){
-            for($j=0; $j<$size; $j++){
-                if($plan[$i]->getCodCorresponsal()->getId() == $planesDistintosCorresponsales[$j]->getCodCorresponsal()->getId()){
-                    $esta = true;
-                    break;
-                }else{
-                    $esta = false;
-                }
-            }
-            if($esta == false){
-                $planesDistintosCorresponsales[$size] = $plan[$i];
-                $size++;
-            }
-        }
-        return$planesDistintosCorresponsales;
-    }
 
-    public function buscarCorresponsalesId($planDeDistintosCorresonsales){
-        $em = $this->getDoctrine()->getRepository(Corresponsal::class);
-        $corresponsales = null;
-        for($i=0; $i<sizeof($planDeDistintosCorresonsales); $i++){
-            $corresponsales[$i] = $em->findOneById($planDeDistintosCorresonsales[$i]->getCodCorresponsal()->getId());
-        }
-        return $corresponsales;
-    }
+
+
 
     public function buscarPlanesPorCorresponsales($plan, $corresponsal){
         $Plancorr = null;
@@ -436,16 +415,8 @@ class PlanDeImposicionController extends AbstractController
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
         return $importacionUltima;
     }
-    public function planesDeImposicionActuales($importacionUltima){
-        $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
-        $plan_de_imposicions = $planDeImposicionRepositorio->findByImposicion($importacionUltima->getId());
-        return $plan_de_imposicions;
-    }
-    public function corresponsalesdelPlan($plan_de_imposicions){
-        $planDeDistintosCorresonsales = $this->buscarPlanesConDistintosCorresponsales($plan_de_imposicions);
-        $corresponsales = $this->buscarCorresponsalesId($planDeDistintosCorresonsales);
-        return $corresponsales;
-    }
+
+
 
     public function paisesDelPlan($plan_de_imposicions){
         $paises = [$plan_de_imposicions[0]->getCodPais()];
@@ -615,33 +586,6 @@ class PlanDeImposicionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/pdf/plan/estadisticas", name="plan_estadisticas_pdf", methods={"GET"})
-     */
-    public function pdf_PlanEstadisticas(PlanDeImposicionRepository $planDeImposicionRepository): Response
-    {
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-        $dompdf = new Dompdf($pdfOptions);
-        //****************************************
-        $importacionUltima = $this->utimaImportacion();
-        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
-        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
-        //cojer los plan csv de la bd
-        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
-        $planescsv = $csvReposirotio->findAll();
-        //****************************************
-        $html = $this->renderView('plan_de_imposicion/pdf_planEstadisticas.html.twig', [
-            'plan_de_imposicion_csvs' => $planescsv,
-            'importacion' => $importacionUltima,
-            'corresponsales' =>$corresponsales,
-        ]);
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-        $dompdf->stream("PI.pdf", [
-            "Attachment" => true
-        ]);
-    }
+
 
 }

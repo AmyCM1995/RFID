@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Corresponsal;
 use App\Entity\PlanDeImposicion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -47,4 +48,40 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima){
+        $plan_de_imposicions = $planDeImposicionRepositorio->findByImposicion($importacionUltima->getId());
+        return $plan_de_imposicions;
+    }
+    public function corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions){
+        $planDeDistintosCorresonsales = $this->buscarPlanesConDistintosCorresponsales($plan_de_imposicions);
+        $corresponsales = $this->buscarCorresponsalesId($corresponsalRepository, $planDeDistintosCorresonsales);
+        return $corresponsales;
+    }
+    public function buscarPlanesConDistintosCorresponsales($plan){
+        $esta = false;
+        $size = 1;
+        $planesDistintosCorresponsales = [$plan[0]];
+        for($i=0; $i<sizeof($plan); $i++){
+            for($j=0; $j<$size; $j++){
+                if($plan[$i]->getCodCorresponsal()->getId() == $planesDistintosCorresponsales[$j]->getCodCorresponsal()->getId()){
+                    $esta = true;
+                    break;
+                }else{
+                    $esta = false;
+                }
+            }
+            if($esta == false){
+                $planesDistintosCorresponsales[$size] = $plan[$i];
+                $size++;
+            }
+        }
+        return$planesDistintosCorresponsales;
+    }
+    public function buscarCorresponsalesId($corresponsalRepository, $planDeDistintosCorresonsales){
+        $corresponsales = null;
+        for($i=0; $i<sizeof($planDeDistintosCorresonsales); $i++){
+            $corresponsales[$i] = $corresponsalRepository->findOneById($planDeDistintosCorresonsales[$i]->getCodCorresponsal()->getId());
+        }
+        return $corresponsales;
+    }
 }
