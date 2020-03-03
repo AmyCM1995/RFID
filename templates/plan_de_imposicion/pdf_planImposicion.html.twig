@@ -1,13 +1,23 @@
  {% block contenido %}
-    <h3 align="center">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h3>
-    <h5 align="center">Dimensión {{ importacion.dimension }}</h5>
-    <h5 align="center">Ciclo {{ importacion.ciclo }}</h5>
+     <div>
+         <h1 align="left">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h1>
+         <h3 align="left">Dimensión {{ importacion.dimension }}</h3>
+         <h3 align="left">Ciclo {{ importacion.ciclo }}</h3>
+     </div>
+
+
+     <style type="text/css">
+         table, th, td {
+             border-collapse: collapse;
+             border: 1px solid black;
+             padding: 5px;
+         }
+     </style>
 
     <table class="table">
         <thead>
         <tr>
-            <th></th>
-            <th></th>
+            <th colspan="2"> </th>
             {% for corresponsal in corresponsales %}
                 <th>{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
             {% endfor %}

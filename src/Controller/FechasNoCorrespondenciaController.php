@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\String\UnicodeString;
 
 /**
  * @Route("/fechas/no/correspondencia")
@@ -111,7 +112,15 @@ class FechasNoCorrespondenciaController extends AbstractController
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("Fechas.pdf", [
+        $fecha = new \DateTime('now');
+        $f = $fecha->format("d/m/y");
+        $dmy = new UnicodeString($f);
+        $d = $dmy->before("/");
+        $my = $dmy->after("/");
+        $m = $my->before("/");
+        $y = $my->after("/");
+        $nombre = "Fechas_".$d."_".$m."_".$y."_".".pdf";
+        $dompdf->stream($nombre, [
             "Attachment" => true
         ]);
     }
