@@ -1,8 +1,8 @@
  {% block contenido %}
      <div>
-         <h1 align="left">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h1>
-         <h3 align="left">Dimensión {{ importacion.dimension }}</h3>
-         <h3 align="left">Ciclo {{ importacion.ciclo }}</h3>
+         <p align="left">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</p>
+         <p align="left">Dimensión {{ importacion.dimension }}</p>
+         <p align="left">Ciclo {{ importacion.ciclo }}</p>
      </div>
 
 
@@ -11,10 +11,11 @@
              border-collapse: collapse;
              border: 1px solid black;
              padding: 5px;
+             font-size: small;
          }
      </style>
 
-    <table class="table">
+    <table class="table" align="center">
         <thead>
         <tr>
             <th colspan="2"> </th>

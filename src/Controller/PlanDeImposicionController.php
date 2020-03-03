@@ -9,9 +9,7 @@ use App\Entity\PlanDeImposicion;
 use App\Entity\PlanImposicionCsv;
 use App\Entity\Totales;
 use App\Form\PlanDeImposicionType;
-use App\Repository\CorresponsalRepository;
 use App\Repository\PlanDeImposicionRepository;
-use App\Repository\TotalesRepository;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -22,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\UnicodeString;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 /**
  * @Route("/plan/de/imposicion")
@@ -129,162 +128,31 @@ class PlanDeImposicionController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $file = $form['file']->getData();
-            $file->move('csv', $file->getClientOriginalName());
-            $csv = Reader::createFromPath('csv/'.$file->getClientOriginalName());
-            $records = $csv->getRecords();
-
-            $importacion = new Importaciones();
-            $importacion->setFechaImportado(new \DateTime('now'));
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $corresponsales = null;
-
-            foreach ($records as $offset=>$record){
-                if($offset <= 4){
-                    if ($offset == 0){
-                        $dimension = new UnicodeString($record[0]);
-                        $ciclo = new UnicodeString($record[1]);
-                        $ciclo1 = $ciclo->after(':');
-                        $importacion->setDimension($dimension->after(':'));
-                        $importacion->setCiclo($ciclo1->before(';'));
-                    }elseif ($offset == 1){
-                        $fecha = new UnicodeString($record[0]);
-                        $fechaI = $fecha->after('from');
-                        $fechaF = $fechaI->after('to');
-
-                        $importacion->setFechaInicioPlan($fechaI->before('to'));
-                        $importacion->setFechaFinPlan($fechaF->before(';'));
-
-                        $entityManager->persist($importacion);
-                        $entityManager->flush();
-
-                    }elseif ($offset == 3){
-                        //corresponsales
-                        $rec = new UnicodeString($record[0]);
-                        $codCorr1 = $rec->after(';;');
-                        $rec = $codCorr1;
-                        $codCorr1 = $rec->before(';');
-                        $codCorr2 = $rec->after(';');
-                        $rec = $codCorr2;
-                        $codCorr2 = $rec->before(';');
-                        $codCorr3 = $rec->after(';');
-
-                        $corresponsales = $this->buscarCorrespnsales($codCorr1, $codCorr2, $codCorr3);
-
-                    }
-                }else{
-                    $linea = "";
-                    for($i=0; $i<sizeof($record); $i++){
-                        $linea = $linea.$record[$i];
-                    }
-                    $l = new UnicodeString($linea);
-                    if(!$l->equalsTo(';;;;')){
-                        $c1 = $l->after(';');
-                        $f = $c1->before(';');
-                        $c2 = $c1->after(';');
-                        $envio12 = $c2->before(';');
-                        $envio1= null;
-                        $envio2 = null;
-                        if($envio12->length() > 1){
-                            if($envio12->length() > 4){
-                                $envio1 = $envio12->slice(0, 4);
-                                $envio2 = $envio12->slice(4, 4);
-                            }else{
-                                $envio1 = $envio12;
-                            }
-                        }
-                        $c3 = $c2->after(';');
-                        $envio34 = $c3->before(';');
-                        $envio3 = null;
-                        $envio4 = null;
-                        if($envio34->length() > 1){
-                            if($envio34->length() > 4){
-                                $envio3 = $envio34->slice(0, 4);
-                                $envio4 = $envio34->slice(4, 4);
-                            }else{
-                                $envio3 = $envio34;
-                            }
-                        }
-                        $envio56 = $c3->after(';');
-                        $envio5 = null;
-                        $envio6 = null;
-                        if($envio56->length() > 1){
-                            if($envio56->length() > 4){
-                                $envio5 = $envio56->slice(0, 4);
-                                $envio6 = $envio56->slice(4, 4);
-                            }else{
-                                $envio5 = $envio56;
-                            }
-                        }
-
-
-                        if($envio1 != null){
-                            $plan = new PlanDeImposicion();
-                            $plan->setImportacion($importacion);
-                            $plan->setFecha(new \DateTime($f));
-                            $this->persistirPlanDeImposicion($plan, $corresponsales[0], $envio1);
-                            if($envio2 != ""){
-                                $plan1 = new PlanDeImposicion();
-                                $plan1->setImportacion($importacion);
-                                $plan1->setFecha(new \DateTime($f));
-                                $this->persistirPlanDeImposicion($plan1, $corresponsales[0], $envio2);
-                            }
-                        }
-
-                        if($envio3 != null){
-                            $plan2 = new PlanDeImposicion();
-                            $plan2->setImportacion($importacion);
-                            $plan2->setFecha(new \DateTime($f));
-                            $this->persistirPlanDeImposicion($plan2, $corresponsales[1], $envio3);
-                            if($envio4 != ""){
-                                $plan3 = new PlanDeImposicion();
-                                $plan3->setImportacion($importacion);
-                                $plan3->setFecha(new \DateTime($f));
-                                $this->persistirPlanDeImposicion($plan3, $corresponsales[1], $envio4);
-                            }
-                        }
-
-                        if($envio5 != null){
-                            $plan4 = new PlanDeImposicion();
-                            $plan4->setImportacion($importacion);
-                            $plan4->setFecha(new \DateTime($f));
-                            $this->persistirPlanDeImposicion($plan4, $corresponsales[2], $envio5);
-                            if($envio6 != ""){
-                                $plan5 = new PlanDeImposicion();
-                                $plan5->setImportacion($importacion);
-                                $plan5->setFecha(new \DateTime($f));
-                                $this->persistirPlanDeImposicion($plan5, $corresponsales[2], $envio6);
-                            }
-                        }
-
-                    }
-
-                }
+            $nombre = new UnicodeString($file->getClientOriginalName());
+            $extension = $nombre->after('.');
+            if($extension->equalsTo('csv')){
+                $file->move('csv', $file->getClientOriginalName());
+                $csv = Reader::createFromPath('csv/'.$file->getClientOriginalName());
+                $records = $csv->getRecords();
+                $this->principalPersistirCSV($records);
+            }else{
+                if($extension->equalsTo('xls') || $extension->equalsTo('xlsx')){
+                    $file->move('csv', $file->getClientOriginalName());
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                    echo "public/csv/".$file->getClientOriginalName();
+                    $spreadsheet = $reader->load($file->getClientOriginalName());
+                    echo "public/csv/".$file->getClientOriginalName();
+                    $sheet = $spreadsheet->getActiveSheet();
+                    $this->principalPersistirXls($sheet);
+                }/*elseif($extension->equalsTo('xlsx')){
+                    $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("xlsx");
+                    $spreadsheet = $reader->load($file->getClientOriginalName());
+                    $sheet = $spreadsheet->getActiveSheet();
+                    $this->principalPersistirXls($sheet);
+                }*/
             }
-            //*****************************************Plan de imposicion CSV
-            $importacionUltima = $this->utimaImportacion();
-            $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
-            $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
-            $planesCorr1 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[0]);
-            $planesCorr2 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[1]);
-            $planesCorr3 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[2]);
-            $planescsv = [null];
-            $pos = 0;
-            while($this->existePlan($planesCorr1)){
-                $csv = $this->generarPlanDeImposicionCSV($plan_de_imposicions, $planesCorr1, $planesCorr2, $planesCorr3);
-                $planescsv[$pos] = $csv;
-                $pos++;
-            }
-            $this->borrarCSVAnteriores();
-            $this->persistirCSV($planescsv);
-            //********************************************Estadísticas
-            $paises = $this->paisesDelPlan($plan_de_imposicions);
-            $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
-            $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
-            $this->borrarTotalesAnteriores();
-            $this->persistirTotales($totales);
 
-            return $this->render('plan_imposicion_csv/importacion_correcta.html.twig');
+            //return $this->render('plan_imposicion_csv/importacion_correcta.html.twig');
         }
 
         return $this->render('plan_imposicion_csv/index.html.twig', [
@@ -310,6 +178,173 @@ class PlanDeImposicionController extends AbstractController
             $entityManager->flush();
         }
 
+    }
+
+    public function principalPersistirXls($sheet){
+        echo true;
+        /*foreach ($sheet->getRowIterator() as $row){
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false);
+            foreach ($cellIterator as $cell){
+                if(!is_null($cell)){
+                    $value = $cell->getCalculatedValue();
+                    echo $value;
+                }
+            }
+        }*/
+    }
+
+    public function principalPersistirCSV($records){
+        $importacion = new Importaciones();
+        $importacion->setFechaImportado(new \DateTime('now'));
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $corresponsales = null;
+
+        foreach ($records as $offset=>$record){
+            if($offset <= 4){
+                if ($offset == 0){
+                    $dimension = new UnicodeString($record[0]);
+                    $ciclo = new UnicodeString($record[1]);
+                    $ciclo1 = $ciclo->after(':');
+                    $importacion->setDimension($dimension->after(':'));
+                    $importacion->setCiclo($ciclo1->before(';'));
+                }elseif ($offset == 1){
+                    $fecha = new UnicodeString($record[0]);
+                    $fechaI = $fecha->after('from');
+                    $fechaF = $fechaI->after('to');
+
+                    $importacion->setFechaInicioPlan($fechaI->before('to'));
+                    $importacion->setFechaFinPlan($fechaF->before(';'));
+
+                    $entityManager->persist($importacion);
+                    $entityManager->flush();
+
+                }elseif ($offset == 3){
+                    //corresponsales
+                    $rec = new UnicodeString($record[0]);
+                    $codCorr1 = $rec->after(';;');
+                    $rec = $codCorr1;
+                    $codCorr1 = $rec->before(';');
+                    $codCorr2 = $rec->after(';');
+                    $rec = $codCorr2;
+                    $codCorr2 = $rec->before(';');
+                    $codCorr3 = $rec->after(';');
+
+                    $corresponsales = $this->buscarCorrespnsales($codCorr1, $codCorr2, $codCorr3);
+
+                }
+            }else{
+                $linea = "";
+                for($i=0; $i<sizeof($record); $i++){
+                    $linea = $linea.$record[$i];
+                }
+                $l = new UnicodeString($linea);
+                if(!$l->equalsTo(';;;;')){
+                    $c1 = $l->after(';');
+                    $f = $c1->before(';');
+                    $c2 = $c1->after(';');
+                    $envio12 = $c2->before(';');
+                    $envio1= null;
+                    $envio2 = null;
+                    if($envio12->length() > 1){
+                        if($envio12->length() > 4){
+                            $envio1 = $envio12->slice(0, 4);
+                            $envio2 = $envio12->slice(4, 4);
+                        }else{
+                            $envio1 = $envio12;
+                        }
+                    }
+                    $c3 = $c2->after(';');
+                    $envio34 = $c3->before(';');
+                    $envio3 = null;
+                    $envio4 = null;
+                    if($envio34->length() > 1){
+                        if($envio34->length() > 4){
+                            $envio3 = $envio34->slice(0, 4);
+                            $envio4 = $envio34->slice(4, 4);
+                        }else{
+                            $envio3 = $envio34;
+                        }
+                    }
+                    $envio56 = $c3->after(';');
+                    $envio5 = null;
+                    $envio6 = null;
+                    if($envio56->length() > 1){
+                        if($envio56->length() > 4){
+                            $envio5 = $envio56->slice(0, 4);
+                            $envio6 = $envio56->slice(4, 4);
+                        }else{
+                            $envio5 = $envio56;
+                        }
+                    }
+
+
+                    if($envio1 != null){
+                        $plan = new PlanDeImposicion();
+                        $plan->setImportacion($importacion);
+                        $plan->setFecha(new \DateTime($f));
+                        $this->persistirPlanDeImposicion($plan, $corresponsales[0], $envio1);
+                        if($envio2 != ""){
+                            $plan1 = new PlanDeImposicion();
+                            $plan1->setImportacion($importacion);
+                            $plan1->setFecha(new \DateTime($f));
+                            $this->persistirPlanDeImposicion($plan1, $corresponsales[0], $envio2);
+                        }
+                    }
+
+                    if($envio3 != null){
+                        $plan2 = new PlanDeImposicion();
+                        $plan2->setImportacion($importacion);
+                        $plan2->setFecha(new \DateTime($f));
+                        $this->persistirPlanDeImposicion($plan2, $corresponsales[1], $envio3);
+                        if($envio4 != ""){
+                            $plan3 = new PlanDeImposicion();
+                            $plan3->setImportacion($importacion);
+                            $plan3->setFecha(new \DateTime($f));
+                            $this->persistirPlanDeImposicion($plan3, $corresponsales[1], $envio4);
+                        }
+                    }
+
+                    if($envio5 != null){
+                        $plan4 = new PlanDeImposicion();
+                        $plan4->setImportacion($importacion);
+                        $plan4->setFecha(new \DateTime($f));
+                        $this->persistirPlanDeImposicion($plan4, $corresponsales[2], $envio5);
+                        if($envio6 != ""){
+                            $plan5 = new PlanDeImposicion();
+                            $plan5->setImportacion($importacion);
+                            $plan5->setFecha(new \DateTime($f));
+                            $this->persistirPlanDeImposicion($plan5, $corresponsales[2], $envio6);
+                        }
+                    }
+
+                }
+
+            }
+        }
+        //*****************************************Plan de imposicion CSV
+        $importacionUltima = $this->utimaImportacion();
+        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
+        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
+        $planesCorr1 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[0]);
+        $planesCorr2 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[1]);
+        $planesCorr3 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[2]);
+        $planescsv = [null];
+        $pos = 0;
+        while($this->existePlan($planesCorr1)){
+            $csv = $this->generarPlanDeImposicionCSV($plan_de_imposicions, $planesCorr1, $planesCorr2, $planesCorr3);
+            $planescsv[$pos] = $csv;
+            $pos++;
+        }
+        $this->borrarCSVAnteriores();
+        $this->persistirCSV($planescsv);
+        //********************************************Estadísticas
+        $paises = $this->paisesDelPlan($plan_de_imposicions);
+        $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
+        $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
+        $this->borrarTotalesAnteriores();
+        $this->persistirTotales($totales);
     }
 
 
@@ -566,13 +601,17 @@ class PlanDeImposicionController extends AbstractController
         $pdfOptions->set('defaultFont', 'Arial');
         $dompdf = new Dompdf($pdfOptions);
         //****************************************
+        $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
         $importacionUltima = $this->utimaImportacion();
-        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
-        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima);
+        $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
         //cojer los plan csv de la bd
         $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
         $planescsv = $csvReposirotio->findAll();
         //****************************************
+        //***********************PDF
         $html = $this->renderView('plan_de_imposicion/pdf_planImposicion.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltima,
@@ -581,11 +620,22 @@ class PlanDeImposicionController extends AbstractController
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("PI.pdf", [
+        $fi = $importacionUltima->getFechaInicioPlan();
+        $ff = $importacionUltima->getFechaFinPlan();
+        $nombre = "PI-".$fi."-".$ff.".pdf";
+        $dompdf->stream($nombre, [
             "Attachment" => true
         ]);
+       //*************************Vista Previa
+       /* $fi = $importacionUltima->getFechaInicioPlan();
+        $ff = $importacionUltima->getFechaFinPlan();
+        $nombre = "PI-".$fi."-".$ff.".pdf";
+        echo $nombre;
+       return $this->render('plan_de_imposicion/pdf_planImposicion.html.twig', [
+           'plan_de_imposicion_csvs' => $planescsv,
+           'importacion' => $importacionUltima,
+           'corresponsales' =>$corresponsales,
+       ]);*/
     }
-
-
 
 }
