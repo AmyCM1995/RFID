@@ -77,7 +77,7 @@
 }
 
 .sidebar {
-    background: rgba(16, 167, 182, 0.41);
+    background: rgba(0, 204, 255, 0.41);
     width: 225px !important;
     height: 2500px;
 }
@@ -108,7 +108,7 @@ html, body{
     display: block;
     width: auto;
     padding: 0;
-    color: #004085;
+    color: #001ca8;
 }
 
 .dropdown-sidebar-content {
