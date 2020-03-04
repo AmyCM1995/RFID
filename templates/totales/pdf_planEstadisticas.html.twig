@@ -1,13 +1,23 @@
 {% block contenido %}
-    <h3 align="center">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h3>
-    <h5 align="center">Dimensión {{ importacion.dimension }}</h5>
-    <h5 align="center">Ciclo {{ importacion.ciclo }}</h5>
+    <div>
+        <p align="left">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</p>
+        <p align="left">Dimensión {{ importacion.dimension }}</p>
+        <p align="left">Ciclo {{ importacion.ciclo }}</p>
+    </div>
 
-    <table class="table">
+    <style type="text/css">
+        table, th, td {
+            border-collapse: collapse;
+            border: 1px solid black;
+            padding: 5px;
+            font-size: small;
+        }
+    </style>
+
+    <table class="table" id="plan">
         <thead>
         <tr>
-            <th></th>
-            <th></th>
+            <th colspan="2"> </th>
             {% for corresponsal in corresponsales %}
                 <th>{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
             {% endfor %}
@@ -53,186 +63,169 @@
     </table>
 
 
-{#******************************Estadisticas********************************#}
-    <h1>Cálculo de totales</h1>
+    {#******************************Estadisticas********************************#}
+    <div id="totales">
+        <div id="espacio"></div>
+        <h1>Cálculo de totales</h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th></th>
-            {% for corresponsal in corresponsales %}
-                <th>{{ corresponsal.codigo }}</th>
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                {% for corresponsal in corresponsales %}
+                    <th>{{ corresponsal.codigo }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for corresponsalesDestino in corresponsalesDestino %}
+                {% set size = loop.index %}
+                <th>{{ corresponsalesDestino }}</th>
+                {% for totalesc1 in totalesc1 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalesc1 }}</td>
+                    {% endif %}
+                {% endfor %}
+                {% for totalesc2 in totalesc2 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalesc2 }}</td>
+                    {% endif %}
+                {% endfor %}
+                {% for totalesc3 in totalesc3 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalesc3 }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
             {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            {% for corresponsalesDestino in corresponsalesDestino %}
-            {% set size = loop.index %}
-            <th>{{ corresponsalesDestino }}</th>
-            {% for totalesc1 in totalesc1 %}
-                {% if loop.index == size %}
-                    <td>{{ totalesc1 }}</td>
-                {% endif %}
-            {% endfor %}
-            {% for totalesc2 in totalesc2 %}
-                {% if loop.index == size %}
-                    <td>{{ totalesc2 }}</td>
-                {% endif %}
-            {% endfor %}
-            {% for totalesc3 in totalesc3 %}
-                {% if loop.index == size %}
-                    <td>{{ totalesc3 }}</td>
-                {% endif %}
-            {% endfor %}
-        </tr>
-        {% endfor %}
 
-        </tbody>
-    </table>
-    <h3>Cantidad total de envíos por países</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            {% for paisesDestino in paisesDestino %}
-                <td>{{ paisesDestino.nombre }} ({{ paisesDestino.codigo }})</td>
-            {% endfor %}
-            <td>Total</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            {% for total in totalesPaises %}
+            </tbody>
+        </table>
+        <h3>Cantidad total de envíos por países</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                {% for paisesDestino in paisesDestino %}
+                    <td>{{ paisesDestino.nombre }} ({{ paisesDestino.codigo }})</td>
+                {% endfor %}
+                <td>Total</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for total in totalesPaises %}
+                    <td>{{ total }}</td>
+                {% endfor %}
+                <td>{{ totalEnvios }}</td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div id="materiales">
+        <div id="espacio"></div>
+        <h1>Cálculo de materiales</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                {% for corresponsalesCubanos in corresponsalesCubanos %}
+                    <th>{{ corresponsalesCubanos }}</th>
+                {% endfor %}
+                <th>Totales</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>Sobres</th>
+                <td>{{ totalc1 }}</td>
+                <td>{{ totalc2 }}</td>
+                <td>{{ totalc3 }}</td>
+                <td>{{ totalEnvios }}</td>
+            </tr>
+            <tr>
+                <th>Sellos 65c</th>
+                {% for totalEnvios065 in totalEnvios065 %}
+                    <td>{{ totalEnvios065 }}</td>
+                {% endfor %}
+                <td>{{ total065 }}</td>
+            </tr>
+            <tr>
+                <th>Sellos 75c</th>
+                {% for totalEnvios075 in totalEnvios075 %}
+                    <td>{{ totalEnvios075 }}</td>
+                {% endfor %}
+                <td>{{ total075 }}</td>
+            </tr>
+            <tr>
+                <th>Sellos 85c</th>
+                {% for totalEnvios085 in totalEnvios085 %}
+                    <td>{{ totalEnvios085 }}</td>
+                {% endfor %}
+                <td>{{ total085 }}</td>
+            </tr>
+            <tr>
+                <th colspan="5">Transpondedores</th>
+            </tr>
+            <tr>
+                {% for paisDestino in paisesDestino %}
+                {% set size = loop.index %}
+                {% set total = 0 %}
+                <th>CU -> {{ paisDestino.codigo }}</th>
+                {% for totalPaisesC1 in totalesPaisesC1 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC1 }}</td>
+                        {% set total = total + totalPaisesC1 %}
+                    {% endif %}
+                {% endfor %}
+                {% for totalPaisesC2 in totalesPaisesC2 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC2 }}</td>
+                        {% set total = total + totalPaisesC2 %}
+                    {% endif %}
+                {% endfor %}
+                {% for totalPaisesC3 in totalesPaisesC3 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC3 }}</td>
+                        {% set total = total + totalPaisesC3 %}
+                    {% endif %}
+                {% endfor %}
                 <td>{{ total }}</td>
+            </tr>
             {% endfor %}
-            <td>{{ totalEnvios }}</td>
-        </tr>
-        </tbody>
-
-    </table>
-
-    <h1>Cálculo de materiales</h1>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th></th>
-            {% for corresponsalesCubanos in corresponsalesCubanos %}
-                <th>{{ corresponsalesCubanos }}</th>
+            <tr>
+                <th colspan="5">Cartas GMS</th>
+            </tr>
+            <tr>
+                {% for paisDestino in paisesDestino %}
+                {% set size = loop.index %}
+                {% set total = 0 %}
+                <th>CU -> {{ paisDestino.codigo }}</th>
+                {% for totalPaisesC1 in totalesPaisesC1 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC1 }}</td>
+                        {% set total = total + totalPaisesC1 %}
+                    {% endif %}
+                {% endfor %}
+                {% for totalPaisesC2 in totalesPaisesC2 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC2 }}</td>
+                        {% set total = total + totalPaisesC2 %}
+                    {% endif %}
+                {% endfor %}
+                {% for totalPaisesC3 in totalesPaisesC3 %}
+                    {% if loop.index == size %}
+                        <td>{{ totalPaisesC3 }}</td>
+                        {% set total = total + totalPaisesC3 %}
+                    {% endif %}
+                {% endfor %}
+                <td>{{ total }}</td>
+            </tr>
             {% endfor %}
-            <th>Totales</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th>Sobres</th>
-            <td>{{ totalc1 }}</td>
-            <td>{{ totalc2 }}</td>
-            <td>{{ totalc3 }}</td>
-            <td>{{ totalEnvios }}</td>
-        </tr>
-        <tr>
-            <th>Sellos 65c</th>
-            {% for totalEnvios065 in totalEnvios065 %}
-                <td>{{ totalEnvios065 }}</td>
-            {% endfor %}
-            <td>{{ total065 }}</td>
-        </tr>
-        <tr>
-            <th>Sellos 75c</th>
-            {% for totalEnvios075 in totalEnvios075 %}
-                <td>{{ totalEnvios075 }}</td>
-            {% endfor %}
-            <td>{{ total075 }}</td>
-        </tr>
-        <tr>
-            <th>Sellos 85c</th>
-            {% for totalEnvios085 in totalEnvios085 %}
-                <td>{{ totalEnvios085 }}</td>
-            {% endfor %}
-            <td>{{ total085 }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h3>Transpondedores</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th></th>
-            {% for corresponsalesCubanos in corresponsalesCubanos %}
-                <th>{{ corresponsalesCubanos }}</th>
-            {% endfor %}
-            <th>Totales</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            {% for paisDestino in paisesDestino %}
-            {% set size = loop.index %}
-            {% set total = 0 %}
-            <th>CU -> {{ paisDestino.codigo }}</th>
-            {% for totalPaisesC1 in totalesPaisesC1 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC1 }}</td>
-                    {% set total = total + totalPaisesC1 %}
-                {% endif %}
-            {% endfor %}
-            {% for totalPaisesC2 in totalesPaisesC2 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC2 }}</td>
-                    {% set total = total + totalPaisesC2 %}
-                {% endif %}
-            {% endfor %}
-            {% for totalPaisesC3 in totalesPaisesC3 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC3 }}</td>
-                    {% set total = total + totalPaisesC3 %}
-                {% endif %}
-            {% endfor %}
-            <td>{{ total }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <h3>Cartas GMS</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th></th>
-            {% for corresponsalesCubanos in corresponsalesCubanos %}
-                <th>{{ corresponsalesCubanos }}</th>
-            {% endfor %}
-            <th>Totales</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            {% for paisDestino in paisesDestino %}
-            {% set size = loop.index %}
-            {% set total = 0 %}
-            <th>CU -> {{ paisDestino.codigo }}</th>
-            {% for totalPaisesC1 in totalesPaisesC1 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC1 }}</td>
-                    {% set total = total + totalPaisesC1 %}
-                {% endif %}
-            {% endfor %}
-            {% for totalPaisesC2 in totalesPaisesC2 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC2 }}</td>
-                    {% set total = total + totalPaisesC2 %}
-                {% endif %}
-            {% endfor %}
-            {% for totalPaisesC3 in totalesPaisesC3 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC3 }}</td>
-                    {% set total = total + totalPaisesC3 %}
-                {% endif %}
-            {% endfor %}
-            <td>{{ total }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

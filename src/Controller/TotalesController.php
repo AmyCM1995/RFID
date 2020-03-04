@@ -8,13 +8,11 @@ use App\Entity\PaisCorrespondencia;
 use App\Entity\PlanDeImposicion;
 use App\Entity\PlanImposicionCsv;
 use App\Entity\Totales;
-use App\Repository\CorresponsalRepository;
 use App\Repository\PlanDeImposicionRepository;
 use App\Repository\TotalesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\String\UnicodeString;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -177,7 +175,10 @@ class TotalesController extends AbstractController
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("PI estadisticas.pdf", [
+        $fi = $importacionUltima->getFechaInicioPlan();
+        $ff = $importacionUltima->getFechaFinPlan();
+        $nombre = "PI_estadisticas-".$fi."-".$ff.".pdf";
+        $dompdf->stream($nombre, [
             "Attachment" => true
         ]);
     }
