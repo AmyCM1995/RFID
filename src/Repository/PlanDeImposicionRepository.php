@@ -36,6 +36,35 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return PlanDeImposicion[] Returns an array of PlanDeImposicion objects
+     */
+    public function findByAnno($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.fecha LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(100000)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return PlanDeImposicion[] Returns an array of PlanDeImposicion objects
+     */
+    public function findByFecha($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.fecha = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(1000)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     /*
     public function findOneBySomeField($value): ?PlanDeImposicion
@@ -84,4 +113,95 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
         }
         return $corresponsales;
     }
+
+    public function paisesDelPlan($plan_de_imposicions){
+        $paises = [];
+        $size = 0;
+        foreach ($plan_de_imposicions as $plan_de_imposicion){
+            if($plan_de_imposicion->getCodPais() != null){
+                if($size == 0){
+                    $paises[0] = $plan_de_imposicion->getCodPais();
+                    $size++;
+                }else{
+                    if($this->existePais($paises, $plan_de_imposicion->getCodPais()) == false){
+                        $paises[$size] = $plan_de_imposicion->getCodPais();
+                        $size++;
+                    }
+                }
+            }
+
+        }
+        return $paises;
+    }
+
+    public function existePais($paises, $pais){
+        $existe = false;
+        foreach ($paises as $paise){
+            if($paise->getId() == $pais->getId()){
+                $existe = true;
+            }
+        }
+        return $existe;
+    }
+
+    public function corresponsalesDestinoDelPlan($plan_de_imposicions){
+        $corresponsalesDestino = [];
+        $size = 0;
+        foreach ($plan_de_imposicions as $plan_de_imposicion){
+            if($plan_de_imposicion->getCodEnvio() != null){
+                if($size == 0){
+                    $corresponsalesDestino[0] = $plan_de_imposicion->getCodEnvio();
+                    $size++;
+                }else{
+                    if($this->existeCorresponsalDestino($corresponsalesDestino, $plan_de_imposicion->getCodEnvio()) == false){
+                        $corresponsalesDestino[$size] = $plan_de_imposicion->getCodEnvio();
+                        $size++;
+                    }
+                }
+            }
+        }
+        usort($corresponsalesDestino, "strnatcmp");
+        return $corresponsalesDestino;
+    }
+    public function existeCorresponsalDestino($corresponsalesDestino, $envio){
+        $existe = false;
+        foreach ($corresponsalesDestino as $corr){
+            if($corr == $envio){
+                $existe = true;
+            }
+        }
+        return $existe;
+    }
+
+    public function totalArrPaisess($plan, $paises){
+        $ctdArrPaises = [];
+        $size = 0;
+        foreach ($paises as $pais){
+            $ctdArrPaises[$size] = $this->totalPais($plan, $pais);
+            $size++;
+        }
+        return $ctdArrPaises;
+    }
+
+    public function totalPais($plan, $pais){
+        $ctd = 0;
+        foreach ($plan as $p){
+            if($p->getCodPais() != null){
+                if($p->getCodPais()->getId() == $pais->getId()){
+                    $ctd++;
+                }
+            }
+        }
+        return $ctd;
+    }
+
+    public function totalEnvios($totalesPaises){
+        $total = 0;
+        for($i=0; $i<sizeof($totalesPaises); $i++){
+            $total += $totalesPaises[$i];
+        }
+        return $total;
+    }
+
 }
+

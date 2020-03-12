@@ -44,7 +44,7 @@
                                     <div class="dropdown-content">
                                         {#<a href="{{ path('principal') }}">Notificaciones</a>
                                         <a href="#">Ajustes</a>#}
-                                        <a href="{{ path('user_contrasena_cambiar') }}">Cambiar contraseña</a>
+                                        <a href="{{ path('user_contrasena_cambiar', {'nombreUsuario': app.user.username}) }}">Cambiar contraseña</a>
                                         <a href="{{ path('app_login')}}">Cerrar Sesión</a>
                                     </div>
                                 </li>
@@ -111,7 +111,7 @@
                         <li class="dropdown-sidebar">
                             <div class="dropdown-sidebar-btn"><a>Reportes</a></div>
                             <div class="dropdown-sidebar-content">
-                                <a href="{{ path('plan_estadisticas_pdf_view') }}">Plan de Imposición</a>
+                                <a href="{{ path('pdf_estadisticas_anuales') }}">Plan de Imposición</a>
                                 <a href="#">Nomencladores</a>
                             </div>
                         </li>

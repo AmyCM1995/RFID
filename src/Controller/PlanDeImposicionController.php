@@ -114,6 +114,8 @@ class PlanDeImposicionController extends AbstractController
 
         return $this->redirectToRoute('plan_de_imposicion_index');
     }
+
+    //*****************************************************************************************************************
     /**
      * @Route("/plan/imposicion/persistir", name="plan_imposicion_persistir")
      */
@@ -325,8 +327,10 @@ class PlanDeImposicionController extends AbstractController
         }
         //*****************************************Plan de imposicion CSV
         $importacionUltima = $this->utimaImportacion();
-        $plan_de_imposicions = $this->planesDeImposicionActuales($importacionUltima);
-        $corresponsales = $this->corresponsalesdelPlan($plan_de_imposicions);
+        $planImposicionRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $plan_de_imposicions = $planImposicionRepository->planesDeImposicionActuales($planImposicionRepository, $importacionUltima);
+        $corresponsales = $planImposicionRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
         $planesCorr1 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[0]);
         $planesCorr2 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[1]);
         $planesCorr3 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[2]);
@@ -345,8 +349,26 @@ class PlanDeImposicionController extends AbstractController
         $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
         $this->borrarTotalesAnteriores();
         $this->persistirTotales($totales);
+        //*********************************************Limpiar Plan de Imposicion
+        $this->limpiarPlanImposicion($importacionUltima);
     }
 
+
+    public function limpiarPlanImposicion($importacionUltima){
+        $planImposicionRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $planImposicionsNuevos = $planImposicionRepository->findByImposicion($importacionUltima);
+        foreach ($planImposicionsNuevos as $planImposicionNueva){
+            $planImposicionsMismaFecha = $planImposicionRepository->findByFecha($planImposicionNueva->getFecha());
+            foreach ($planImposicionsMismaFecha as $planImposicionFecha){
+                if($planImposicionFecha->getImportacion()->getId() != $importacionUltima->getId()){
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->remove($planImposicionFecha);
+                    $entityManager->flush();
+                }
+            }
+        }
+
+    }
 
     public function persistirPlanDeImposicion(PlanDeImposicion $plan, Corresponsal $corresponsal, $envio){
         $entityManager = $this->getDoctrine()->getManager();

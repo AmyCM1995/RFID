@@ -38,11 +38,12 @@
     </tbody>
 </table>
     {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-        <button class="btn bg-primary" id="corresponsal-btns">
+        <button class="btn bg-primary" id="corresponsal-btns" style="">
             <a href="{{ path('pais_correspondencia_new') }}">Nuevo</a>
         </button>
         {#<button class="btn bg-primary" id="corresponsal-btns">
             <a href="#">Acciones</a>
         </button>#}
     {% endif %}
+
 {% endblock %}

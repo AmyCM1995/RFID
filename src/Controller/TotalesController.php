@@ -28,18 +28,19 @@ class TotalesController extends AbstractController
         $corresponsalesDestino = $totalesRepositorio->buscarCorresponsalesDestino();
         $paisesDestino = $totalesRepositorio->buscarPaises($repositorio);
         $totalesPaises = $totalesRepositorio->totalesPaises($repositorio);
-        $totalesC1 = $totalesRepositorio->tablaTotalesCorresponsal($corresponsalesCubanos[0], $corresponsalesDestino);
+        /*$totalesC1 = $totalesRepositorio->tablaTotalesCorresponsal($corresponsalesCubanos[0], $corresponsalesDestino);
         $totalesC2 = $totalesRepositorio->tablaTotalesCorresponsal($corresponsalesCubanos[1], $corresponsalesDestino);
-        $totalesC3 = $totalesRepositorio->tablaTotalesCorresponsal($corresponsalesCubanos[2], $corresponsalesDestino);
+        $totalesC3 = $totalesRepositorio->tablaTotalesCorresponsal($corresponsalesCubanos[2], $corresponsalesDestino);*/
+        $matriz = $totalesRepositorio->matrizTotales($corresponsalesCubanos, $corresponsalesDestino);
         $enviosTotales = $totalesRepositorio->enviosTotales();
-
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
 
         return $this->render('totales/index.html.twig', [
-            'totalesc1' => $totalesC1,
+            /*'totalesc1' => $totalesC1,
             'totalesc2' => $totalesC2,
-            'totalesc3' => $totalesC3,
+            'totalesc3' => $totalesC3,*/
+            'matriz' => $matriz,
             'corresponsalesCubanos' => $corresponsalesCubanos,
             'corresponsalesDestino' => $corresponsalesDestino,
             'paisesDestino' => $paisesDestino,
@@ -254,6 +255,68 @@ class TotalesController extends AbstractController
             'total075' => $total075,
             'total085' => $total085,
         ]);
+    }
+
+    /**
+     * @Route("/pdf/estadisticas/anuales", name="pdf_estadisticas_anuales", methods={"GET"})
+     */
+    public function pdf_estadisticasAnuales(PlanDeImposicionRepository $planDeImposicionRepository): Response
+    {
+        $anno = "2019";
+        $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $paisrepository = $this->getDoctrine()->getRepository(PaisCorrespondencia::class);
+        $planAnno = $planRepository->findByAnno($anno);
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $planAnno);
+        $codCorresponsales = $this->codigoCorresponsalesApartirCorresponsales($corresponsales);
+        $paises = $planRepository->paisesDelPlan($planAnno);
+        $corresponsalesDestino = $planRepository->corresponsalesDestinoDelPlan($planAnno);
+        $totalesPaises = $planRepository->totalArrPaisess($planAnno, $paises);
+        $totalEnvios = $planRepository->totalEnvios($totalesPaises);
+        $matrizEnvios = $this->matrizAnual($planAnno, $codCorresponsales, $corresponsalesDestino);
+
+
+
+        return $this->render('totales/pdf_estadisticasAnuales.html.twig', [
+            'matriz' => $matrizEnvios,
+            'corresponsalesCubanos' => $codCorresponsales,
+            'corresponsalesDestino' => $corresponsalesDestino,
+            'paisesDestino' => $paises,
+            'totalesPaises' => $totalesPaises,
+            'totalEnvios' => $totalEnvios,
+            'anno' => $anno,
+        ]);
+    }
+
+
+    public function matrizAnual($plan, $corresponsalesCubanos, $corresponsalesDestino){
+        $matriz[][] = 0;
+        for($i=0; $i<sizeof($corresponsalesCubanos);$i++){
+            for($j=0; $j<sizeof($corresponsalesDestino);$j++){
+                $matriz[$i][$j] = $this->cantEnviosEntre($plan, $corresponsalesCubanos[$i], $corresponsalesDestino[$j]);
+            }
+        }
+        return $matriz;
+    }
+
+    public function cantEnviosEntre($plan, $corrCubano, $corrDestino){
+        $cant = 0;
+        foreach ($plan as $p){
+            if($p->getCodEnvio() == $corrDestino && $p->getCodCorresponsal()->getCodigo() == $corrCubano){
+                $cant++;
+            }
+        }
+        return $cant;
+    }
+
+    public function codigoCorresponsalesApartirCorresponsales($corresponsales){
+        $codigos = [];
+        $size = 0;
+        foreach ($corresponsales as $corresponsal){
+            $codigos[$size] = $corresponsal->getCodigo();
+            $size++;
+        }
+        return $codigos;
     }
 
 }

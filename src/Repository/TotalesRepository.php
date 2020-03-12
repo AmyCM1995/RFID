@@ -204,6 +204,34 @@ class TotalesRepository extends ServiceEntityRepository
         return $existe;
     }
 
+    public function matrizTotales($corresponsalesCubanos, $corresponsalesDestino){
+        $matriz[][] = 0;
+        for($i=0; $i<sizeof($corresponsalesCubanos); $i++){
+            for($j=0; $j<sizeof($corresponsalesDestino); $j++){
+                $total = $this->findOneByCorresCubanoYDestino($corresponsalesCubanos[$i], $corresponsalesDestino[$j]);
+                if($total != null){
+                    $matriz[$i][$j] = $total->getTotalEnvios();
+                }else{
+                    $matriz[$i][$j] = -1;
+                }
+            }
+        }
+
+        return $matriz;
+    }
+
+    public function findOneByCorresCubanoYDestino($corrCuba, $corrDest){
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.corresponsalCuba = :val')
+            ->andWhere('t.corresponsalDestino = :v')
+            ->setParameter('val', $corrCuba)
+            ->setParameter('v', $corrDest)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+
     //**********************************************************Materiales
     public function paisesDestinoTarifas($paises, $tarifa){
         $paisesTarifa = [];

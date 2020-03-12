@@ -6,9 +6,7 @@
     {{ parent() }}
 
     <h1>Cálculo de totales</h1>
-    <h6>Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h6>
-    <h6>Dimensión {{ importacion.dimension }}</h6>
-    <h6>Ciclo {{ importacion.ciclo }}</h6>
+    <h6>Año {{ anno }}</h6>
 
     <table class="table">
         <thead>
@@ -22,25 +20,23 @@
         <tbody>
         {% for corresponsalesDestino in corresponsalesDestino %}
             {% set sizeDest = loop.index %}
-        <tr>
-            <th>{{ corresponsalesDestino }}</th>
-            {% for corresponsalesCubanos in corresponsalesCubanos %}
-                {% set sizeCub = loop.index %}
-            {% for mat in matriz %}
-                {% if loop.index == sizeCub %}
-                {% for m in mat %}
-                    {% if loop.index == sizeDest %}
-                        <td>{{ m }}</td>
-                    {% endif %}
+            <tr>
+                <th>{{ corresponsalesDestino }}</th>
+                {% for corresponsalesCubanos in corresponsalesCubanos %}
+                    {% set sizeCub = loop.index %}
+                    {% for mat in matriz %}
+                        {% if loop.index == sizeCub %}
+                            {% for m in mat %}
+                                {% if loop.index == sizeDest %}
+                                    <td>{{ m }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
-                {% endif %}
-            {% endfor %}
-            {% endfor %}
 
-        </tr>
+            </tr>
         {% endfor %}
-
-
         </tbody>
     </table>
     <h3>Cantidad total de envíos por países</h3>
