@@ -1,9 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}{{ parent() }}{% endblock %}
-
 {% block contenido %}
-    {{ parent() }}
 
     <h1>Cálculo de totales</h1>
     <h6>Año {{ anno }}</h6>
@@ -180,4 +175,5 @@
         {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}

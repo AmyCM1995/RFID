@@ -1,4 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
 {% block contenido %}
+    {{ parent() }}
 
     <h1>Cálculo de totales</h1>
     <h6>Ciclo {{ ciclo }}</h6>
@@ -175,5 +180,9 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <button class="btn bg-primary" id="corresponsal-btns">
+        <a href="{{ path('pdf_estadisticas_ciclo') }}">Exportar</a>
+    </button>
 
 {% endblock %}

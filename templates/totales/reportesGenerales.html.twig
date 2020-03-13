@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Reportes</h1>
+    <h3>Cálculo de totales y materiales</h3>
+    <br>
+    <table class="table">
+        <tr>
+            <td>Año</td>
+            <td>
+                {#<a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">Generar</a>#}
+                <a href="{{ path('pdf_estadisticas_anuales_view') }}">Vista previa</a>
+                <a href="{{ path('pdf_estadisticas_anuales') }}">Generar</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Último ciclo</td>
+            <td>
+                <a href="{{ path('pdf_estadisticas_ciclo_view') }}">Vista previa</a>
+                <a href="{{ path('pdf_estadisticas_ciclo') }}">Generar</a>
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}

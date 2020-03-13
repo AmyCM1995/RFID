@@ -50,6 +50,19 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+    public function findByCiclo($value)
+    {
+        $arr[] = 0;
+        $size = 0;
+        $todos = $this->findAll();
+        foreach ($todos as $plan){
+            if($plan->getImportacion()->getCiclo() == $value){
+                $arr[$size] = $plan;
+                $size++;
+            }
+        }
+        return $arr;
+    }
 
     /**
      * @return PlanDeImposicion[] Returns an array of PlanDeImposicion objects
