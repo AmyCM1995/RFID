@@ -23,9 +23,9 @@
         <tbody>
         <tr>
             <th>Sobres</th>
-            <td>{{ totalesc1 }}</td>
-            <td>{{ totalesc2 }}</td>
-            <td>{{ totalesc3 }}</td>
+            {% for totales in totales %}
+                <td>{{ totales }}</td>
+            {% endfor %}
             <td>{{ totalEnvios }}</td>
         </tr>
         <tr>
@@ -42,13 +42,22 @@
             {% endfor %}
             <td>{{ total075 }}</td>
         </tr>
-        <tr>
-            <th>Sellos 85c</th>
-            {% for totalEnvios085 in totalEnvios085 %}
-                <td>{{ totalEnvios085 }}</td>
-            {% endfor %}
-            <td>{{ total085 }}</td>
-        </tr>
+        {% set existe = false %}
+        {% for totalEnvios085 in totalEnvios085 %}
+            {% if totalEnvios085 != 0 %}
+                {% set existe = true %}
+            {% endif %}
+        {% endfor %}
+        {% if existe == true %}
+            <tr>
+                <th>Sellos 85c</th>
+                {% for totalEnvios085 in totalEnvios085 %}
+                    <td>{{ totalEnvios085 }}</td>
+                {% endfor %}
+                <td>{{ total085 }}</td>
+            </tr>
+        {% endif %}
+
         </tbody>
     </table>
 
@@ -64,31 +73,26 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            {% for paisDestino in paisesDestino %}
-                {% set size = loop.index %}
-                {% set total = 0 %}
-                    <th>CU -> {{ paisDestino.codigo }}</th>
-                {% for totalPaisesC1 in totalesPaisesC1 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC1 }}</td>
-                        {% set total = total + totalPaisesC1 %}
-                    {% endif %}
-                {% endfor %}
-                {% for totalPaisesC2 in totalesPaisesC2 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC2 }}</td>
-                        {% set total = total + totalPaisesC2 %}
-                    {% endif %}
-                {% endfor %}
-                {% for totalPaisesC3 in totalesPaisesC3 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC3 }}</td>
-                        {% set total = total + totalPaisesC3 %}
-                    {% endif %}
+        {% for paisDestino in paisesDestino %}
+            {% set sizeDest = loop.index %}
+            {% set total = 0 %}
+            <tr>
+                <th>CU -> {{ paisDestino.codigo }}</th>
+                {% for corresponsalesCubanos in corresponsalesCubanos %}
+                    {% set sizeCub = loop.index %}
+                    {% for tp in totalesPaises %}
+                        {% if loop.index == sizeCub %}
+                            {% for t in tp %}
+                                {% if loop.index == sizeDest %}
+                                    <td>{{ t }}</td>
+                                    {% set total = total + t %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
                 <td>{{ total }}</td>
-        </tr>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
@@ -104,31 +108,26 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            {% for paisDestino in paisesDestino %}
-            {% set size = loop.index %}
+        {% for paisDestino in paisesDestino %}
+            {% set sizeDest = loop.index %}
             {% set total = 0 %}
-            <th>CU -> {{ paisDestino.codigo }}</th>
-            {% for totalPaisesC1 in totalesPaisesC1 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC1 }}</td>
-                    {% set total = total + totalPaisesC1 %}
-                {% endif %}
-            {% endfor %}
-            {% for totalPaisesC2 in totalesPaisesC2 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC2 }}</td>
-                    {% set total = total + totalPaisesC2 %}
-                {% endif %}
-            {% endfor %}
-            {% for totalPaisesC3 in totalesPaisesC3 %}
-                {% if loop.index == size %}
-                    <td>{{ totalPaisesC3 }}</td>
-                    {% set total = total + totalPaisesC3 %}
-                {% endif %}
-            {% endfor %}
-            <td>{{ total }}</td>
-        </tr>
+            <tr>
+                <th>CU -> {{ paisDestino.codigo }}</th>
+                {% for corresponsalesCubanos in corresponsalesCubanos %}
+                    {% set sizeCub = loop.index %}
+                    {% for tp in totalesPaises %}
+                        {% if loop.index == sizeCub %}
+                            {% for t in tp %}
+                                {% if loop.index == sizeDest %}
+                                    <td>{{ t }}</td>
+                                    {% set total = total + t %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                <td>{{ total }}</td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
