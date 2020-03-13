@@ -203,5 +203,28 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
         return $total;
     }
 
+    public function totalEnviosCorresponsalesTarifa($CorrCuba, $paisesaTarifa, $plan){
+        $total = [];
+        $size = 0;
+        for($i=0; $i<sizeof($CorrCuba); $i++){
+            $total[$size] = $this->totalEnviosCorresponsalTarifa($CorrCuba[$i], $paisesaTarifa, $plan);
+            $size++;
+        }
+        return $total;
+    }
+    public function totalEnviosCorresponsalTarifa($corresponsal, $paisesTarifa, $plan){
+        $totalEnvios = 0;
+        for($i=0; $i<sizeof($plan); $i++){
+            for($j=0; $j<sizeof($paisesTarifa); $j++){
+                if($plan[$i]->getCodPais() != null){
+                    if($plan[$i]->getCodPais()->getCodigo() == $paisesTarifa[$j]->getCodigo() && $plan[$i]->getCodCorresponsal() == $corresponsal){
+                        $totalEnvios++;
+                    }
+                }
+            }
+        }
+        return $totalEnvios;
+    }
+
 }
 
