@@ -138,20 +138,15 @@ class PlanDeImposicionController extends AbstractController
                 $records = $csv->getRecords();
                 $this->principalPersistirCSV($records);
             }else{
-                if($extension->equalsTo('xls') || $extension->equalsTo('xlsx')){
+                if($extension->equalsTo('xlsx')){
                     $file->move('csv', $file->getClientOriginalName());
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-                    echo "public/csv/".$file->getClientOriginalName();
-                    $spreadsheet = $reader->load($file->getClientOriginalName());
-                    echo "public/csv/".$file->getClientOriginalName();
+                    $spreadsheet = $reader->load("csv/".$file->getClientOriginalName());
                     $sheet = $spreadsheet->getActiveSheet();
                     $this->principalPersistirXls($sheet);
-                }/*elseif($extension->equalsTo('xlsx')){
-                    $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("xlsx");
-                    $spreadsheet = $reader->load($file->getClientOriginalName());
-                    $sheet = $spreadsheet->getActiveSheet();
-                    $this->principalPersistirXls($sheet);
-                }*/
+                }elseif ($extension->equalsTo('xls')){
+                    echo "no se aceptan xls";
+                }
             }
 
             //return $this->render('plan_imposicion_csv/importacion_correcta.html.twig');
@@ -183,17 +178,109 @@ class PlanDeImposicionController extends AbstractController
     }
 
     public function principalPersistirXls($sheet){
-        echo true;
-        /*foreach ($sheet->getRowIterator() as $row){
+        $importacion = new Importaciones();
+        $importacion->setFechaImportado(new \DateTime('now'));
+        $columnas = 0;
+        $filaActual = -1;
+        $entityManager = $this->getDoctrine()->getManager();
+        $corresponsales[] = null;
+        $corres[] = null;
+        $sizeCorr = 0;
+
+        foreach ($sheet->getRowIterator() as $row){
+            $filaActual++;
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(false);
-            foreach ($cellIterator as $cell){
-                if(!is_null($cell)){
-                    $value = $cell->getCalculatedValue();
-                    echo $value;
+            if($filaActual <= 4){
+                if($filaActual == 0){
+                    foreach ($cellIterator as $cell){
+                        if($cell->getCalculatedValue() != null){
+                            $dimensionCiclo = new UnicodeString($cell->getCalculatedValue());
+                            $c = $dimensionCiclo->after(',');
+                            $d = $dimensionCiclo->before(',');
+                            $dimension = $d->after(':');
+                            $ciclo = $c->after(':');
+                            $importacion->setCiclo($ciclo);
+                            $importacion->setDimension($dimension);
+                        }
+                    }
+                }elseif($filaActual == 1){
+                    foreach ($cellIterator as $cell){
+                        if($cell->getCalculatedValue() != null){
+                            $fecha = new UnicodeString($cell->getCalculatedValue());
+                            $fechaI = $fecha->after('from');
+                            $fechaF = $fechaI->after('to');
+
+                            $importacion->setFechaInicioPlan($fechaI->before('to'));
+                            $importacion->setFechaFinPlan($fechaF);
+
+                            $entityManager->persist($importacion);
+                            $entityManager->flush();
+                        }
+                    }
+                }elseif ($filaActual == 3){
+                    foreach ($cellIterator as $cell){
+                        if($cell->getCalculatedValue() != null){
+                            $corres[$sizeCorr] = $cell->getCalculatedValue();
+                            $sizeCorr++;
+                        }
+                    }
+                }elseif($filaActual == 4){
+                    $corresponsales = $this->buscarCorresponsalesAPartirDeCodigos($corres);
+                    $columnas = sizeof($corresponsales)+2;
+                }
+            }else{
+                //envios
+                $fecha = null;
+                $envios = null;
+
+                $size = 0;
+                foreach ($cellIterator as $cell){
+                    if($cell->getCalculatedValue() != null){
+                        if($size == 0){
+                            $size++;
+                        }elseif ($size == 1){
+                            $fecha = $cell->getCalculatedValue();
+
+                            $size++;
+                        }else{
+                            $envios = new UnicodeString($cell->getCalculatedValue());
+                            if($envios->length() > 1){  //tiene envios
+                                if($envios->length() == 4){  //tiene un solo envio
+                                    $plan = new PlanDeImposicion();
+                                    $plan->setImportacion($importacion);
+                                    $plan->setFecha(new \DateTime($fecha));
+                                    $this->persistirPlanDeImposicion($plan, $corresponsales[$size-2], $envios);
+                                }else{  //tiene dos envios
+                                    $e1 = $envios->after(',');
+                                    $e2 = $envios->before(',');
+                                    $plan = new PlanDeImposicion();
+                                    $plan->setImportacion($importacion);
+                                    $plan->setFecha(new \DateTime($fecha));
+                                    $this->persistirPlanDeImposicion($plan, $corresponsales[$size-2], $e1);
+                                    $plan = new PlanDeImposicion();
+                                    $plan->setImportacion($importacion);
+                                    $plan->setFecha(new \DateTime($fecha));
+                                    $this->persistirPlanDeImposicion($plan, $corresponsales[$size-2], $e2);
+                                }
+                            }
+                            $size++;
+                        }
+                    }
                 }
             }
-        }*/
+        }
+        //*****************************************Plan de imposicion CSV
+        $plan_de_imposicions = $this->llenarPlanDeImposicionCSV();
+        //********************************************Estadísticas
+        $paises = $this->paisesDelPlan($plan_de_imposicions);
+        $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
+        $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
+        $this->borrarTotalesAnteriores();
+        $this->persistirTotales($totales);
+        //*********************************************Limpiar Plan de Imposicion
+        $importacionUltima = $this->utimaImportacion();
+        $this->limpiarPlanImposicion($importacionUltima);
     }
 
     public function principalPersistirCSV($records){
@@ -202,7 +289,7 @@ class PlanDeImposicionController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $corresponsales = null;
-
+        $corres = null;
         foreach ($records as $offset=>$record){
             if($offset <= 4){
                 if ($offset == 0){
@@ -225,16 +312,17 @@ class PlanDeImposicionController extends AbstractController
                 }elseif ($offset == 3){
                     //corresponsales
                     $rec = new UnicodeString($record[0]);
-                    $codCorr1 = $rec->after(';;');
-                    $rec = $codCorr1;
-                    $codCorr1 = $rec->before(';');
-                    $codCorr2 = $rec->after(';');
-                    $rec = $codCorr2;
-                    $codCorr2 = $rec->before(';');
-                    $codCorr3 = $rec->after(';');
-
-                    $corresponsales = $this->buscarCorrespnsales($codCorr1, $codCorr2, $codCorr3);
-
+                    $size = 0;
+                    $rec = $rec->after(';;');
+                    while($rec->length() >4 ){
+                        $corres[$size] = $rec->before(';');
+                        $rec = $rec->after(';');
+                        $size++;
+                    }
+                    if($rec->length() == 4){
+                        $corres[$size] = $rec;
+                    }
+                    $corresponsales = $this->buscarCorresponsalesAPartirDeCodigos($corres);
                 }
             }else{
                 $linea = "";
@@ -326,23 +414,7 @@ class PlanDeImposicionController extends AbstractController
             }
         }
         //*****************************************Plan de imposicion CSV
-        $importacionUltima = $this->utimaImportacion();
-        $planImposicionRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
-        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
-        $plan_de_imposicions = $planImposicionRepository->planesDeImposicionActuales($planImposicionRepository, $importacionUltima);
-        $corresponsales = $planImposicionRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
-        $planesCorr1 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[0]);
-        $planesCorr2 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[1]);
-        $planesCorr3 = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corresponsales[2]);
-        $planescsv = [null];
-        $pos = 0;
-        while($this->existePlan($planesCorr1)){
-            $csv = $this->generarPlanDeImposicionCSV($plan_de_imposicions, $planesCorr1, $planesCorr2, $planesCorr3);
-            $planescsv[$pos] = $csv;
-            $pos++;
-        }
-        $this->borrarCSVAnteriores();
-        $this->persistirCSV($planescsv);
+        $plan_de_imposicions = $this->llenarPlanDeImposicionCSV();
         //********************************************Estadísticas
         $paises = $this->paisesDelPlan($plan_de_imposicions);
         $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
@@ -350,7 +422,32 @@ class PlanDeImposicionController extends AbstractController
         $this->borrarTotalesAnteriores();
         $this->persistirTotales($totales);
         //*********************************************Limpiar Plan de Imposicion
+        $importacionUltima = $this->utimaImportacion();
         $this->limpiarPlanImposicion($importacionUltima);
+    }
+
+    public function llenarPlanDeImposicionCSV(){
+        $importacionUltima = $this->utimaImportacion();
+        $planImposicionRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $plan_de_imposicions = $planImposicionRepository->planesDeImposicionActuales($planImposicionRepository, $importacionUltima);
+        $corresponsales = $planImposicionRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
+        $planesCorresponsales = null;
+        $size = 0;
+        foreach ($corresponsales as $corr){
+            $planesCorresponsales[$size] = $this->buscarPlanesPorCorresponsales($plan_de_imposicions, $corr);
+            $size++;
+        }
+        $planescsv = [null];
+        $pos = 0;
+        while($this->existePlan($planesCorresponsales[0])){
+            $csv = $this->generarPlanDeImposicionCSV($plan_de_imposicions, $planesCorresponsales[0], $planesCorresponsales[1], $planesCorresponsales[2]);
+            $planescsv[$pos] = $csv;
+            $pos++;
+        }
+        $this->borrarCSVAnteriores();
+        $this->persistirCSV($planescsv);
+        return $plan_de_imposicions;
     }
 
 
@@ -394,7 +491,16 @@ class PlanDeImposicionController extends AbstractController
         return $resultado;
     }
 
-
+public function buscarCorresponsalesAPartirDeCodigos ($corresponsales){
+    $repositorioCorresponsal = $this->getDoctrine()->getRepository(Corresponsal::class);
+    $resultado[] = null;
+    $size = 0;
+    foreach ($corresponsales as $c){
+        $resultado[$size] = $repositorioCorresponsal->findOneByCodigo($c);
+        $size++;
+    }
+    return $resultado;
+}
 
 
 
