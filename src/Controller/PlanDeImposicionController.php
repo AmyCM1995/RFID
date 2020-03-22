@@ -145,16 +145,129 @@ class PlanDeImposicionController extends AbstractController
                     $sheet = $spreadsheet->getActiveSheet();
                     $this->principalPersistirXls($sheet);
                 }elseif ($extension->equalsTo('xls')){
-                    echo "no se aceptan xls";
+                    echo "no se aceptan ficheros xls";
                 }
             }
 
-            //return $this->render('plan_imposicion_csv/importacion_correcta.html.twig');
+            return $this->render('plan_imposicion_csv/importacion_correcta.html.twig', [
+                'encabezado' => "Importar plan de imposición"
+            ]);
         }
 
         return $this->render('plan_imposicion_csv/index.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route("/plan/imposicion/visualizar/cumplimiento", name="plan_imposicion_visualizar_cumplimiento")
+     */
+    public function visualizarCumplimiento()
+    {
+        $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $importacionUltima = $this->utimaImportacion();
+        $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima);
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
+        //cojer los plan csv de la bd
+        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $planescsv = $csvReposirotio->findAll();
+        $success = $this->buscarSuccessPlanes($planescsv);
+        $danger = $this->buscarDangerPlanes($planescsv);
+        return $this->render('plan_de_imposicion/visualizarCumplimiento.html.twig', [
+            'plan_de_imposicion_csvs' => $planescsv,
+            'importacion' => $importacionUltima,
+            'corresponsales' => $corresponsales,
+            'success' => $success,
+            'danger' => $danger,
+        ]);
+    }
+
+    public function buscarSuccessPlanes($planescsv){
+        $success[] = null;
+        $size = 0;
+        foreach ($planescsv as $plancsv){
+            if($plancsv->getCump11() != null){
+                if($plancsv->getCump11() == true){
+                    $success[$size] = $plancsv->getEnvio11();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump12() != null){
+                if($plancsv->getCump12() == true){
+                    $success[$size] = $plancsv->getEnvio12();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump21() != null){
+                if($plancsv->getCump21() == true){
+                    $success[$size] = $plancsv->getEnvio21();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump22() != null){
+                if($plancsv->getCump22() == true){
+                    $success[$size] = $plancsv->getEnvio22();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump31() != null){
+                if($plancsv->getCump31() == true){
+                    $success[$size] = $plancsv->getEnvio31();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump32() != null){
+                if($plancsv->getCump32() == true){
+                    $success[$size] = $plancsv->getEnvio32();
+                    $size++;
+                }
+            }
+        }
+        return $success;
+    }
+    public function buscarDangerPlanes($planescsv){
+        $danger[] = null;
+        $size = 0;
+        foreach ($planescsv as $plancsv){
+            if($plancsv->getCump11() != null){
+                if($plancsv->getCump11() == false){
+                    $danger[$size] = $plancsv->getEnvio11();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump12() != null){
+                if($plancsv->getCump12() == false){
+                    $danger[$size] = $plancsv->getEnvio12();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump21() != null){
+                if($plancsv->getCump21() == false){
+                    $danger[$size] = $plancsv->getEnvio21();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump22() != null){
+                if($plancsv->getCump22() == false){
+                    $danger[$size] = $plancsv->getEnvio22();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump31() != null){
+                if($plancsv->getCump31() == false){
+                    $danger[$size] = $plancsv->getEnvio31();
+                    $size++;
+                }
+            }
+            if($plancsv->getCump32() != null){
+                if($plancsv->getCump32() == false){
+                    $danger[$size] = $plancsv->getEnvio32();
+                    $size++;
+                }
+            }
+        }
+        return $danger;
     }
 
     public function borrarCSVAnteriores(){

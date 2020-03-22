@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block contenido %}
+       {{ parent() }}
+<h3>Importar cumplimiento del plan de imposición</h3>
+    {{  form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

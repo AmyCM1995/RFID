@@ -44,6 +44,11 @@ class PlanDeImposicion
      */
     private $cod_corresponsal;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CumplimientoPlan", mappedBy="id_plan_imposicion", cascade={"persist", "remove"})
+     */
+    private $cumplimientoPlan;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,23 @@ class PlanDeImposicion
     public function setCodCorresponsal(?Corresponsal $cod_corresponsal): self
     {
         $this->cod_corresponsal = $cod_corresponsal;
+
+        return $this;
+    }
+
+    public function getCumplimientoPlan(): ?CumplimientoPlan
+    {
+        return $this->cumplimientoPlan;
+    }
+
+    public function setCumplimientoPlan(CumplimientoPlan $cumplimientoPlan): self
+    {
+        $this->cumplimientoPlan = $cumplimientoPlan;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $cumplimientoPlan->getIdPlanImposicion()) {
+            $cumplimientoPlan->setIdPlanImposicion($this);
+        }
 
         return $this;
     }

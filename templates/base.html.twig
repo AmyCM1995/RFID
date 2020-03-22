@@ -7,6 +7,10 @@
             <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}">
             <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         {% endblock %}
+        {% block jquery %}
+            <?php use_javascript('jquery-3.4.1.slim.min.js')?>
+            <?php include_javascrippts()?>
+        {% endblock %}
     </head>
     <body>
         {% block body %}
@@ -79,7 +83,8 @@
                             <div class="dropdown-sidebar-content">
                                 <a href="{{path('plan_de_imposicion_index')}}">Plan actual</a>
                                 {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-                                <a href="{{ path('plan_imposicion_persistir') }}">Importar</a>
+                                    <a href="{{ path('plan_imposicion_persistir') }}">Importar nuevo plan</a>
+                                    <a href="{{ path('cumplimiento_plan_importar') }}">Importar cumplimiento del plan</a>
                                 {% endif %}
                                 <a href="{{ path('totales') }}">Totales</a>
                                 <a href="{{ path('materiales') }}">Materiales</a>

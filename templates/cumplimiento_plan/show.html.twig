@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CumplimientoPlan{% endblock %}
+
+{% block body %}
+    <h1>CumplimientoPlan</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cumplimiento_plan.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_real</th>
+                <td>{{ cumplimiento_plan.fechaReal ? cumplimiento_plan.fechaReal|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Es_enTiempo</th>
+                <td>{{ cumplimiento_plan.esEnTiempo ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('cumplimiento_plan_index') }}">back to list</a>
+
+    <a href="{{ path('cumplimiento_plan_edit', {'id': cumplimiento_plan.id}) }}">edit</a>
+
+    {{ include('cumplimiento_plan/_delete_form.html.twig') }}
+{% endblock %}

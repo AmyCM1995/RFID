@@ -36,15 +36,15 @@ class FechasNoCorrespondenciaRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?FechasNoCorrespondencia
+
+    public function findOneByFecha($value): ?FechasNoCorrespondencia
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+            ->andWhere('f.fecha = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }
