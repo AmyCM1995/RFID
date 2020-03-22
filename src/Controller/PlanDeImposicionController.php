@@ -8,7 +8,6 @@ use App\Entity\PaisCorrespondencia;
 use App\Entity\PlanDeImposicion;
 use App\Entity\PlanImposicionCsv;
 use App\Entity\Totales;
-use App\Form\PlanDeImposicionType;
 use App\Repository\PlanDeImposicionRepository;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\UnicodeString;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 /**
  * @Route("/plan/de/imposicion")
@@ -46,73 +44,6 @@ class PlanDeImposicionController extends AbstractController
             'importacion' => $importacionUltima,
             'corresponsales' =>$corresponsales,
         ]);
-    }
-
-    /**
-     * @Route("/new", name="plan_de_imposicion_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $planDeImposicion = new PlanDeImposicion();
-        $form = $this->createForm(PlanDeImposicionType::class, $planDeImposicion);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($planDeImposicion);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('plan_de_imposicion_index');
-        }
-
-        return $this->render('plan_de_imposicion/new.html.twig', [
-            'plan_de_imposicion' => $planDeImposicion,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="plan_de_imposicion_show", methods={"GET"})
-     */
-    public function show(PlanDeImposicion $planDeImposicion): Response
-    {
-        return $this->render('plan_de_imposicion/show.html.twig', [
-            'plan_de_imposicion' => $planDeImposicion,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="plan_de_imposicion_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, PlanDeImposicion $planDeImposicion): Response
-    {
-        $form = $this->createForm(PlanDeImposicionType::class, $planDeImposicion);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('plan_de_imposicion_index');
-        }
-
-        return $this->render('plan_de_imposicion/edit.html.twig', [
-            'plan_de_imposicion' => $planDeImposicion,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="plan_de_imposicion_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, PlanDeImposicion $planDeImposicion): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$planDeImposicion->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($planDeImposicion);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('plan_de_imposicion_index');
     }
 
     //*****************************************************************************************************************

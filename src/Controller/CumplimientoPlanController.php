@@ -6,13 +6,10 @@ use App\Entity\CumplimientoPlan;
 use App\Entity\FechasNoCorrespondencia;
 use App\Entity\PlanDeImposicion;
 use App\Entity\PlanImposicionCsv;
-use App\Form\CumplimientoPlanType;
-use App\Repository\CumplimientoPlanRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\UnicodeString;
 
@@ -21,16 +18,6 @@ use Symfony\Component\String\UnicodeString;
  */
 class CumplimientoPlanController extends AbstractController
 {
-    /**
-     * @Route("/", name="cumplimiento_plan_index", methods={"GET"})
-     */
-    public function index(CumplimientoPlanRepository $cumplimientoPlanRepository): Response
-    {
-        return $this->render('cumplimiento_plan/index.html.twig', [
-            'cumplimiento_plans' => $cumplimientoPlanRepository->findAll(),
-        ]);
-    }
-
     /**
      * @Route("/importar", name="cumplimiento_plan_importar")
      */
@@ -67,73 +54,6 @@ class CumplimientoPlanController extends AbstractController
         return $this->render('cumplimiento_plan/importar.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/new", name="cumplimiento_plan_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $cumplimientoPlan = new CumplimientoPlan();
-        $form = $this->createForm(CumplimientoPlanType::class, $cumplimientoPlan);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($cumplimientoPlan);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('cumplimiento_plan_index');
-        }
-
-        return $this->render('cumplimiento_plan/new.html.twig', [
-            'cumplimiento_plan' => $cumplimientoPlan,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="cumplimiento_plan_show", methods={"GET"})
-     */
-    public function show(CumplimientoPlan $cumplimientoPlan): Response
-    {
-        return $this->render('cumplimiento_plan/show.html.twig', [
-            'cumplimiento_plan' => $cumplimientoPlan,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="cumplimiento_plan_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, CumplimientoPlan $cumplimientoPlan): Response
-    {
-        $form = $this->createForm(CumplimientoPlanType::class, $cumplimientoPlan);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('cumplimiento_plan_index');
-        }
-
-        return $this->render('cumplimiento_plan/edit.html.twig', [
-            'cumplimiento_plan' => $cumplimientoPlan,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="cumplimiento_plan_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, CumplimientoPlan $cumplimientoPlan): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$cumplimientoPlan->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($cumplimientoPlan);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('cumplimiento_plan_index');
     }
 
     //**********************************************************************************************************
