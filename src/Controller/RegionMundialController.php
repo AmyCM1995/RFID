@@ -30,6 +30,7 @@ class RegionMundialController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $regionMundial = new RegionMundial();
         $form = $this->createForm(RegionMundialType::class, $regionMundial);
         $form->handleRequest($request);
@@ -49,20 +50,11 @@ class RegionMundialController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="region_mundial_show", methods={"GET"})
-     */
-    public function show(RegionMundial $regionMundial): Response
-    {
-        return $this->render('region_mundial/show.html.twig', [
-            'region_mundial' => $regionMundial,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="region_mundial_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, RegionMundial $regionMundial): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $form = $this->createForm(RegionMundialType::class, $regionMundial);
         $form->handleRequest($request);
 
@@ -83,6 +75,7 @@ class RegionMundialController extends AbstractController
      */
     public function delete(Request $request, RegionMundial $regionMundial): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         if ($this->isCsrfTokenValid('delete'.$regionMundial->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($regionMundial);

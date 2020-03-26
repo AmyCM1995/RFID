@@ -13,6 +13,9 @@
     list-style: none;
 }
 
+#spinner{
+    display: none;
+}
 .dropdown {
     position: relative;
     display: inline-block;

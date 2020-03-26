@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Acceso denegado</h1>
+    <h6>Usted no tiene acceso a la página solicitada</h6>
+{% endblock %}

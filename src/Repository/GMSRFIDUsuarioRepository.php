@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\GMSRFIDUsuario;
+use
+    App\Entity\GMSRFIDUsuario;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+
 
 /**
  * @method GMSRFIDUsuario|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,21 +15,33 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method GMSRFIDUsuario[]    findAll()
  * @method GMSRFIDUsuario[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GMSRFIDUsuarioRepository extends ServiceEntityRepository
+class GMSRFIDUsuarioRepository extends ServiceEntityRepository implements UserLoaderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, GMSRFIDUsuario::class);
     }
 
-    public function obtenerUsuarioPorNombre($nombreUsuario){
-        return $this->createQuery(
-            'SELECT u FROM App\src\Entity\GMSRFIDUsuario u
-            WHERE u.nombre =:query'
-        )
-            ->setParameter('query', $nombreUsuario)
+    public function loadUserByUsername($nombreUsuario){
+        $user = $this->createQueryBuilder('u')
+            ->where('u.username = :username')
+            ->setParameter('username', $nombreUsuario)
             ->getQuery()
             ->getOneOrNullResult();
+
+        if (null === $user) {
+            $message = sprintf(
+                'Unable to find an active admin AppBundle:User object identified by "%s".',
+                $nombreUsuario
+            );
+            throw new UsernameNotFoundException($message);
+        }
+
+        return $user;
+    }
+
+    public function flush(){
+        $this->_em->flush();
     }
 
     // /**

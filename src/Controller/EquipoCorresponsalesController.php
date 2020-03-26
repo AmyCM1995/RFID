@@ -31,6 +31,7 @@ class EquipoCorresponsalesController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $equipoCorresponsale = new EquipoCorresponsales();
         $equipoCorresponsale->setEsActivo(true);
 
@@ -65,20 +66,11 @@ class EquipoCorresponsalesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="equipo_corresponsales_show", methods={"GET"})
-     */
-    public function show(EquipoCorresponsales $equipoCorresponsale): Response
-    {
-        return $this->render('equipo_corresponsales/show.html.twig', [
-            'equipo_corresponsale' => $equipoCorresponsale,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="equipo_corresponsales_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, EquipoCorresponsales $equipoCorresponsale): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $form = $this->createForm(EquipoCorresponsalesType::class, $equipoCorresponsale);
         $form->handleRequest($request);
 
@@ -99,6 +91,7 @@ class EquipoCorresponsalesController extends AbstractController
      */
     public function delete(Request $request, EquipoCorresponsales $equipoCorresponsale): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         if ($this->isCsrfTokenValid('delete'.$equipoCorresponsale->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->find(EquipoCorresponsales::class, $equipoCorresponsale->getId());

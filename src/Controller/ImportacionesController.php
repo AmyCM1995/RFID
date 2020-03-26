@@ -17,6 +17,7 @@ class ImportacionesController extends AbstractController
      */
     public function index(ImportacionesRepository $importacionesRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         return $this->render('importaciones/index.html.twig', [
             'importaciones' => $importacionesRepository->findAll(),
         ]);

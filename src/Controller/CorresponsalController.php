@@ -32,6 +32,7 @@ class CorresponsalController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $corresponsal = new Corresponsal();
         $corresponsal->setEsActivo(true);
         $form = $this->createForm(CorresponsalType::class, $corresponsal);
@@ -41,41 +42,30 @@ class CorresponsalController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($corresponsal);
             $entityManager->flush();
+            //pdf corresponsal
+            $this->pdfNuevoCorresponsal($corresponsal);
 
             return $this->redirectToRoute('corresponsal_index');
-
-            //**********************************************************PDF
-            $pdfOptions = new Options();
-            $pdfOptions->set('defaultFont', 'Arial');
-
-            $dompdf = new Dompdf($pdfOptions);
-
-            $html = $this->render('corresponsal/pdf_nuevoCorresponsal.html.twig', [
-                'corresponsal' => $corresponsal,
-            ]);
-
-            $dompdf->setPaper('A4' , 'portrait');
-            $dompdf->render();
-            $output = $dompdf->output();
-            $publicDirectory = $this->get('kernel')->getProjectDir().'/public';
-            $pdfFilepath = $publicDirectory.'/NuevoCorresponsal.pdf';
-            file_put_contents($pdfFilepath, $output);
-
         }
-
         return $this->render('corresponsal/new.html.twig', [
             'corresponsal' => $corresponsal,
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="corresponsal_show", methods={"GET"})
-     */
-    public function show(Corresponsal $corresponsal): Response
-    {
-        return $this->render('corresponsal/show.html.twig', [
+    public function pdfNuevoCorresponsal($corresponsal){
+        $this->redirectToRoute('corresponsal_index');
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOptions);
+        $html = $this->renderView('corresponsal/pdf_nuevoCorresponsal.html.twig', [
             'corresponsal' => $corresponsal,
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4' , 'portrait');
+        $dompdf->render();
+        $dompdf->stream("NuevoCorresponsal.pdf", [
+            "Attachment" => true
         ]);
     }
 
@@ -84,6 +74,7 @@ class CorresponsalController extends AbstractController
      */
     public function edit(Request $request, Corresponsal $corresponsal): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $form = $this->createForm(CorresponsalType::class, $corresponsal);
         $form->handleRequest($request);
 
@@ -93,19 +84,17 @@ class CorresponsalController extends AbstractController
             //**************************************PDF
             $pdfOptions = new Options();
             $pdfOptions->set('defaultFont', 'Arial');
-
             $dompdf = new Dompdf($pdfOptions);
 
-            $html = $this->render('corresponsal/pdf_editarCorresponsal.html.twig', [
+            $html = $this->renderView('corresponsal/pdf_editarCorresponsal.html.twig', [
                 'corresponsal' => $corresponsal,
             ]);
-
+            $dompdf->loadHtml($html);
             $dompdf->setPaper('A4' , 'portrait');
             $dompdf->render();
-            $output = $dompdf->output();
-            $publicDirectory = $this->get('kernel')->getProjectDir().'/public';
-            $pdfFilepath = $publicDirectory.'/CambjosCorresponsal.pdf';
-            file_put_contents($pdfFilepath, $output);
+            $dompdf->stream("CorresponsalModificado.pdf", [
+                "Attachment" => true
+            ]);
 
             return $this->redirectToRoute('corresponsal_index');
         }
@@ -121,6 +110,7 @@ class CorresponsalController extends AbstractController
      */
     public function delete(Request $request, Corresponsal $corresponsal): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         if ($this->isCsrfTokenValid('delete'.$corresponsal->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->find(Corresponsal::class, $corresponsal->getId());

@@ -51,6 +51,7 @@ class PlanDeImposicionController extends AbstractController
      * @Route("/plan/imposicion/persistir", name="plan_imposicion_persistir")
      */
     public function persistir(Request $request){
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $form = $this->createFormBuilder()
             ->add('file', FileType::class, [
                 'mapped' => false, 'label' => ' '

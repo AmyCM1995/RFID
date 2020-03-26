@@ -32,11 +32,7 @@
                     <td>{{ corresponsal.apellidos }}</td>
                     <td>{{ corresponsal.correo }}</td>
                     <td>{{ corresponsal.direccion }}</td>
-                    <td>
-                        {% for equipo in corresponsal.equipo %}
-                            {{ equipo.codigo }}
-                        {% endfor %}
-                    </td>
+                    <td>{{ corresponsal.equipo.codigo }}</td>
             {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
                         {#<a href="{{ path('corresponsal_show', {'id': corresponsal.id}) }}">Mostrar</a>#}

@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\GMSRFIDUsuario;
+use App\Form\CambiarUsuarioType;
 use App\Form\GMSRFIDUsuarioType;
 use App\Repository\GMSRFIDUsuarioRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/g/m/s/r/f/i/d/usuario")
  */
 class GMSRFIDUsuarioController extends AbstractController
@@ -92,4 +95,6 @@ class GMSRFIDUsuarioController extends AbstractController
 
         return $this->redirectToRoute('g_m_s_r_f_i_d_usuario_index');
     }
+
+
 }

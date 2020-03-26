@@ -23,6 +23,7 @@ class CumplimientoPlanController extends AbstractController
      */
     public function importar(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $form = $this->createFormBuilder()
             ->add('file', FileType::class, [
                 'mapped' => false, 'label' => ' '

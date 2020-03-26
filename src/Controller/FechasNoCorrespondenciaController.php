@@ -33,6 +33,7 @@ class FechasNoCorrespondenciaController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $fechasNoCorrespondencium = new FechasNoCorrespondencia();
         $form = $this->createForm(FechasNoCorrespondenciaType::class, $fechasNoCorrespondencium);
         $form->handleRequest($request);
@@ -52,20 +53,11 @@ class FechasNoCorrespondenciaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="fechas_no_correspondencia_show", methods={"GET"})
-     */
-    public function show(FechasNoCorrespondencia $fechasNoCorrespondencium): Response
-    {
-        return $this->render('fechas_no_correspondencia/show.html.twig', [
-            'fechas_no_correspondencium' => $fechasNoCorrespondencium,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="fechas_no_correspondencia_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, FechasNoCorrespondencia $fechasNoCorrespondencium): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $form = $this->createForm(FechasNoCorrespondenciaType::class, $fechasNoCorrespondencium);
         $form->handleRequest($request);
 
@@ -86,6 +78,7 @@ class FechasNoCorrespondenciaController extends AbstractController
      */
     public function delete(Request $request, FechasNoCorrespondencia $fechasNoCorrespondencium): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         if ($this->isCsrfTokenValid('delete'.$fechasNoCorrespondencium->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($fechasNoCorrespondencium);

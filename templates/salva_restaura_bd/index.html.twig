@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Salvas y restauras de la base de datos</h1>
+    <br>
+    <div>
+        <table class="table">
+            <thead>
+                <th>Módulo</th>
+                <th>Acción</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Plan de imposición</td>
+                    <td>
+                        <a href={{ path("salva_restaura_b_d_salva_pi") }}>Salvar</a>
+                        <a href="#">Restaurar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

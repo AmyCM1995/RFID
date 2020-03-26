@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+
+    <h1>Cambiar contraseña de {{ app.user.username }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn bg-primary" id="corresponsal-btns" style="color: #FFFFFF">{{ button_label|default('Actualizar') }}</button>
+        <button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 2px">
+            <a href="{{ path('provincia_cuba_index') }}">Cancelar</a>
+        </button>
+    {{ form_end(form) }}
+
+{% endblock %}

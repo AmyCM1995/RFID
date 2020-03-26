@@ -2,65 +2,72 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/security/acceso_denegado.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GMS-RFIDv2.0.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GMS-RFIDv2.0.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/csv/Data Entry.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/csv/Posting plan (2019)  TEST.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/csv/Posting plan (2019)  TEST.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/csv/Posting plan (2019).xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/csv/Posting plan (final 2019).xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CorresponsalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CorresponsalController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CumplimientoPlanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CumplimientoPlanController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EquipoCorresponsalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EquipoCorresponsalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FechasNoCorrespondenciaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FechasNoCorrespondenciaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ImportacionesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ImportacionesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PaisCorrespondenciaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PaisCorrespondenciaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PlanImposicionCSVController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanImposicionCSVController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProvinciaCubaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProvinciaCubaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegionMundialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegionMundialController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RolController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SeguridadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SeguridadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TotalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TotalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UsuarioActualController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Corresponsal.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Corresponsal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/EquipoCorresponsales.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/EquipoCorresponsales.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/AnnoType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CambiarUsuarioType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CambiarUsuarioType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/CorresponsalType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CorresponsalType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/EquipoCorresponsalesType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/EquipoCorresponsalesType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/FechasNoCorrespondenciaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/FechasNoCorrespondenciaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PaisCorrespondenciaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PaisCorrespondenciaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ProvinciaCubaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProvinciaCubaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/corresponsal/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/corresponsal/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ImportarCsvType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/GMSRFIDUsuarioRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/GMSRFIDUsuarioRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/corresponsal/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/corresponsal/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/corresponsal/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/corresponsal/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/corresponsal/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/corresponsal/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/equipo_corresponsales/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/equipo_corresponsales/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/equipo_corresponsales/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/equipo_corresponsales/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/equipo_corresponsales/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/equipo_corresponsales/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/equipo_corresponsales/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/equipo_corresponsales/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fechas_no_correspondencia/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fechas_no_correspondencia/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fechas_no_correspondencia/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fechas_no_correspondencia/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/importaciones/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/importaciones/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/importaciones/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/importaciones/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/importaciones/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/importaciones/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/importaciones/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/importaciones/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pais_correspondencia/añadir.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pais_correspondencia/añadir.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pais_correspondencia/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pais_correspondencia/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pais_correspondencia/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pais_correspondencia/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pais_correspondencia/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pais_correspondencia/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pais_correspondencia/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pais_correspondencia/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/persistir.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/importacion_correcta.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_imposicion_csv/importacion_correcta.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/principal/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/principal/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/provincia_cuba/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/provincia_cuba/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/provincia_cuba/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/provincia_cuba/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/provincia_cuba/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/provincia_cuba/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/provincia_cuba/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/provincia_cuba/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/region_mundial/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/region_mundial/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/region_mundial/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/region_mundial/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/region_mundial/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/region_mundial/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/region_mundial/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/region_mundial/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/cambiarContraseña.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/cambiarContraseña.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rol/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rol/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rol/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rol/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rol/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rol/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rol/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rol/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/totales/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/totales/materiales.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/materiales.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/usuario_actual/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/usuario_actual/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/corresponsal/pdf_editarCorresponsal.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/corresponsal/pdf_editarCorresponsal.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/corresponsal/pdf_nuevoCorresponsal.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/corresponsal/pdf_nuevoCorresponsal.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/corresponsal/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cumplimiento_plan/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cumplimiento_plan/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cumplimiento_plan/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cumplimiento_plan/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cumplimiento_plan/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cumplimiento_plan/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/equipo_corresponsales/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/importaciones/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/importaciones/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/importaciones/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/importaciones/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/importaciones/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pais_correspondencia/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/progressbar.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_imposicion_csv/progressbar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/provincia_cuba/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/region_mundial/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/salva_restaura_bd/salvaPI.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/salva_restaura_bd/salvaPI.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/forgot.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/forgot.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/totales/reportesGenerales.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/reportesGenerales.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/usuario_actual/index.html.twig" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -88,8 +95,19 @@
     <expand />
     <select />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="GMS-RFIDv2.0" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -212,11 +230,29 @@
       <path value="$PROJECT_DIR$/vendor/phenx/php-svg-lib" />
       <path value="$PROJECT_DIR$/vendor/phenx/php-font-lib" />
       <path value="$PROJECT_DIR$/vendor/core23/dompdf-bundle" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpexcel" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/clue/stream-filter" />
+      <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/vendor/php-http/curl-client" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message" />
+      <path value="$PROJECT_DIR$/vendor/php-http/httplug" />
+      <path value="$PROJECT_DIR$/vendor/php-http/promise" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
     </include_path>
   </component>
   <component name="ProjectId" id="1T49G70Y0wIeSjxsVim6sNxgzqD" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/img" />
@@ -224,16 +260,17 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\img" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\css" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\plan_de_imposicion" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src\Command" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\totales" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src\Data" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\plan_imposicion_csv" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\img" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\totales" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\css" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src" />
     </key>
   </component>
@@ -248,6 +285,16 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="salvaPI.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/src/Command/salvaPI.php">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.salvaPI.php" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -280,7 +327,21 @@
       <workItem from="1576535148196" duration="139158000" />
       <workItem from="1577316747429" duration="24981000" />
       <workItem from="1578799950568" duration="637000" />
-      <workItem from="1578884852722" duration="7668000" />
+      <workItem from="1578884852722" duration="45281000" />
+      <workItem from="1580092367956" duration="619000" />
+      <workItem from="1580227825479" duration="3406000" />
+      <workItem from="1580247946797" duration="749000" />
+      <workItem from="1580248721538" duration="8195000" />
+      <workItem from="1581344041958" duration="10771000" />
+      <workItem from="1582562641317" duration="1634000" />
+      <workItem from="1582839862340" duration="2232000" />
+      <workItem from="1583245151795" duration="6352000" />
+      <workItem from="1583257613818" duration="2000" />
+      <workItem from="1583263964029" duration="46028000" />
+      <workItem from="1584030080994" duration="24538000" />
+      <workItem from="1584382495812" duration="26877000" />
+      <workItem from="1584530828206" duration="35181000" />
+      <workItem from="1585249575256" duration="6295000" />
     </task>
     <servers />
   </component>
@@ -299,5 +360,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

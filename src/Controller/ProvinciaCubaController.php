@@ -34,7 +34,7 @@ class ProvinciaCubaController extends AbstractController
      */
     public function new(Request $request): Response
     {
-
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $provinciaCuba = new ProvinciaCuba();
         $provinciaCuba->setEsActivo(true);
         $form = $this->createForm(ProvinciaCubaType::class, $provinciaCuba);
@@ -55,20 +55,11 @@ class ProvinciaCubaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="provincia_cuba_show", methods={"GET"})
-     */
-    public function show(ProvinciaCuba $provinciaCuba): Response
-    {
-        return $this->render('provincia_cuba/show.html.twig', [
-            'provincia_cuba' => $provinciaCuba,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="provincia_cuba_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, ProvinciaCuba $provinciaCuba): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $form = $this->createForm(ProvinciaCubaType::class, $provinciaCuba);
         $form->handleRequest($request);
 
@@ -90,6 +81,7 @@ class ProvinciaCubaController extends AbstractController
      */
     public function delete(Request $request, ProvinciaCuba $provinciaCuba): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         if ($this->isCsrfTokenValid('delete'.$provinciaCuba->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->find(ProvinciaCuba::class, $provinciaCuba->getId());

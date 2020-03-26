@@ -34,7 +34,7 @@ class Corresponsal
     private $correo;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\EquipoCorresponsales", inversedBy="corresponsals", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\EquipoCorresponsales", inversedBy="corresponsals")
      */
     private $equipo;
 
@@ -48,23 +48,11 @@ class Corresponsal
      */
     private $direccion;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EquipoCorresponsales", mappedBy="CorresponsalCoordinador", cascade={"persist"})
-     */
-    private $equipoCorresponsales;
-
-    /**
+     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $es_activo;
 
-
-
-    public function __construct()
-    {
-        $this->equipo = new ArrayCollection();
-        $this->equipoCorresponsales = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -107,31 +95,19 @@ class Corresponsal
         return $this;
     }
 
-    /**
-     * @return Collection|EquipoCorresponsales[]
-     */
-    public function getEquipo(): Collection
+
+    public function getEquipo(): ?EquipoCorresponsales
     {
         return $this->equipo;
     }
 
-    public function addEquipo(EquipoCorresponsales $equipo): self
+    public function setEquipo(?EquipoCorresponsales $equipoCorresponsales): self
     {
-        if (!$this->equipo->contains($equipo)) {
-            $this->equipo[] = $equipo;
-        }
+        $this->equipo = $equipoCorresponsales;
 
         return $this;
     }
 
-    public function removeEquipo(EquipoCorresponsales $equipo): self
-    {
-        if ($this->equipo->contains($equipo)) {
-            $this->equipo->removeElement($equipo);
-        }
-
-        return $this;
-    }
 
     public function getApellidos(): ?string
     {
@@ -153,37 +129,6 @@ class Corresponsal
     public function setDireccion(string $direccion): self
     {
         $this->direccion = $direccion;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|EquipoCorresponsales[]
-     */
-    public function getEquipoCorresponsales(): Collection
-    {
-        return $this->equipoCorresponsales;
-    }
-
-    public function addEquipoCorresponsale(EquipoCorresponsales $equipoCorresponsale): self
-    {
-        if (!$this->equipoCorresponsales->contains($equipoCorresponsale)) {
-            $this->equipoCorresponsales[] = $equipoCorresponsale;
-            $equipoCorresponsale->setCorresponsalCoordinador($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipoCorresponsale(EquipoCorresponsales $equipoCorresponsale): self
-    {
-        if ($this->equipoCorresponsales->contains($equipoCorresponsale)) {
-            $this->equipoCorresponsales->removeElement($equipoCorresponsale);
-            // set the owning side to null (unless already changed)
-            if ($equipoCorresponsale->getCorresponsalCoordinador() === $this) {
-                $equipoCorresponsale->setCorresponsalCoordinador(null);
-            }
-        }
 
         return $this;
     }

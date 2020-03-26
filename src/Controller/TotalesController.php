@@ -11,6 +11,7 @@ use App\Entity\Totales;
 use App\Repository\PlanDeImposicionRepository;
 use App\Repository\TotalesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Dompdf\Dompdf;
@@ -244,55 +245,60 @@ class TotalesController extends AbstractController
     }
 
     /**
-     * @Route("/pdf/estadisticas/anuales/view", name="pdf_estadisticas_anuales_view", methods={"GET"})
+     * @Route("/pdf/estadisticas/anuales/view/{$anno}", name="pdf_estadisticas_anuales_view", methods={"GET"})
      */
-    public function pdf_estadisticasAnuales_view(): Response
+    public function pdf_estadisticasAnuales_view(Request $request): Response
     {
-        $anno = "2019";
-        $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
-        $planAnno = $planRepository->findByAnno($anno);
-        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
-        $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $planAnno);
-        $codCorresponsales = $this->codigoCorresponsalesApartirCorresponsales($corresponsales);
-        $paises = $planRepository->paisesDelPlan($planAnno);
-        $corresponsalesDestino = $planRepository->corresponsalesDestinoDelPlan($planAnno);
-        $totalesPaises = $planRepository->totalArrPaisess($planAnno, $paises);
-        $totalEnvios = $planRepository->totalEnvios($totalesPaises);
-        $matrizEnvios = $this->matrizPlanAnual($planAnno, $codCorresponsales, $corresponsalesDestino);
+        $anno = 0;
 
-        $totalesRepositorio = $this->getDoctrine()->getRepository(Totales::class);
-        $paisesDestino065 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.65);
-        $paisesDestino075 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.75);
-        $paisesDestino085 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.85);
-        $totalEnvios065 = $planRepository->totalEnviosCorresponsalesTarifa($corresponsales, $paisesDestino065, $planAnno);
-        $totalEnvios075 = $planRepository->totalEnviosCorresponsalesTarifa($corresponsales, $paisesDestino075, $planAnno);
-        $totalEnvios085 = $planRepository->totalEnviosCorresponsalesTarifa($corresponsales, $paisesDestino085, $planAnno);
-        $total065 = $totalesRepositorio->totalArreglo($totalEnvios065);
-        $total075 = $totalesRepositorio->totalArreglo($totalEnvios075);
-        $total085 = $totalesRepositorio->totalArreglo($totalEnvios085);
-        $totales = $this->arregloTotalesCorresponsales($planAnno, $codCorresponsales);
-        $matrizPaisesDestinoCorresponsales = $this->matrizTranspondedoresCartasAnual($planAnno, $corresponsales, $paises);
+        $form = $this->createForm(AnnoType::class, $anno);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+            $planAnno = $planRepository->findByAnno($anno);
+            $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+            $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $planAnno);
+            $codCorresponsales = $this->codigoCorresponsalesApartirCorresponsales($corresponsales);
+            $paises = $planRepository->paisesDelPlan($planAnno);
+            $corresponsalesDestino = $planRepository->corresponsalesDestinoDelPlan($planAnno);
+            $totalesPaises = $planRepository->totalArrPaisess($planAnno, $paises);
+            $totalEnvios = $planRepository->totalEnvios($totalesPaises);
+            $matrizEnvios = $this->matrizPlanAnual($planAnno, $codCorresponsales, $corresponsalesDestino);
 
-
-        return $this->render('totales/pdf_estadisticasAnuales_view.html.twig', [
-            'matrizE' => $matrizEnvios,
-            'corresponsalesCubanos' => $codCorresponsales,
-            'corresponsalesDestino' => $corresponsalesDestino,
-            'paisesDestino' => $paises,
-            'totalesPaises' => $totalesPaises,
-            'totalEnvios' => $totalEnvios,
-            'anno' => $anno,
-            'totalEnvios065' => $totalEnvios065,
-            'totalEnvios075' => $totalEnvios075,
-            'totalEnvios085' => $totalEnvios085,
-            'total065' => $total065,
-            'total075' => $total075,
-            'total085' => $total085,
-            'matrizPC' => $matrizPaisesDestinoCorresponsales,
-            'totales' => $totales,
+            $totalesRepositorio = $this->getDoctrine()->getRepository(Totales::class);
+            $paisesDestino065 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.65);
+            $paisesDestino075 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.75);
+            $paisesDestino085 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.85);
+            $totalEnvios065 = $planRepository->totalEnviosCorresponsalesTarifa($corresponsales, $paisesDestino065, $planAnno);
+            $totalEnvios075 = $planRepository->totalEnviosCorresponsalesTarifa($corresponsales, $paisesDestino075, $planAnno);
+            $totalEnvios085 = $planRepository->totalEnviosCorresponsalesTarifa($corresponsales, $paisesDestino085, $planAnno);
+            $total065 = $totalesRepositorio->totalArreglo($totalEnvios065);
+            $total075 = $totalesRepositorio->totalArreglo($totalEnvios075);
+            $total085 = $totalesRepositorio->totalArreglo($totalEnvios085);
+            $totales = $this->arregloTotalesCorresponsales($planAnno, $codCorresponsales);
+            $matrizPaisesDestinoCorresponsales = $this->matrizTranspondedoresCartasAnual($planAnno, $corresponsales, $paises);
 
 
-        ]);
+            return $this->render('totales/pdf_estadisticasAnuales_view.html.twig', [
+                'matrizE' => $matrizEnvios,
+                'corresponsalesCubanos' => $codCorresponsales,
+                'corresponsalesDestino' => $corresponsalesDestino,
+                'paisesDestino' => $paises,
+                'totalesPaises' => $totalesPaises,
+                'totalEnvios' => $totalEnvios,
+                'anno' => $anno,
+                'totalEnvios065' => $totalEnvios065,
+                'totalEnvios075' => $totalEnvios075,
+                'totalEnvios085' => $totalEnvios085,
+                'total065' => $total065,
+                'total075' => $total075,
+                'total085' => $total085,
+                'matrizPC' => $matrizPaisesDestinoCorresponsales,
+                'totales' => $totales,
+            ]);
+        }
+        return $this->redirectToRoute('reportes_generales');
+
     }
 
     /**
@@ -350,15 +356,15 @@ class TotalesController extends AbstractController
     }
 
     /**
-     * @Route("/pdf/estadisticas/anuales", name="pdf_estadisticas_anuales", methods={"GET"})
+     * @Route("/pdf/estadisticas/anuales/{$anno}", name="pdf_estadisticas_anuales", methods={"GET"})
      */
-    public function pdf_estadisticasAnuales(): Response
+    public function pdf_estadisticasAnuales($anno): Response
     {
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
         $dompdf = new Dompdf($pdfOptions);
         //*****************************************Datos
-        $anno = "2019";
+        //$anno = "2019";
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $planAnno = $planRepository->findByAnno($anno);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);

@@ -24,7 +24,7 @@ class EquipoCorresponsales
     private $codigo;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Corresponsal", mappedBy="equipo", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Corresponsal", mappedBy="equipo")
      */
     private $corresponsals;
 

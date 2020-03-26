@@ -1,37 +1,9 @@
-{% extends 'base.html.twig' %}
+{% block body %}
 
-{% block contenido %}
-    {{ parent() }}
-    <h1>Se han cambiado los datos del corresponsal</h1>
+    <h1>Se han modificado datos de un corresponsal</h1>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Código</th>
-            <td>{{ corresponsal.codigo }}</td>
-        </tr>
-        <tr>
-            <th>Nombre</th>
-            <td>{{ corresponsal.nombre }}</td>
-        </tr>
-        <tr>
-            <th>Apellidos</th>
-            <td>{{ corresponsal.apellidos }}</td>
-        </tr>
-        <tr>
-            <th>Dirección</th>
-            <td>{{ corresponsal.direccion }}</td>
-        </tr>
-        <tr>
-            <th>Correo</th>
-            <td>{{ corresponsal.correo }}</td>
-        </tr>
-        {% if corresponsal.equipo != null %}
-            <tr>
-                <th>Equipo</th>
-                <td>{{ corresponsal.equipo.codigo }}</td>
-            </tr>
-        {% endif %}
-        </tbody>
-    </table>
+    <p>Se han modificado los datos del corresponsal con código {{ corresponsal.codigo }}. A continuación se mostrarán los nuevos datos.
+        Nombre: {{ corresponsal.nombre }}, apellidos: {{ corresponsal.apellidos }}, dirección {{ corresponsal.direccion }}
+        y correo: {{ corresponsal.correo }}</p>
+
 {% endblock %}

@@ -31,6 +31,7 @@ class PaisCorrespondenciaController extends AbstractController
      */
     public function añadir(PaisCorrespondenciaRepository $paisCorrespondenciaRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         return $this->render('pais_correspondencia/añadir.html.twig', [
             'pais_correspondencias' => $paisCorrespondenciaRepository->findAllByNombreAndDelete(),
         ]);
@@ -41,6 +42,7 @@ class PaisCorrespondenciaController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $paisCorrespondencium = new PaisCorrespondencia();
         $paisCorrespondencium ->setEsActivo(false);
         $form = $this->createForm(PaisCorrespondenciaType::class, $paisCorrespondencium);
@@ -62,20 +64,11 @@ class PaisCorrespondenciaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="pais_correspondencia_show", methods={"GET"})
-     */
-    public function show(PaisCorrespondencia $paisCorrespondencium): Response
-    {
-        return $this->render('pais_correspondencia/show.html.twig', [
-            'pais_correspondencium' => $paisCorrespondencium,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="pais_correspondencia_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, PaisCorrespondencia $paisCorrespondencium): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $form = $this->createForm(PaisCorrespondenciaType::class, $paisCorrespondencium);
         $form->handleRequest($request);
 
@@ -96,6 +89,7 @@ class PaisCorrespondenciaController extends AbstractController
      */
     public function activar(PaisCorrespondencia $paisCorrespondencium): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->find(PaisCorrespondencia::class, $paisCorrespondencium->getId());
         $paisCorrespondencium->setEsActivo(true);
@@ -110,6 +104,7 @@ class PaisCorrespondenciaController extends AbstractController
      */
     public function delete(Request $request, PaisCorrespondencia $paisCorrespondencium): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         if ($this->isCsrfTokenValid('delete'.$paisCorrespondencium->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->find(PaisCorrespondencia::class, $paisCorrespondencium->getId());
