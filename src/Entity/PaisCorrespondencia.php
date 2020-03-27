@@ -38,6 +38,16 @@ class PaisCorrespondencia
      */
     private $region;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ciudad", mappedBy="pais")
+     */
+    private $ciudades;
+
+    public function __construct()
+    {
+        $this->ciudades = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -88,6 +98,37 @@ class PaisCorrespondencia
     public function setRegion(?RegionMundial $region): self
     {
         $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ciudad[]
+     */
+    public function getCiudades(): Collection
+    {
+        return $this->ciudades;
+    }
+
+    public function addCiudade(Ciudad $ciudade): self
+    {
+        if (!$this->ciudades->contains($ciudade)) {
+            $this->ciudades[] = $ciudade;
+            $ciudade->setPais($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCiudade(Ciudad $ciudade): self
+    {
+        if ($this->ciudades->contains($ciudade)) {
+            $this->ciudades->removeElement($ciudade);
+            // set the owning side to null (unless already changed)
+            if ($ciudade->getPais() === $this) {
+                $ciudade->setPais(null);
+            }
+        }
 
         return $this;
     }
