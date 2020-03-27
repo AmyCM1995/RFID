@@ -39,9 +39,15 @@ class Area
      */
     private $sitioLectors;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Envio", mappedBy="area_origen")
+     */
+    private $envios;
+
     public function __construct()
     {
         $this->sitioLectors = new ArrayCollection();
+        $this->envios = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,6 +116,37 @@ class Area
             // set the owning side to null (unless already changed)
             if ($sitioLector->getArea() === $this) {
                 $sitioLector->setArea(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Envio[]
+     */
+    public function getEnvios(): Collection
+    {
+        return $this->envios;
+    }
+
+    public function addEnvio(Envio $envio): self
+    {
+        if (!$this->envios->contains($envio)) {
+            $this->envios[] = $envio;
+            $envio->setAreaOrigen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnvio(Envio $envio): self
+    {
+        if ($this->envios->contains($envio)) {
+            $this->envios->removeElement($envio);
+            // set the owning side to null (unless already changed)
+            if ($envio->getAreaOrigen() === $this) {
+                $envio->setAreaOrigen(null);
             }
         }
 

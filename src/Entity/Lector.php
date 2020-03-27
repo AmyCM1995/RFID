@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Lector
      * @ORM\JoinColumn(nullable=false)
      */
     private $sitio;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lectura", mappedBy="lector")
+     */
+    private $lecturas;
+
+    public function __construct()
+    {
+        $this->lecturas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,37 @@ class Lector
     public function setSitio(?SitioLector $sitio): self
     {
         $this->sitio = $sitio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Lectura[]
+     */
+    public function getLecturas(): Collection
+    {
+        return $this->lecturas;
+    }
+
+    public function addLectura(Lectura $lectura): self
+    {
+        if (!$this->lecturas->contains($lectura)) {
+            $this->lecturas[] = $lectura;
+            $lectura->setLector($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLectura(Lectura $lectura): self
+    {
+        if ($this->lecturas->contains($lectura)) {
+            $this->lecturas->removeElement($lectura);
+            // set the owning side to null (unless already changed)
+            if ($lectura->getLector() === $this) {
+                $lectura->setLector(null);
+            }
+        }
 
         return $this;
     }

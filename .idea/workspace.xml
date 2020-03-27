@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Entity/Area.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Ciudad.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Lector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/LecturasCsv.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/SitioLector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/AreaRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/CiudadRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/LectorRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/LecturasCsvRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/SitioLectorRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/PaisCorrespondencia.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/PaisCorrespondencia.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Envio.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Lectura.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/EnvioRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/LecturaRepository.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -288,7 +280,7 @@
       <workItem from="1584382495812" duration="26877000" />
       <workItem from="1584530828206" duration="35181000" />
       <workItem from="1585249575256" duration="7570000" />
-      <workItem from="1585317547438" duration="3318000" />
+      <workItem from="1585317547438" duration="4331000" />
     </task>
     <servers />
   </component>
