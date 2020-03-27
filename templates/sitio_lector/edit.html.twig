@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SitioLector{% endblock %}
+
+{% block body %}
+    <h1>Edit SitioLector</h1>
+
+    {{ include('sitio_lector/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('sitio_lector_index') }}">back to list</a>
+
+    {{ include('sitio_lector/_delete_form.html.twig') }}
+{% endblock %}

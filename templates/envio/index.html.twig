@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Envio index{% endblock %}
+
+{% block body %}
+    <h1>Envio index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Codigo</th>
+                <th>Codigo_transpondedor</th>
+                <th>Tipo_medida</th>
+                <th>Fecha_plan_enviado</th>
+                <th>Fecha_real_enviado</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for envio in envios %}
+            <tr>
+                <td>{{ envio.id }}</td>
+                <td>{{ envio.codigo }}</td>
+                <td>{{ envio.codigoTranspondedor }}</td>
+                <td>{{ envio.tipoMedida }}</td>
+                <td>{{ envio.fechaPlanEnviado ? envio.fechaPlanEnviado|date('Y-m-d') : '' }}</td>
+                <td>{{ envio.fechaRealEnviado ? envio.fechaRealEnviado|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('envio_show', {'id': envio.id}) }}">show</a>
+                    <a href="{{ path('envio_edit', {'id': envio.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('envio_new') }}">Create new</a>
+{% endblock %}

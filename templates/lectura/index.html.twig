@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lectura index{% endblock %}
+
+{% block body %}
+    <h1>Lectura index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha_hora</th>
+                <th>Dia</th>
+                <th>Validada</th>
+                <th>Valida</th>
+                <th>Es_marcado_como_terminal_dues</th>
+                <th>Es_primero_calcular_HTD</th>
+                <th>Codigo_lectura_borrada</th>
+                <th>Detalle_lectura_borrada</th>
+                <th>Ctd_lecturas_luego_entregado</th>
+                <th>Tiene_lecturas_marcadas_como_TD</th>
+                <th>Cant_lecturas_entre_enviado_y_recibido</th>
+                <th>Cant_lecturas_despues_recibido</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lectura in lecturas %}
+            <tr>
+                <td>{{ lectura.id }}</td>
+                <td>{{ lectura.fechaHora ? lectura.fechaHora|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ lectura.dia }}</td>
+                <td>{{ lectura.validada ? 'Yes' : 'No' }}</td>
+                <td>{{ lectura.valida ? 'Yes' : 'No' }}</td>
+                <td>{{ lectura.esMarcadoComoTerminalDues ? 'Yes' : 'No' }}</td>
+                <td>{{ lectura.esPrimeroCalcularHTD ? 'Yes' : 'No' }}</td>
+                <td>{{ lectura.codigoLecturaBorrada }}</td>
+                <td>{{ lectura.detalleLecturaBorrada }}</td>
+                <td>{{ lectura.ctdLecturasLuegoEntregado }}</td>
+                <td>{{ lectura.tieneLecturasMarcadasComoTD ? 'Yes' : 'No' }}</td>
+                <td>{{ lectura.cantLecturasEntreEnviadoYRecibido }}</td>
+                <td>{{ lectura.cantLecturasDespuesRecibido }}</td>
+                <td>
+                    <a href="{{ path('lectura_show', {'id': lectura.id}) }}">show</a>
+                    <a href="{{ path('lectura_edit', {'id': lectura.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('lectura_new') }}">Create new</a>
+{% endblock %}

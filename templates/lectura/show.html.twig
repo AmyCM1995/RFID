@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lectura{% endblock %}
+
+{% block body %}
+    <h1>Lectura</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ lectura.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_hora</th>
+                <td>{{ lectura.fechaHora ? lectura.fechaHora|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Dia</th>
+                <td>{{ lectura.dia }}</td>
+            </tr>
+            <tr>
+                <th>Validada</th>
+                <td>{{ lectura.validada ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Valida</th>
+                <td>{{ lectura.valida ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Es_marcado_como_terminal_dues</th>
+                <td>{{ lectura.esMarcadoComoTerminalDues ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Es_primero_calcular_HTD</th>
+                <td>{{ lectura.esPrimeroCalcularHTD ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_lectura_borrada</th>
+                <td>{{ lectura.codigoLecturaBorrada }}</td>
+            </tr>
+            <tr>
+                <th>Detalle_lectura_borrada</th>
+                <td>{{ lectura.detalleLecturaBorrada }}</td>
+            </tr>
+            <tr>
+                <th>Ctd_lecturas_luego_entregado</th>
+                <td>{{ lectura.ctdLecturasLuegoEntregado }}</td>
+            </tr>
+            <tr>
+                <th>Tiene_lecturas_marcadas_como_TD</th>
+                <td>{{ lectura.tieneLecturasMarcadasComoTD ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Cant_lecturas_entre_enviado_y_recibido</th>
+                <td>{{ lectura.cantLecturasEntreEnviadoYRecibido }}</td>
+            </tr>
+            <tr>
+                <th>Cant_lecturas_despues_recibido</th>
+                <td>{{ lectura.cantLecturasDespuesRecibido }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('lectura_index') }}">back to list</a>
+
+    <a href="{{ path('lectura_edit', {'id': lectura.id}) }}">edit</a>
+
+    {{ include('lectura/_delete_form.html.twig') }}
+{% endblock %}

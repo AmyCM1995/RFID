@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Envio{% endblock %}
+
+{% block body %}
+    <h1>Envio</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ envio.id }}</td>
+            </tr>
+            <tr>
+                <th>Codigo</th>
+                <td>{{ envio.codigo }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_transpondedor</th>
+                <td>{{ envio.codigoTranspondedor }}</td>
+            </tr>
+            <tr>
+                <th>Tipo_medida</th>
+                <td>{{ envio.tipoMedida }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_plan_enviado</th>
+                <td>{{ envio.fechaPlanEnviado ? envio.fechaPlanEnviado|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_real_enviado</th>
+                <td>{{ envio.fechaRealEnviado ? envio.fechaRealEnviado|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('envio_index') }}">back to list</a>
+
+    <a href="{{ path('envio_edit', {'id': envio.id}) }}">edit</a>
+
+    {{ include('envio/_delete_form.html.twig') }}
+{% endblock %}

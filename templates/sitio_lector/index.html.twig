@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SitioLector index{% endblock %}
+
+{% block body %}
+    <h1>SitioLector index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sitio_lector in sitio_lectors %}
+            <tr>
+                <td>{{ sitio_lector.id }}</td>
+                <td>{{ sitio_lector.codigo }}</td>
+                <td>{{ sitio_lector.nombre }}</td>
+                <td>
+                    <a href="{{ path('sitio_lector_show', {'id': sitio_lector.id}) }}">show</a>
+                    <a href="{{ path('sitio_lector_edit', {'id': sitio_lector.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('sitio_lector_new') }}">Create new</a>
+{% endblock %}

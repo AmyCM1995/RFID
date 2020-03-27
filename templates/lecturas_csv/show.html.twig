@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LecturasCsv{% endblock %}
+
+{% block body %}
+    <h1>LecturasCsv</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ lecturas_csv.id }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_pais_origen</th>
+                <td>{{ lecturas_csv.codigoPaisOrigen }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_ciudad_origen</th>
+                <td>{{ lecturas_csv.codigoCiudadOrigen }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_ciudad_origen</th>
+                <td>{{ lecturas_csv.nombreCiudadOrigen }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_area_origen</th>
+                <td>{{ lecturas_csv.codigoAreaOrigen }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_area_origen</th>
+                <td>{{ lecturas_csv.nombreAreaOrigen }}</td>
+            </tr>
+            <tr>
+                <th>Tipo_dimension</th>
+                <td>{{ lecturas_csv.tipoDimension }}</td>
+            </tr>
+            <tr>
+                <th>Id_envio</th>
+                <td>{{ lecturas_csv.idEnvio }}</td>
+            </tr>
+            <tr>
+                <th>Id_transpondedor</th>
+                <td>{{ lecturas_csv.idTranspondedor }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_plan_enviada</th>
+                <td>{{ lecturas_csv.fechaPlanEnviada ? lecturas_csv.fechaPlanEnviada|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_real_enviada</th>
+                <td>{{ lecturas_csv.fechaRealEnviada ? lecturas_csv.fechaRealEnviada|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_pais_destino</th>
+                <td>{{ lecturas_csv.codigoPaisDestino }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_ciudad_destino</th>
+                <td>{{ lecturas_csv.codigoCiudadDestino }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_ciudad_destino</th>
+                <td>{{ lecturas_csv.nombreCiudadDestino }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_area_destino</th>
+                <td>{{ lecturas_csv.codigoAreaDestino }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_area_destino</th>
+                <td>{{ lecturas_csv.nombreAreaDestino }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_recibida</th>
+                <td>{{ lecturas_csv.fechaRecibida ? lecturas_csv.fechaRecibida|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Validado</th>
+                <td>{{ lecturas_csv.validado ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Valido</th>
+                <td>{{ lecturas_csv.valido ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Hora_fecha_lectura</th>
+                <td>{{ lecturas_csv.horaFechaLectura ? lecturas_csv.horaFechaLectura|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Dia_lectura</th>
+                <td>{{ lecturas_csv.diaLectura }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_sitio_pais</th>
+                <td>{{ lecturas_csv.codigoSitioPais }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_sitio</th>
+                <td>{{ lecturas_csv.codigoSitio }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_sitio</th>
+                <td>{{ lecturas_csv.nombreSitio }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_sitio_area</th>
+                <td>{{ lecturas_csv.nombreSitioArea }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_lector</th>
+                <td>{{ lecturas_csv.nombreLector }}</td>
+            </tr>
+            <tr>
+                <th>Id_lector</th>
+                <td>{{ lecturas_csv.idLector }}</td>
+            </tr>
+            <tr>
+                <th>Proposito_lector</th>
+                <td>{{ lecturas_csv.propositoLector }}</td>
+            </tr>
+            <tr>
+                <th>Es_marcado_como_terminal_dues</th>
+                <td>{{ lecturas_csv.esMarcadoComoTerminalDues ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Es_primero_calcular_HTD</th>
+                <td>{{ lecturas_csv.esPrimeroCalcularHTD ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_lectura_borrada</th>
+                <td>{{ lecturas_csv.codigoLecturaBorrada }}</td>
+            </tr>
+            <tr>
+                <th>Detalle_lectura_borrada</th>
+                <td>{{ lecturas_csv.detalleLecturaBorrada }}</td>
+            </tr>
+            <tr>
+                <th>Ctd_lecturas_luego_entregado</th>
+                <td>{{ lecturas_csv.ctdLecturasLuegoEntregado }}</td>
+            </tr>
+            <tr>
+                <th>Tiene_lecturas_marcadas_como_TD</th>
+                <td>{{ lecturas_csv.tieneLecturasMarcadasComoTD ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Cant_lecturas_entre_enviado_y_recibido</th>
+                <td>{{ lecturas_csv.cantLecturasEntreEnviadoYRecibido }}</td>
+            </tr>
+            <tr>
+                <th>Cant_lecturas_despues_recibido</th>
+                <td>{{ lecturas_csv.cantLecturasDespuesRecibido }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('lecturas_csv_index') }}">back to list</a>
+
+    <a href="{{ path('lecturas_csv_edit', {'id': lecturas_csv.id}) }}">edit</a>
+
+    {{ include('lecturas_csv/_delete_form.html.twig') }}
+{% endblock %}

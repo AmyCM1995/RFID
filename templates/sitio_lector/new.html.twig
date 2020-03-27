@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SitioLector{% endblock %}
+
+{% block body %}
+    <h1>Create new SitioLector</h1>
+
+    {{ include('sitio_lector/_form.html.twig') }}
+
+    <a href="{{ path('sitio_lector_index') }}">back to list</a>
+{% endblock %}

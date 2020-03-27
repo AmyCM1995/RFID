@@ -2,10 +2,54 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Entity/Envio.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Lectura.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/EnvioRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/LecturaRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/AreaController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/CiudadController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/EnvioController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/LecturaController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/SitioLectorController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/AreaType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/CiudadType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/EnvioType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/LecturaType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/LecturasCsvType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/SitioLectorType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/area/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/area/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/area/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/area/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/area/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/area/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ciudad/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ciudad/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ciudad/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ciudad/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ciudad/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ciudad/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/envio/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/envio/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/envio/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/envio/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/envio/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/envio/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lectura/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lectura/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lectura/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lectura/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lectura/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lectura/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lecturas_csv/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lecturas_csv/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lecturas_csv/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lecturas_csv/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lecturas_csv/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lecturas_csv/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/sitio_lector/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/sitio_lector/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/sitio_lector/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/sitio_lector/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/sitio_lector/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/sitio_lector/show.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -280,7 +324,7 @@
       <workItem from="1584382495812" duration="26877000" />
       <workItem from="1584530828206" duration="35181000" />
       <workItem from="1585249575256" duration="7570000" />
-      <workItem from="1585317547438" duration="4331000" />
+      <workItem from="1585317547438" duration="4846000" />
     </task>
     <servers />
   </component>
