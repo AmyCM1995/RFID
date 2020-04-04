@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Estado</th>
                 <th>Codigo_pais_origen</th>
                 <th>Codigo_ciudad_origen</th>
                 <th>Nombre_ciudad_origen</th>
@@ -50,7 +50,11 @@
         <tbody>
         {% for lecturas_csv in lecturas_csvs %}
             <tr>
-                <td>{{ lecturas_csv.id }}</td>
+                {% if lecturas_csv.codigoBorradoPropio != null %}
+                    <td>{{ lecturas_csv.codigoBorradoPropio.codigo }}</td>
+                    {% else %}
+                    <td>Lectura correcta</td>
+                {% endif %}
                 <td>{{ lecturas_csv.codigoPaisOrigen }}</td>
                 <td>{{ lecturas_csv.codigoCiudadOrigen }}</td>
                 <td>{{ lecturas_csv.nombreCiudadOrigen }}</td>
@@ -88,7 +92,6 @@
                 <td>{{ lecturas_csv.cantLecturasDespuesRecibido }}</td>
                 <td>
                     <a href="{{ path('lecturas_csv_show', {'id': lecturas_csv.id}) }}">show</a>
-                    <a href="{{ path('lecturas_csv_edit', {'id': lecturas_csv.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -99,5 +102,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('lecturas_csv_new') }}">Create new</a>
 {% endblock %}

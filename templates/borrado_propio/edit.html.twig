@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit BorradoPropio{% endblock %}
+
+{% block body %}
+    <h1>Edit BorradoPropio</h1>
+
+    {{ include('borrado_propio/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('borrado_propio_index') }}">back to list</a>
+
+    {{ include('borrado_propio/_delete_form.html.twig') }}
+{% endblock %}

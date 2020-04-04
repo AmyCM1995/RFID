@@ -93,11 +93,15 @@
                         {% endif %}
 
                         {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-                        {#<li class="sidebtns">
-                            <button class="sidebar-btns"><a href="#">Lecturas</a></button>
-                        <li class="sidebtns">
-                            <button class="sidebar-btns"><a href="#">Lectores RFID</a></button>
-                        </li>#}
+                        <li class="dropdown-sidebar">
+                            <div class="dropdown dropdown-sidebar-btn"><a>Lecturas</a></div>
+                            <div class="dropdown-sidebar-content">
+                                <a href="{{path('lecturas_csv_importar')}}">Importar nuevas lecturas</a>
+                                <a href="{{path('lecturas_csv_index')}}">Visualizar lecturas</a>
+                            </div>
+                            {#<li class="sidebtns">
+                                <button class="sidebar-btns"><a href="#">Lectores RFID</a></button>#}
+                        </li>
                         {% endif %}
 
                         {% if is_granted('ROLE_OBSERVADOR') %}
@@ -111,6 +115,7 @@
                                 <a href="{{ path('pais_correspondencia_index') }}">País</a>
                                 <a href="{{ path('region_mundial_index') }}">Tarifas postales</a>
                                 <a href="{{ path('importaciones_index') }}">Importaciones</a>
+                                <a href="{{ path('borrado_propio_index') }}">Criterios de borrado</a>
                             </div>
                         </li>
                         <li class="dropdown-sidebar">

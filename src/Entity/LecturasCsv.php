@@ -57,12 +57,12 @@ class LecturasCsv
     private $id_transpondedor;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $fecha_plan_enviada;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $fecha_real_enviada;
 
@@ -92,7 +92,7 @@ class LecturasCsv
     private $nombre_area_destino;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $fecha_recibida;
 
@@ -107,7 +107,7 @@ class LecturasCsv
     private $valido;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $hora_fecha_lectura;
 
@@ -172,7 +172,7 @@ class LecturasCsv
     private $detalle_lectura_borrada;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $ctd_lecturas_luego_entregado;
 
@@ -190,6 +190,16 @@ class LecturasCsv
      * @ORM\Column(type="integer", nullable=true)
      */
     private $cant_lecturas_despues_recibido;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\BorradoPropio", inversedBy="lecturasCsvs")
+     */
+    private $codigo_borrado_propio;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ImportacionesLecturas", inversedBy="lecturasCsvs")
+     */
+    private $importacion;
 
     public function getId(): ?int
     {
@@ -292,24 +302,24 @@ class LecturasCsv
         return $this;
     }
 
-    public function getFechaPlanEnviada(): ?\DateTimeInterface
+    public function getFechaPlanEnviada(): ?string
     {
         return $this->fecha_plan_enviada;
     }
 
-    public function setFechaPlanEnviada(?\DateTimeInterface $fecha_plan_enviada): self
+    public function setFechaPlanEnviada(?string $fecha_plan_enviada): self
     {
         $this->fecha_plan_enviada = $fecha_plan_enviada;
 
         return $this;
     }
 
-    public function getFechaRealEnviada(): ?\DateTimeInterface
+    public function getFechaRealEnviada(): ?string
     {
         return $this->fecha_real_enviada;
     }
 
-    public function setFechaRealEnviada(?\DateTimeInterface $fecha_real_enviada): self
+    public function setFechaRealEnviada(?string $fecha_real_enviada): self
     {
         $this->fecha_real_enviada = $fecha_real_enviada;
 
@@ -376,12 +386,12 @@ class LecturasCsv
         return $this;
     }
 
-    public function getFechaRecibida(): ?\DateTimeInterface
+    public function getFechaRecibida(): ?string
     {
         return $this->fecha_recibida;
     }
 
-    public function setFechaRecibida(?\DateTimeInterface $fecha_recibida): self
+    public function setFechaRecibida(?string $fecha_recibida): self
     {
         $this->fecha_recibida = $fecha_recibida;
 
@@ -412,12 +422,12 @@ class LecturasCsv
         return $this;
     }
 
-    public function getHoraFechaLectura(): ?\DateTimeInterface
+    public function getHoraFechaLectura(): ?string
     {
         return $this->hora_fecha_lectura;
     }
 
-    public function setHoraFechaLectura(?\DateTimeInterface $hora_fecha_lectura): self
+    public function setHoraFechaLectura(?string $hora_fecha_lectura): self
     {
         $this->hora_fecha_lectura = $hora_fecha_lectura;
 
@@ -568,12 +578,12 @@ class LecturasCsv
         return $this;
     }
 
-    public function getCtdLecturasLuegoEntregado(): ?int
+    public function getCtdLecturasLuegoEntregado(): ?string
     {
         return $this->ctd_lecturas_luego_entregado;
     }
 
-    public function setCtdLecturasLuegoEntregado(?int $ctd_lecturas_luego_entregado): self
+    public function setCtdLecturasLuegoEntregado(?string $ctd_lecturas_luego_entregado): self
     {
         $this->ctd_lecturas_luego_entregado = $ctd_lecturas_luego_entregado;
 
@@ -612,6 +622,30 @@ class LecturasCsv
     public function setCantLecturasDespuesRecibido(?int $cant_lecturas_despues_recibido): self
     {
         $this->cant_lecturas_despues_recibido = $cant_lecturas_despues_recibido;
+
+        return $this;
+    }
+
+    public function getCodigoBorradoPropio(): ?BorradoPropio
+    {
+        return $this->codigo_borrado_propio;
+    }
+
+    public function setCodigoBorradoPropio(?BorradoPropio $codigo_borrado_propio): self
+    {
+        $this->codigo_borrado_propio = $codigo_borrado_propio;
+
+        return $this;
+    }
+
+    public function getImportacion(): ?ImportacionesLecturas
+    {
+        return $this->importacion;
+    }
+
+    public function setImportacion(?ImportacionesLecturas $importacion): self
+    {
+        $this->importacion = $importacion;
 
         return $this;
     }

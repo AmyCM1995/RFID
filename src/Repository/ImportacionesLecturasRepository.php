@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\ImportacionesLecturas;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+
+/**
+ * @method ImportacionesLecturas|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ImportacionesLecturas|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ImportacionesLecturas[]    findAll()
+ * @method ImportacionesLecturas[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class ImportacionesLecturasRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, ImportacionesLecturas::class);
+    }
+
+    // /**
+    //  * @return ImportacionesLecturas[] Returns an array of ImportacionesLecturas objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('i.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?ImportacionesLecturas
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    */
+    public function findUltimaImportacion(){
+        $importaciones = $this->findAll();
+        $size = sizeof($importaciones)-1;
+        return $importaciones[$size];
+    }
+}

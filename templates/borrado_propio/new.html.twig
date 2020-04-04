@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BorradoPropio{% endblock %}
+
+{% block body %}
+    <h1>Create new BorradoPropio</h1>
+
+    {{ include('borrado_propio/_form.html.twig') }}
+
+    <a href="{{ path('borrado_propio_index') }}">back to list</a>
+{% endblock %}

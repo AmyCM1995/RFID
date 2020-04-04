@@ -47,4 +47,26 @@ class LecturasCsvRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findEveryEnvio(){
+        $lecturas = $this->findAll();
+        $envios = null;
+        $size = 1;
+        $envios[0] = $lecturas[0]->getIdEnvio();
+        foreach ($lecturas as $l){
+            if($this->existe($envios, $l->getIdEnvio()) == false){
+                $envios[$size] = $l->getIdEnvio();
+                $size++;
+            }
+        }
+        return $envios;
+    }
+    public function existe($envios, $id_envio){
+        $existe = false;
+        foreach ($envios as $e){
+            if($e == $id_envio){
+                $existe = true;
+            }
+        }
+        return $existe;
+    }
 }
