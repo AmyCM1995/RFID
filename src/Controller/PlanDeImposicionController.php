@@ -732,6 +732,7 @@ public function buscarCorresponsalesAPartirDeCodigos ($corresponsales){
             }
             $t = new Totales();
             $t->setCorresponsalCuba($corresponsales[$i]->getCodigo());
+            $t->setCorresponsalDestino(null);
             $t->setTotalEnvios($this->CantidadEnviosPorCorresponsal($corresponsales[$i], $plan));
             $totales[$size]=$t;
             $size++;

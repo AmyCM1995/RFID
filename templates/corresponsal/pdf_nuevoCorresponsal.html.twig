@@ -1,9 +1,13 @@
-{% block body %}
+{% extends 'baseReportes.html.twig' %}
+{% block reporte %}
 
     <h1>Se ha añadido un nuevo corresponsal</h1>
 
-    <p>Se ha añadido el corresponsal con código {{ corresponsal.codigo }}, de nombre {{ corresponsal.nombre }}
-        {{ corresponsal.apellidos }} que radica en la dirección {{ corresponsal.direccion }} y cuyo correo es
-        {{ corresponsal.correo }}</p>
+    <p>Se ha añadido el corresponsal con los siguientes datos
+        Código {{ corresponsal.codigo }}
+        Nombre {{ corresponsal.nombre }}
+        Apellidos {{ corresponsal.apellidos }}
+        Dirección {{ corresponsal.direccion }}
+        Correo {{ corresponsal.correo }}</p>
 
 {% endblock %}

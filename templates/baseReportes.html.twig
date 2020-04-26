@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div>
+        <img src={{ asset('img/SCM_Cuba.png') }} alt="Sistema de Control Mundial * Cuba" style="float: left; width: 50px; height: 50px; position: fixed; top: 10px;">
+        <a style="float: right">{{ app.user.username }} {{ "now"| date("d/m/Y") }}</a>
+        <br>
+    </div>
+
+    {% block reporte %}
+        {% for flash_message in app.session.flashbag.get('notice') %}
+            <div class="flash-notice">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+    {% endblock %}
+</body>
+</html>

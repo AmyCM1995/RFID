@@ -1,9 +1,13 @@
-{% block body %}
+{% extends 'baseReportes.html.twig' %}
+{% block reporte %}
 
     <h1>Se han modificado datos de un corresponsal</h1>
 
-    <p>Se han modificado los datos del corresponsal con código {{ corresponsal.codigo }}. A continuación se mostrarán los nuevos datos.
-        Nombre: {{ corresponsal.nombre }}, apellidos: {{ corresponsal.apellidos }}, dirección {{ corresponsal.direccion }}
-        y correo: {{ corresponsal.correo }}</p>
+    <p>Se han modificado los datos del corresponsal con código {{ corresponsal.codigo }}.
+        A continuación se mostrarán los nuevos datos.
+        Nombre: {{ corresponsal.nombre }}
+        Apellidos: {{ corresponsal.apellidos }}
+        Dirección {{ corresponsal.direccion }}
+        Correo: {{ corresponsal.correo }}</p>
 
 {% endblock %}

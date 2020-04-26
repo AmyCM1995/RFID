@@ -1,8 +1,9 @@
- {% block contenido %}
+{% extends 'baseReportes.html.twig' %}
+{% block reporte %}
      <div>
-         <p align="left">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</p>
-         <p align="left">Dimensión {{ importacion.dimension }}</p>
-         <p align="left">Ciclo {{ importacion.ciclo }}</p>
+         <p align="left" style="font-size: 14px">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }} <br>
+             Dimensión {{ importacion.dimension }} <br>
+             Ciclo {{ importacion.ciclo }}</p>
      </div>
 
 
@@ -10,12 +11,12 @@
          table, th, td {
              border-collapse: collapse;
              border: 1px solid black;
-             padding: 5px;
-             font-size: small;
+             padding: 2px;
+             font-size: 10px;
          }
      </style>
 
-    <table class="table" align="center">
+    <table class="table">
         <thead>
         <tr>
             <th colspan="2"> </th>
@@ -25,18 +26,27 @@
         </tr>
         </thead>
         <tbody>
+        {% set dia = false %}
         {% for plan_de_imposicion_csv in plan_de_imposicion_csvs %}
             <tr>
                 {% if plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Monday' %}
+                    {% set dia = false %}
                     <td>Lunes</td>
                 {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Tuesday' %}
+                    {% set dia = false %}
                     <td>Martes</td>
                 {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Wednesday' %}
+                    {% set dia = false %}
                     <td>Miércoles</td>
                 {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Thursday' %}
+                    {% set dia = false %}
                     <td>Jueves</td>
                 {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Friday' %}
                     <td>Viernes</td>
+                    {% set dia = true %}
+                    {% if loop.last %}
+                        {% set dia = false %}
+                    {% endif %}
                 {% endif %}
                 <td>{{ plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('d-m-y') : '' }}</td>
 
@@ -59,6 +69,15 @@
                     <td>{{ plan_de_imposicion_csv.envio31 }}</td>
                 {% endif %}
             </tr>
+            {% if dia == true %}
+                <tr>
+                    <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                    <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                    <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                    <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                    <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>

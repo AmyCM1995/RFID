@@ -1,229 +1,273 @@
-{% block contenido %}
+{% extends 'baseReportes.html.twig' %}
+{% block reporte %}
     <div>
-        <p align="left">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</p>
-        <p align="left">Dimensión {{ importacion.dimension }}</p>
-        <p align="left">Ciclo {{ importacion.ciclo }}</p>
+        <p align="left" style="font-size: 14px">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }} <br>
+            Dimensión {{ importacion.dimension }} <br>
+            Ciclo {{ importacion.ciclo }}</p>
     </div>
+
 
     <style type="text/css">
         table, th, td {
             border-collapse: collapse;
             border: 1px solid black;
-            padding: 5px;
-            font-size: small;
+            padding: 2px;
+            font-size: 10px;
+        }
+        #pi {
+            width: 300px;
+            height: 830px;
+            border: 2px black;
+            float: left;
+        }
+        #tablas{
+            width: 350px;
+            height: 830px;
+            border: 2px black;
+            float: right;
+        }
+        #tabla{
+            border-collapse: collapse;
+            border: 1px red;
+            padding: 2px;
+            font-size: 10px;
+
         }
     </style>
 
-    <table class="table" id="plan">
-        <thead>
-        <tr>
-            <th colspan="2"> </th>
-            {% for corresponsal in corresponsales %}
-                <th>{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
-            {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for plan_de_imposicion_csv in plan_de_imposicion_csvs %}
-            <tr>
-                {% if plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Monday' %}
-                    <td>Lunes</td>
-                {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Tuesday' %}
-                    <td>Martes</td>
-                {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Wednesday' %}
-                    <td>Miércoles</td>
-                {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Thursday' %}
-                    <td>Jueves</td>
-                {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Friday' %}
-                    <td>Viernes</td>
-                {% endif %}
-                <td>{{ plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('d-m-y') : '' }}</td>
-
-                {# *******************************ENVIOS**************************************#}
-                {% if plan_de_imposicion_csv.envio12 != null %}
-                    <td>{{ [plan_de_imposicion_csv.envio11,plan_de_imposicion_csv.envio12]|join(' y ') }}</td>
-                {% else %}
-                    <td>{{ plan_de_imposicion_csv.envio11 }}</td>
-                {% endif %}
-
-                {% if plan_de_imposicion_csv.envio22 != null %}
-                    <td>{{ [plan_de_imposicion_csv.envio21,plan_de_imposicion_csv.envio22]|join(' y ') }}</td>
-                {% else %}
-                    <td>{{ plan_de_imposicion_csv.envio21 }}</td>
-                {% endif %}
-
-                {% if plan_de_imposicion_csv.envio32 != null %}
-                    <td>{{ [plan_de_imposicion_csv.envio31,plan_de_imposicion_csv.envio32]|join(' y ') }}</td>
-                {% else %}
-                    <td>{{ plan_de_imposicion_csv.envio31 }}</td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-
-    {#******************************Estadisticas********************************#}
-    <div id="totales">
-        <div id="espacio"></div>
-        <h1>Cálculo de totales</h1>
-
+    <div id="pi">
         <table class="table">
             <thead>
             <tr>
-                <th></th>
+                <th colspan="2"> </th>
                 {% for corresponsal in corresponsales %}
-                    <th>{{ corresponsal.codigo }}</th>
+                    <th>{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
                 {% endfor %}
             </tr>
             </thead>
             <tbody>
-            <tr>
-                {% for corresponsalesDestino in corresponsalesDestino %}
-                {% set size = loop.index %}
-                <th>{{ corresponsalesDestino }}</th>
-                {% for totalesc1 in totalesc1 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalesc1 }}</td>
+            {% set dia = false %}
+            {% for plan_de_imposicion_csv in plan_de_imposicion_csvs %}
+                <tr>
+                    {% if plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Monday' %}
+                        {% set dia = false %}
+                        <td>Lunes</td>
+                    {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Tuesday' %}
+                        {% set dia = false %}
+                        <td>Martes</td>
+                    {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Wednesday' %}
+                        {% set dia = false %}
+                        <td>Miércoles</td>
+                    {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Thursday' %}
+                        {% set dia = false %}
+                        <td>Jueves</td>
+                    {% elseif  plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Friday' %}
+                        <td>Viernes</td>
+                        {% set dia = true %}
+                        {% if loop.last %}
+                            {% set dia = false %}
+                        {% endif %}
                     {% endif %}
-                {% endfor %}
-                {% for totalesc2 in totalesc2 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalesc2 }}</td>
+                    <td>{{ plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('d-m-y') : '' }}</td>
+
+                    {# *******************************ENVIOS**************************************#}
+                    {% if plan_de_imposicion_csv.envio12 != null %}
+                        <td>{{ [plan_de_imposicion_csv.envio11,plan_de_imposicion_csv.envio12]|join(' y ') }}</td>
+                    {% else %}
+                        <td>{{ plan_de_imposicion_csv.envio11 }}</td>
                     {% endif %}
-                {% endfor %}
-                {% for totalesc3 in totalesc3 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalesc3 }}</td>
+
+                    {% if plan_de_imposicion_csv.envio22 != null %}
+                        <td>{{ [plan_de_imposicion_csv.envio21,plan_de_imposicion_csv.envio22]|join(' y ') }}</td>
+                    {% else %}
+                        <td>{{ plan_de_imposicion_csv.envio21 }}</td>
                     {% endif %}
-                {% endfor %}
-            </tr>
+
+                    {% if plan_de_imposicion_csv.envio32 != null %}
+                        <td>{{ [plan_de_imposicion_csv.envio31,plan_de_imposicion_csv.envio32]|join(' y ') }}</td>
+                    {% else %}
+                        <td>{{ plan_de_imposicion_csv.envio31 }}</td>
+                    {% endif %}
+                </tr>
+                {% if dia == true %}
+                    <tr>
+                        <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                        <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                        <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                        <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                        <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                    </tr>
+                {% endif %}
             {% endfor %}
-
             </tbody>
-        </table>
-        <h3>Cantidad total de envíos por países</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                {% for paisesDestino in paisesDestino %}
-                    <td>{{ paisesDestino.nombre }} ({{ paisesDestino.codigo }})</td>
-                {% endfor %}
-                <td>Total</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                {% for total in totalesPaises %}
-                    <td>{{ total }}</td>
-                {% endfor %}
-                <td>{{ totalEnvios }}</td>
-            </tr>
-            </tbody>
-
         </table>
     </div>
 
-    <div id="materiales">
-        <div id="espacio"></div>
-        <h1>Cálculo de materiales</h1>
 
-        <table class="table">
+
+    {#******************************Estadisticas********************************#}
+    <div id="tablas">
+        <h1>Cálculo de totales</h1>
+
+        <div style="">
+            <table id="tabla">
+                <thead>
+                <tr>
+                    <th id="tabla"></th>
+                    {% for corresponsal in corresponsales %}
+                        <th id="tabla">{{ corresponsal.codigo }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for corresponsalesDestinoConPais in corresponsalesDestinoConPaises %}
+                    {% set sizeDest = loop.index %}
+                    <tr>
+                        <th id="tabla">{{ corresponsalesDestinoConPais }}</th>
+                        {% for corresponsalesCubanos in corresponsalesCubanos %}
+                            {% set sizeCub = loop.index %}
+                            {% for mat in matriz %}
+                                {% if loop.index == sizeCub %}
+                                    {% for m in mat %}
+                                        {% if loop.index == sizeDest %}
+                                            <td id="tabla">{{ m }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th id="tabla">Totales</th>
+                    {% for totalesPorCorresponsal in totalesPorCorresponsales %}
+                        <td id="tabla">{{ totalesPorCorresponsal }}</td>
+                    {% endfor %}
+                    {#<td id="tabla">{{ totalEnvios }}</td>#}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Cantidad total de envíos por países</h3>
+        <table id="tabla">
             <thead>
             <tr>
-                <th></th>
-                {% for corresponsalesCubanos in corresponsalesCubanos %}
-                    <th>{{ corresponsalesCubanos }}</th>
+                {% for paisesDestino in paisesDestino %}
+                    <td id="tabla">{{ paisesDestino.nombre }} ({{ paisesDestino.codigo }})</td>
                 {% endfor %}
-                <th>Totales</th>
+                <td id="tabla">Total</td>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <th>Sobres</th>
-                <td>{{ totalc1 }}</td>
-                <td>{{ totalc2 }}</td>
-                <td>{{ totalc3 }}</td>
-                <td>{{ totalEnvios }}</td>
+                {% for total in totalesPaises1 %}
+                    <td id="tabla">{{ total }}</td>
+                {% endfor %}
+                <td id="tabla">{{ totalEnvios }}</td>
+            </tr>
+            </tbody>
+
+        </table>
+
+
+        <h1>Cálculo de materiales</h1>
+
+        <table id="tabla">
+            <thead>
+            <tr>
+                <th id="tabla"></th>
+                {% for corresponsalesCubanos in corresponsalesCubanos %}
+                    <th id="tabla">{{ corresponsalesCubanos }}</th>
+                {% endfor %}
+                <th id="tabla">Totales</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th id="tabla">Sobres</th>
+                {% for totales in totales %}
+                    <td id="tabla">{{ totales }}</td>
+                {% endfor %}
+                <td id="tabla">{{ totalEnvios }}</td>
             </tr>
             <tr>
-                <th>Sellos 65c</th>
+                <th id="tabla">Sellos 65c</th>
                 {% for totalEnvios065 in totalEnvios065 %}
-                    <td>{{ totalEnvios065 }}</td>
+                    <td id="tabla">{{ totalEnvios065 }}</td>
                 {% endfor %}
-                <td>{{ total065 }}</td>
+                <td id="tabla">{{ total065 }}</td>
             </tr>
             <tr>
-                <th>Sellos 75c</th>
+                <th id="tabla">Sellos 75c</th>
                 {% for totalEnvios075 in totalEnvios075 %}
-                    <td>{{ totalEnvios075 }}</td>
+                    <td id="tabla">{{ totalEnvios075 }}</td>
                 {% endfor %}
-                <td>{{ total075 }}</td>
+                <td id="tabla">{{ total075 }}</td>
             </tr>
+            {% set existe = false %}
+            {% for totalEnvios085 in totalEnvios085 %}
+                {% if totalEnvios085 != 0 %}
+                    {% set existe = true %}
+                {% endif %}
+            {% endfor %}
+            {% if existe == true %}
+                <tr>
+                    <th id="tabla">Sellos 85c</th>
+                    {% for totalEnvios085 in totalEnvios085 %}
+                        <td id="tabla">{{ totalEnvios085 }}</td>
+                    {% endfor %}
+                    <td id="tabla">{{ total085 }}</td>
+                </tr>
+            {% endif %}
             <tr>
-                <th>Sellos 85c</th>
-                {% for totalEnvios085 in totalEnvios085 %}
-                    <td>{{ totalEnvios085 }}</td>
-                {% endfor %}
-                <td>{{ total085 }}</td>
+                <th  id="tabla" colspan="5" style="text-align: center">Transpondedores</th>
             </tr>
-            <tr>
-                <th colspan="5">Transpondedores</th>
-            </tr>
-            <tr>
-                {% for paisDestino in paisesDestino %}
-                {% set size = loop.index %}
+            {% for paisDestino in paisesDestino %}
+                {% set sizeDest = loop.index %}
                 {% set total = 0 %}
-                <th>CU -> {{ paisDestino.codigo }}</th>
-                {% for totalPaisesC1 in totalesPaisesC1 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC1 }}</td>
-                        {% set total = total + totalPaisesC1 %}
-                    {% endif %}
-                {% endfor %}
-                {% for totalPaisesC2 in totalesPaisesC2 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC2 }}</td>
-                        {% set total = total + totalPaisesC2 %}
-                    {% endif %}
-                {% endfor %}
-                {% for totalPaisesC3 in totalesPaisesC3 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC3 }}</td>
-                        {% set total = total + totalPaisesC3 %}
-                    {% endif %}
-                {% endfor %}
-                <td>{{ total }}</td>
-            </tr>
+                <tr>
+                    <th id="tabla">CU -> {{ paisDestino.codigo }}</th>
+                    {% for corresponsalesCubanos in corresponsalesCubanos %}
+                        {% set sizeCub = loop.index %}
+                        {% for tp in totalesPaises %}
+                            {% if loop.index == sizeCub %}
+                                {% for t in tp %}
+                                    {% if loop.index == sizeDest %}
+                                        <td id="tabla">{{ t }}</td>
+                                        {% set total = total + t %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    <td id="tabla">{{ total }}</td>
+                </tr>
             {% endfor %}
             <tr>
-                <th colspan="5">Cartas GMS</th>
+                <th  id="tabla" colspan="5" style="text-align: center">Cartas GMS</th>
             </tr>
-            <tr>
-                {% for paisDestino in paisesDestino %}
-                {% set size = loop.index %}
+            {% for paisDestino in paisesDestino %}
+                {% set sizeDest = loop.index %}
                 {% set total = 0 %}
-                <th>CU -> {{ paisDestino.codigo }}</th>
-                {% for totalPaisesC1 in totalesPaisesC1 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC1 }}</td>
-                        {% set total = total + totalPaisesC1 %}
-                    {% endif %}
-                {% endfor %}
-                {% for totalPaisesC2 in totalesPaisesC2 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC2 }}</td>
-                        {% set total = total + totalPaisesC2 %}
-                    {% endif %}
-                {% endfor %}
-                {% for totalPaisesC3 in totalesPaisesC3 %}
-                    {% if loop.index == size %}
-                        <td>{{ totalPaisesC3 }}</td>
-                        {% set total = total + totalPaisesC3 %}
-                    {% endif %}
-                {% endfor %}
-                <td>{{ total }}</td>
-            </tr>
+                <tr>
+                    <th id="tabla">CU -> {{ paisDestino.codigo }}</th>
+                    {% for corresponsalesCubanos in corresponsalesCubanos %}
+                        {% set sizeCub = loop.index %}
+                        {% for tp in totalesPaises %}
+                            {% if loop.index == sizeCub %}
+                                {% for t in tp %}
+                                    {% if loop.index == sizeDest %}
+                                        <td id="tabla">{{ t }}</td>
+                                        {% set total = total + t %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    <td id="tabla">{{ total }}</td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>

@@ -89,6 +89,29 @@ class TotalesRepository extends ServiceEntityRepository
 
         return $corresponsalesDestino;
     }
+
+    public function agregarPaisesCorresponsalesDestino($corresponsalesDestino, $paisesDestino, $sizeCorresponsalesCubanos){
+        $corresponsalesDestinoConPaises = null;
+        $size = 0;
+        $sizeCorresponsales = 0;
+        $sizePaises = 0;
+        for ($i=0; $i<sizeof($corresponsalesDestino); $i++){
+            if($sizeCorresponsales < $sizeCorresponsalesCubanos){
+                $corresponsalesDestinoConPaises[$size] = $corresponsalesDestino[$i];
+                $size++;
+                $sizeCorresponsales++;
+            }elseif ($sizeCorresponsales == $sizeCorresponsalesCubanos){
+                $corresponsalesDestinoConPaises[$size] = $paisesDestino[$sizePaises]->getCodigo();
+                $size++;
+                $sizePaises++;
+                $sizeCorresponsales = 0;
+                $i--;
+            }
+        }
+        $corresponsalesDestinoConPaises[$size] = $paisesDestino[$sizePaises]->getCodigo();
+        return $corresponsalesDestinoConPaises;
+    }
+
     public function buscarCodigoPaíses(){
         $totaless = $this->findAll();
         $paisesDestino = [$totaless[0]->getCorresponsalDestino()];
@@ -104,6 +127,7 @@ class TotalesRepository extends ServiceEntityRepository
                 }
             }
         }
+        usort($paisesDestino, "strnatcmp");
         return $paisesDestino;
     }
     public function buscarPaises($repositorio){
@@ -204,11 +228,11 @@ class TotalesRepository extends ServiceEntityRepository
         return $existe;
     }
 
-    public function matrizTotales($corresponsalesCubanos, $corresponsalesDestino){
+    public function matrizTotales($corresponsalesCubanos, $corresponsalesDestinoConPaises){
         $matriz[][] = 0;
         for($i=0; $i<sizeof($corresponsalesCubanos); $i++){
-            for($j=0; $j<sizeof($corresponsalesDestino); $j++){
-                $total = $this->findOneByCorresCubanoYDestino($corresponsalesCubanos[$i], $corresponsalesDestino[$j]);
+            for($j=0; $j<sizeof($corresponsalesDestinoConPaises); $j++){
+                $total = $this->findOneByCorresCubanoYDestino($corresponsalesCubanos[$i], $corresponsalesDestinoConPaises[$j]);
                 if($total != null){
                     $matriz[$i][$j] = $total->getTotalEnvios();
                 }else{
@@ -218,6 +242,23 @@ class TotalesRepository extends ServiceEntityRepository
         }
 
         return $matriz;
+    }
+
+    public function totalesPorCorresponsales($corresponsalesCubanos, $repositorio, $paisesDestino){
+        $totales = [];
+        $size = 0;
+        $temporal = 0;
+        $arr = null;
+        for ($i=0; $i<sizeof($corresponsalesCubanos); $i++){
+            $arr = $this->arrTotalCorresponsalesPaises($repositorio, $corresponsalesCubanos[$i], $paisesDestino);
+            foreach ($arr as $arr){
+                $temporal += $arr;
+            }
+            $totales[$size] = $temporal;
+            $size++;
+            $temporal = 0;
+        }
+        return $totales;
     }
 
     public function findOneByCorresCubanoYDestino($corrCuba, $corrDest){

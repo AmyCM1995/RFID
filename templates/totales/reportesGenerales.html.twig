@@ -9,11 +9,11 @@
     <h3>Cálculo de totales y materiales</h3>
     <br>
     <h5>Año</h5>
-    {{ form_start(form) }}
+    {#} form_start(form) }}
     {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {{ form_end(form) }#}
     <button class="btn bg-primary" id="corresponsal-btns">
-        <a href="{{ path('pdf_estadisticas_anuales_view', {'anno': anno}) }}">Vista previa</a>
+        <a href="{{ path('pdf_estadisticas_anuales_view', {'anno': 2019}) }}">Vista previa</a>
     </button>
     <button class="btn bg-primary" id="corresponsal-btns">
         {#<a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">Generar</a>#}
