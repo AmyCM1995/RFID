@@ -4,6 +4,15 @@
     <h1>Cálculo de totales</h1>
     <h6>Ciclo {{ ciclo }}</h6>
 
+     <style type="text/css">
+       table, th, td {
+             border-collapse: collapse;
+             border: 1px solid gray;
+             padding: 2px;
+             font-size: 12px;
+         }
+     </style>
+
     <table class="table">
         <thead>
         <tr>
@@ -30,11 +39,18 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
-
             </tr>
         {% endfor %}
+        <tr>
+            <th id="tabla">Totales</th>
+            {% for totalesPorCorresponsal in totalesPorCorresponsales %}
+                <td id="tabla">{{ totalesPorCorresponsal }}</td>
+            {% endfor %}
+            {#<td id="tabla">{{ totalEnvios }}</td>#}
+        </tr>
         </tbody>
     </table>
+
     <h3>Cantidad total de envíos por países</h3>
     <table class="table">
         <thead>
@@ -55,7 +71,7 @@
         </tbody>
     </table>
 
-    <h3>Materiales</h3>
+    <h1>Materiales</h1>
     <table class="table">
         <thead>
         <tr>
@@ -103,21 +119,9 @@
                 <td>{{ total085 }}</td>
             </tr>
         {% endif %}
-        </tbody>
-    </table>
-
-    <h3>Transpondedores</h3>
-    <table class="table">
-        <thead>
         <tr>
-            <th></th>
-            {% for corresponsalesCubanos in corresponsalesCubanos %}
-                <th>{{ corresponsalesCubanos }}</th>
-            {% endfor %}
-            <th>Totales</th>
+            <th colspan="5" style="text-align: center">Transpondedores</th>
         </tr>
-        </thead>
-        <tbody>
         {% for paisDestino in paisesDestino %}
             {% set sizeDest = loop.index %}
             {% set total = 0 %}
@@ -139,20 +143,9 @@
                 <td>{{ total }}</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
-    <h3>Cartas GMS</h3>
-    <table class="table">
-        <thead>
         <tr>
-            <th></th>
-            {% for corresponsalesCubanos in corresponsalesCubanos %}
-                <th>{{ corresponsalesCubanos }}</th>
-            {% endfor %}
-            <th>Totales</th>
+            <th colspan="5" style="text-align: center">Cartas GMS</th>
         </tr>
-        </thead>
-        <tbody>
         {% for paisDestino in paisesDestino %}
             {% set sizeDest = loop.index %}
             {% set total = 0 %}

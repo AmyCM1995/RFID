@@ -2,22 +2,29 @@
 {% block reporte %}
     <h1>Fechas de interrupciones en la correspondencia</h1>
 
+    <style type="text/css">
+        table, th, td {
+            border-collapse: collapse;
+            border: 1px solid gray;
+        }
+    </style>
+
     <table class="table">
         <thead>
         <tr>
             <th>Fecha</th>
-            <th>Anual</th>
-            <th>Descripción</th>
-            <th>Provincias afectadas</th>
+            <th style="width: 60px; text-align: center" >Anual</th>
+            <th style="width: 275px;">Descripción</th>
+            <th style="width: 275px;">Provincias afectadas</th>
         </tr>
         </thead>
         <tbody>
         {% for fechas_no_correspondencium in fechas_no_correspondencias %}
             <tr>
                 <td>{{ fechas_no_correspondencium.fecha ? fechas_no_correspondencium.fecha|date('Y-m-d') : '' }}</td>
-                <td>{{ fechas_no_correspondencium.esAnual ? 'Sí' : 'No' }}</td>
-                <td>{{ fechas_no_correspondencium.descripcion }}</td>
-                <td>
+                <td style="width: 60px; text-align: center">{{ fechas_no_correspondencium.esAnual ? 'Sí' : 'No' }}</td>
+                <td style="width: 275px;">{{ fechas_no_correspondencium.descripcion }}</td>
+                <td style="width: 275px;">
                     {% for provincia in fechas_no_correspondencium.provincia %}
                         {{ provincia.nombre }}
                     {% endfor %}

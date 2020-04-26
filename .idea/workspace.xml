@@ -2,30 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/css/reportes.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/csv/Posting plan (2019) mitad.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/csv/Posting plan (2019).csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/SCM_Cuba.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/SCM_Cuba.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/AnnoType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/baseReportes.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/TotalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TotalesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/TotalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TotalesRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/corresponsal/pdf_editarCorresponsal.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/corresponsal/pdf_editarCorresponsal.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/corresponsal/pdf_nuevoCorresponsal.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/corresponsal/pdf_nuevoCorresponsal.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/pdf_Fechas.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fechas_no_correspondencia/pdf_Fechas.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/pdf_planImposicion.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/pdf_planImposicion.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/totales/pdf_estadisticasAnuales.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/pdf_estadisticasAnuales.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/totales/pdf_estadisticasAnuales_view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/pdf_estadisticasAnuales_view.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/totales/pdf_estadisticasUltimoCiclo.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/pdf_estadisticasUltimoCiclo.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/totales/pdf_estadisticasUltimoCiclo_view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/pdf_estadisticasUltimoCiclo_view.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/totales/pdf_planEstadisticas.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/pdf_planEstadisticas.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/totales/pdf_view_planEstadisticas.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/pdf_view_planEstadisticas.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/totales/reportesGenerales.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/reportesGenerales.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -308,7 +292,7 @@
       <workItem from="1586649974739" duration="853000" />
       <workItem from="1586999734252" duration="283000" />
       <workItem from="1587221043991" duration="1505000" />
-      <workItem from="1587664476771" duration="29194000" />
+      <workItem from="1587664476771" duration="36861000" />
     </task>
     <servers />
   </component>

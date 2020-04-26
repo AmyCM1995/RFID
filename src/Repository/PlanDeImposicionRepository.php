@@ -144,7 +144,28 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
             }
 
         }
-        return $paises;
+        return $this->organizarPaises($paises);
+    }
+
+    public function organizarPaises($paises){
+        $result = [];
+        $codPaises = [];
+        $size = 0;
+        foreach ($paises as $paise){
+            $codPaises[$size] = $paise->getCodigo();
+            $size++;
+        }
+        usort($codPaises, "strnatcmp");
+        $size = 0;
+        foreach ($codPaises as $cod){
+            foreach ($paises as $pais){
+                if($cod == $pais->getCodigo()){
+                    $result[$size] = $pais;
+                    $size++;
+                }
+            }
+        }
+        return $result;
     }
 
     public function existePais($paises, $pais){

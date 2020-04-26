@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\String\UnicodeString;
 
 class TotalesController extends AbstractController
 {
@@ -29,7 +30,8 @@ class TotalesController extends AbstractController
         $corresponsalesDestino = $totalesRepositorio->buscarCorresponsalesDestino();
         $paisesDestino = $totalesRepositorio->buscarPaises($repositorio);
         $totalesPaises = $totalesRepositorio->totalesPaises($repositorio);
-        $matriz = $totalesRepositorio->matrizTotales($corresponsalesCubanos, $corresponsalesDestino);
+        $corresponsalesDestinoConPaises = $totalesRepositorio->agregarPaisesCorresponsalesDestino($corresponsalesDestino, $paisesDestino, sizeof($corresponsalesCubanos));
+        $matriz = $totalesRepositorio->matrizTotales($corresponsalesCubanos, $corresponsalesDestinoConPaises);
         $enviosTotales = $totalesRepositorio->enviosTotales();
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
@@ -37,7 +39,7 @@ class TotalesController extends AbstractController
         return $this->render('totales/index.html.twig', [
             'matriz' => $matriz,
             'corresponsalesCubanos' => $corresponsalesCubanos,
-            'corresponsalesDestino' => $corresponsalesDestino,
+            'corresponsalesDestino' => $corresponsalesDestinoConPaises,
             'paisesDestino' => $paisesDestino,
             'totalesPaises' => $totalesPaises,
             'totalEnvios' => $enviosTotales,
@@ -305,11 +307,13 @@ class TotalesController extends AbstractController
         $codCorresponsales = $this->codigoCorresponsalesApartirCorresponsales($corresponsales);
         $paises = $planRepository->paisesDelPlan($planAnno);
         $corresponsalesDestino = $planRepository->corresponsalesDestinoDelPlan($planAnno);
+        $totalesRepositorio = $this->getDoctrine()->getRepository(Totales::class);
+        $corresponsalesDestinoConPaises = $totalesRepositorio->agregarPaisesCorresponsalesDestino($corresponsalesDestino, $paises, sizeof($codCorresponsales));
         $totalesPaises = $planRepository->totalArrPaisess($planAnno, $paises);
         $totalEnvios = $planRepository->totalEnvios($totalesPaises);
-        $matrizEnvios = $this->matrizPlanAnual($planAnno, $codCorresponsales, $corresponsalesDestino);
+        $matrizEnvios = $this->matrizPlanAnual($planAnno, $codCorresponsales, $corresponsalesDestinoConPaises);
+        $totalesPorCorresponsales = $totalesRepositorio->totalesPorCorresponsales($codCorresponsales, $totalesRepositorio, $paises);
 
-        $totalesRepositorio = $this->getDoctrine()->getRepository(Totales::class);
         $paisesDestino065 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.65);
         $paisesDestino075 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.75);
         $paisesDestino085 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.85);
@@ -326,10 +330,11 @@ class TotalesController extends AbstractController
         return $this->render('totales/pdf_estadisticasUltimoCiclo_view.html.twig', [
             'matrizE' => $matrizEnvios,
             'corresponsalesCubanos' => $codCorresponsales,
-            'corresponsalesDestino' => $corresponsalesDestino,
+            'corresponsalesDestino' => $corresponsalesDestinoConPaises,
             'paisesDestino' => $paises,
             'totalesPaises' => $totalesPaises,
             'totalEnvios' => $totalEnvios,
+            'totalesPorCorresponsales' => $totalesPorCorresponsales,
             'ciclo' => $ciclo,
             'totalEnvios065' => $totalEnvios065,
             'totalEnvios075' => $totalEnvios075,
@@ -425,11 +430,13 @@ class TotalesController extends AbstractController
         $codCorresponsales = $this->codigoCorresponsalesApartirCorresponsales($corresponsales);
         $paises = $planRepository->paisesDelPlan($planAnno);
         $corresponsalesDestino = $planRepository->corresponsalesDestinoDelPlan($planAnno);
+        $totalesRepositorio = $this->getDoctrine()->getRepository(Totales::class);
+        $corresponsalesDestinoConPaises = $totalesRepositorio->agregarPaisesCorresponsalesDestino($corresponsalesDestino, $paises, sizeof($codCorresponsales));
         $totalesPaises = $planRepository->totalArrPaisess($planAnno, $paises);
         $totalEnvios = $planRepository->totalEnvios($totalesPaises);
-        $matrizEnvios = $this->matrizPlanAnual($planAnno, $codCorresponsales, $corresponsalesDestino);
+        $matrizEnvios = $this->matrizPlanAnual($planAnno, $codCorresponsales, $corresponsalesDestinoConPaises);
+        $totalesPorCorresponsales = $totalesRepositorio->totalesPorCorresponsales($codCorresponsales, $totalesRepositorio, $paises);
 
-        $totalesRepositorio = $this->getDoctrine()->getRepository(Totales::class);
         $paisesDestino065 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.65);
         $paisesDestino075 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.75);
         $paisesDestino085 = $totalesRepositorio->paisesDestinoTarifas($paises, 0.85);
@@ -446,11 +453,12 @@ class TotalesController extends AbstractController
         $html =  $this->renderView('totales/pdf_estadisticasUltimoCiclo.html.twig', [
             'matrizE' => $matrizEnvios,
             'corresponsalesCubanos' => $codCorresponsales,
-            'corresponsalesDestino' => $corresponsalesDestino,
+            'corresponsalesDestino' => $corresponsalesDestinoConPaises,
             'paisesDestino' => $paises,
             'totalesPaises' => $totalesPaises,
             'totalEnvios' => $totalEnvios,
             'ciclo' => $ciclo,
+            'totalesPorCorresponsales' => $totalesPorCorresponsales,
             'totalEnvios065' => $totalEnvios065,
             'totalEnvios075' => $totalEnvios075,
             'totalEnvios085' => $totalEnvios085,
@@ -460,6 +468,7 @@ class TotalesController extends AbstractController
             'matrizPC' => $matrizPaisesDestinoCorresponsales,
             'totales' => $totales,
         ]);
+
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
@@ -488,7 +497,14 @@ class TotalesController extends AbstractController
         $matriz[][] = 0;
         for($i=0; $i<sizeof($corresponsalesCubanos);$i++){
             for($j=0; $j<sizeof($corresponsalesDestino);$j++){
-                $matriz[$i][$j] = $this->cantEnviosEntre($plan, $corresponsalesCubanos[$i], $corresponsalesDestino[$j]);
+                $cod = new UnicodeString($corresponsalesDestino[$j]);
+                if($cod->length() != 2){
+                    $matriz[$i][$j] = $this->cantEnviosEntre($plan, $corresponsalesCubanos[$i], $corresponsalesDestino[$j]);
+                }else{
+                    //es un país
+                    $total= $this->cantEnviosCorresponsalCodPais($plan, $corresponsalesCubanos[$i], $corresponsalesDestino[$j]);
+                    $matriz[$i][$j] = $total;
+                }
             }
         }
         return $matriz;
@@ -502,6 +518,19 @@ class TotalesController extends AbstractController
         }
         return $matriz;
     }
+
+    public function cantEnviosCorresponsalCodPais($plan, $corrCubano, $paisDestino){
+        $cant = 0;
+        foreach ($plan as $p){
+            if($p->getCodPais() != null){
+                if($p->getCodPais()->getCodigo() == $paisDestino && $p->getCodCorresponsal()->getCodigo() == $corrCubano){
+                    $cant++;
+                }
+            }
+        }
+        return $cant;
+    }
+
     public function cantEnviosCorresponsalPais($plan, $corrCubano, $paisDestino){
         $cant = 0;
         foreach ($plan as $p){

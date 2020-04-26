@@ -1,5 +1,4 @@
-{% extends 'baseReportes.html.twig' %}
-{% block reporte %}
+{% extends 'base.html.twig' %}
 
 {% block title %}{{ parent() }}{% endblock %}
 
@@ -35,11 +34,18 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
-
             </tr>
         {% endfor %}
+        <tr>
+            <th id="tabla">Totales</th>
+            {% for totalesPorCorresponsal in totalesPorCorresponsales %}
+                <td id="tabla">{{ totalesPorCorresponsal }}</td>
+            {% endfor %}
+            {#<td id="tabla">{{ totalEnvios }}</td>#}
+        </tr>
         </tbody>
     </table>
+
     <h3>Cantidad total de envíos por países</h3>
     <table class="table">
         <thead>
