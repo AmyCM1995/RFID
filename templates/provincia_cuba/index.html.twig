@@ -10,7 +10,6 @@
     <table class="table">
         <thead>
             <tr>
-               {# <th>Id</th>#}
                 <th>Nombre</th>
                 {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                 <th>Acciones</th>
@@ -21,12 +20,15 @@
         {% for provincia_cuba in provincia_cubas %}
             {%  if  provincia_cuba.esActivo == true %}
                 <tr>
-                   {# <td>{{ provincia_cuba.id }}</td>#}
                     <td>{{ provincia_cuba.nombre }}</td>
             {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
-                       {# <a href="{{ path('provincia_cuba_show', {'id': provincia_cuba.id}) }}">show</a>#}
-                        <a href="{{ path('provincia_cuba_edit', {'id': provincia_cuba.id}) }}">Editar</a>
+                        <a href="{{ path('provincia_cuba_edit', {'id': provincia_cuba.id}) }}">
+                            <img src="{{ asset('img/editar.png') }}" style="width: 5%">
+                        </a>
+                        <a href="{{ path('provincia_cuba_delete', {'id': provincia_cuba.id}) }}">
+                            <img src="{{ asset('img/borrar.png') }}" style="width: 5%">
+                        </a>
                     </td>
             {% endif %}
                 </tr>
@@ -38,9 +40,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <button class="btn bg-primary" id="corresponsal-btns">
-        <a href="{{ path('provincia_cuba_new') }}">Nueva</a>
-    </button>
-
+    {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+    <a class="btn btn-primary"  href="{{ path('provincia_cuba_new') }}">Nuevo</a>
+    {% endif %}
 {% endblock %}

@@ -6,17 +6,6 @@
     {{ parent() }}
     <h1>Fechas no correspondencia</h1>
 
-
     {{ include('fechas_no_correspondencia/_form.html.twig')}}
 
-
-    <div class="row ">
-        <ul style="margin-left: 15px; padding: 0">
-            <div style="margin-top: 2px">{{ include('fechas_no_correspondencia/_delete_form.html.twig') }}</div>
-
-            <button class="btn bg-primary" style="margin-top: 2px">
-                <a href="{{ path('fechas_no_correspondencia_index') }}" style="color: #FFFFFF">Regresar</a>
-            </button>
-        </ul>
-    </div>
 {% endblock %}

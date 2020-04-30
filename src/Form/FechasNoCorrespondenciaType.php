@@ -22,8 +22,11 @@ class FechasNoCorrespondenciaType extends AbstractType
     {
         $date = new \DateTime('now');
         $builder
-            ->add('fecha', DateType::class, ['label' => 'Fecha', 'widget' => 'single_text', 'data' => $date])
-            ->add('es_anual', CheckboxType::class, ['required' => false, 'label' => 'Anual'] )
+            ->add('fecha', DateType::class, ['label' => 'Fecha', 'widget' => 'single_text', 'data' => $date,
+                 'attr' => array('class' => 'form-control')])
+            ->add('es_anual', CheckboxType::class, [
+                'attr' => array('class' => 'form-check-input'), 'label' => 'Anual','required' => false
+            ])
             ->add('descripcion', TextType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Descripción',])
             ->add('provincia', EntityType::class, [

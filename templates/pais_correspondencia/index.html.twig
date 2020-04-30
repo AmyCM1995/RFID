@@ -9,7 +9,6 @@
     <table class="table">
         <thead>
             <tr>
-                {#<th>Id</th>#}
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Región</th>
@@ -22,16 +21,19 @@
         {% for pais_correspondencium in pais_correspondencias %}
             {% if  pais_correspondencium.esActivo == true %}
                 <tr>
-                    {#<td>{{ pais_correspondencium.id }}</td>#}
                     <td>{{ pais_correspondencium.codigo }}</td>
                     <td>{{ pais_correspondencium.nombre }}</td>
                     {% if pais_correspondencium.region != null %}
                         <td>{{pais_correspondencium.region.descripcion}}</td>
                     {% endif %}
-                    {#<td>{{ pais_correspondencium.esActivo ? 'Sí' : 'No' }}</td>#}
             {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
-                        <a href="{{ path('pais_correspondencia_edit', {'id': pais_correspondencium.id}) }}">Editar</a>
+                        <a href="{{ path('pais_correspondencia_edit', {'id': pais_correspondencium.id}) }}">
+                            <img src="{{ asset('img/editar.png') }}" style="width: 7%">
+                        </a>
+                        <a href="{{ path('pais_correspondencia_delete', {'id': pais_correspondencium.id}) }}">
+                            <img src="{{ asset('img/borrar.png') }}" style="width: 7%">
+                        </a>
                     </td>
             {% endif %}
                 </tr>
@@ -45,12 +47,7 @@
     </table>
 
     {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-        <button class="btn bg-primary" id="corresponsal-btns">
-            <a href="{{ path('pais_correspondencia_añadir') }}">Añadir</a>
-        </button>
-        {#<button class="btn bg-primary" id="corresponsal-btns">
-            <a href="#">Acciones</a>
-        </button>#}
+        <a class="btn btn-primary"  href="{{ path('pais_correspondencia_añadir') }}">Añadir</a>
     {% endif %}
 
 {% endblock %}

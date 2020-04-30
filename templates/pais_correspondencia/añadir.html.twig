@@ -12,21 +12,30 @@
         <th>Código</th>
         <th>Nombre</th>
         <th>Región</th>
+        {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+        <th>Acciones</th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
     {% for pais_correspondencium in pais_correspondencias %}
         {% if  pais_correspondencium.esActivo == false %}
             <tr>
-                {#<td>{{ pais_correspondencium.id }}</td>#}
                 <td>{{ pais_correspondencium.codigo }}</td>
                 <td>{{ pais_correspondencium.nombre }}</td>
                 {% if pais_correspondencium.region != null %}
                     <td>{{pais_correspondencium.region.descripcion}}</td>
                 {% endif %}
                 <td>
-                    <a href="{{ path('pais_correspondencia_activar', {'id': pais_correspondencium.id}) }}">Añadir</a>
-                    <a href="{{ path('pais_correspondencia_edit', {'id': pais_correspondencium.id}) }}">Editar</a>
+                    <a href="{{ path('pais_correspondencia_activar', {'id': pais_correspondencium.id}) }}">
+                        <img src="{{ asset('img/añadir.png') }}" style="width: 10%">
+                    </a>
+                    <a href="{{ path('pais_correspondencia_edit', {'id': pais_correspondencium.id}) }}">
+                        <img src="{{ asset('img/editar.png') }}" style="width: 10%">
+                    </a>
+                    <a href="{{ path('pais_correspondencia_delete', {'id': pais_correspondencium.id}) }}">
+                        <img src="{{ asset('img/borrar.png') }}" style="width: 10%">
+                    </a>
                 </td>
             </tr>
         {% endif %}
@@ -38,12 +47,8 @@
     </tbody>
 </table>
     {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-        <button class="btn bg-primary" id="corresponsal-btns" style="">
-            <a href="{{ path('pais_correspondencia_new') }}">Nuevo</a>
-        </button>
-        {#<button class="btn bg-primary" id="corresponsal-btns">
-            <a href="#">Acciones</a>
-        </button>#}
+        <a class="btn btn-primary"  href="{{ path('pais_correspondencia_new') }}">Nuevo</a>
+        <a class="btn btn-primary"  href="{{ path('pais_correspondencia_index') }}">Regresar</a>
     {% endif %}
 
 {% endblock %}

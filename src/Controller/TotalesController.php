@@ -11,6 +11,9 @@ use App\Entity\Totales;
 use App\Repository\PlanDeImposicionRepository;
 use App\Repository\TotalesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -481,13 +484,21 @@ class TotalesController extends AbstractController
     /**
      * @Route("/reportes/generales", name="reportes_generales")
      */
-    public function reportesGenerales(): Response
+    public function reportesGenerales(Request $request): Response
     {
+        $form = $this->createFormBuilder()
+            ->add('anno', NumberType::class, [
+                'mapped' => false,
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Año'
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
 
-
+        }
 
         return $this->render('totales/reportesGenerales.html.twig', [
-
+            'form' => $form->createView(),
         ]);
     }
 

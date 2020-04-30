@@ -74,16 +74,16 @@ class FechasNoCorrespondenciaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="fechas_no_correspondencia_delete", methods={"DELETE"})
+     * @Route("/{id}", name="fechas_no_correspondencia_delete", methods={"GET","POST"})
      */
     public function delete(Request $request, FechasNoCorrespondencia $fechasNoCorrespondencium): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
-        if ($this->isCsrfTokenValid('delete'.$fechasNoCorrespondencium->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$fechasNoCorrespondencium->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($fechasNoCorrespondencium);
             $entityManager->flush();
-        }
+        //}
 
         return $this->redirectToRoute('fechas_no_correspondencia_index');
     }

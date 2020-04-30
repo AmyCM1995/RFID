@@ -1,7 +1,0 @@
-<form method="post" action="{{ path('equipo_corresponsales_delete', {'id': equipo_corresponsale.id}) }}" onsubmit="return confirm('Desea eliminar este equipo de corresponsales?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ equipo_corresponsale.id) }}">
-    <button class="btn bg-primary">
-        <a style="color: #FFFFFF">Borrar</a>
-    </button>
-</form>

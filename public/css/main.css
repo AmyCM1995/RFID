@@ -180,12 +180,12 @@ html, body{
     padding-top: 10px;
 }
 
-#corresponsal-btns{
+#general-btns{
     padding: 5px;
     margin: 0;
 }
 
-#corresponsal-btns > a{
+#general-btns > a{
     color: #FFFFFF;
 }
 

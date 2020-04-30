@@ -1,4 +1,9 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-<button class="btn bg-primary" id="corresponsal-btns" style="color: #FFFFFF">{{ button_label|default('Aceptar') }}</button>
+<br>
+<button class="btn btn-primary">
+    {{ button_label|default('Aceptar') }}
+</button>
+<a class="btn btn-primary" href="{{ path('pais_correspondencia_index') }}">Regresar</a>
+
 {{ form_end(form) }}

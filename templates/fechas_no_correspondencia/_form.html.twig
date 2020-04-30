@@ -3,5 +3,11 @@
     {{ form_row(form.es_anual) }}
     {{ form_row(form.descripcion) }}
     {{ form_row(form.provincia) }}
-<button class="btn bg-primary" id="corresponsal-btns" style="color: #FFFFFF">{{ button_label|default('Aceptar') }}</button>
+<br>
+<button class="btn btn-primary">
+    {{ button_label|default('Aceptar') }}
+</button>
+<a class="btn btn-primary" href="{{ path('fechas_no_correspondencia_index') }}">Regresar</a>
+
+
 {{ form_end(form) }}

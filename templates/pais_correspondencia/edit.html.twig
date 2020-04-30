@@ -8,14 +8,4 @@
 
     {{ include('pais_correspondencia/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
-
-    <div class="row ">
-        <ul style="margin-left: 15px; padding: 0">
-            <div style="margin-top: 3px">{{ include('pais_correspondencia/_delete_form.html.twig') }}</div>
-
-            <button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 3px; padding-left: 0">
-                <a href="{{ path('pais_correspondencia_index') }}" style="margin-left: 10px">Regresar</a>
-            </button>
-        </ul>
-    </div>
 {% endblock %}

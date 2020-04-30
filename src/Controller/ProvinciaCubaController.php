@@ -77,18 +77,18 @@ class ProvinciaCubaController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="provincia_cuba_delete", methods={"DELETE"})
+     * @Route("/{id}", name="provincia_cuba_delete", methods={"GET","POST"})
      */
     public function delete(Request $request, ProvinciaCuba $provinciaCuba): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
-        if ($this->isCsrfTokenValid('delete'.$provinciaCuba->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$provinciaCuba->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->find(ProvinciaCuba::class, $provinciaCuba->getId());
             $provinciaCuba->setEsActivo(false);
            // $entityManager->remove($provinciaCuba);
             $entityManager->flush();
-        }
+        //}
 
         return $this->redirectToRoute('provincia_cuba_index');
     }

@@ -106,18 +106,18 @@ class CorresponsalController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="corresponsal_delete", methods={"DELETE"})
+     * @Route("/{id}", name="corresponsal_delete", methods={"GET","POST"})
      */
     public function delete(Request $request, Corresponsal $corresponsal): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
-        if ($this->isCsrfTokenValid('delete'.$corresponsal->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$corresponsal->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->find(Corresponsal::class, $corresponsal->getId());
             $corresponsal->setEsActivo(false);
             //$entityManager->remove($corresponsal);
             $entityManager->flush();
-        }
+        //}
 
         return $this->redirectToRoute('corresponsal_index');
     }

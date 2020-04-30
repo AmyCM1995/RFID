@@ -35,8 +35,12 @@
                     <td>{{ corresponsal.equipo.codigo }}</td>
             {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
-                        {#<a href="{{ path('corresponsal_show', {'id': corresponsal.id}) }}">Mostrar</a>#}
-                        <a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">Modificar</a>
+                        <a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">
+                            <img src="{{ asset('img/editar.png') }}" style="width: 15%">
+                        </a>
+                        <a href="{{ path('corresponsal_delete', {'id': corresponsal.id}) }}">
+                            <img src="{{ asset('img/borrar.png') }}" style="width: 15%">
+                        </a>
                     </td>
             {% endif %}
                 </tr>
@@ -50,12 +54,7 @@
     </table>
 
     {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-    <button class="btn bg-primary" id="corresponsal-btns">
-        <a href="{{ path('corresponsal_new') }}">Añadir</a>
-    </button>
-    {#<button class="btn bg-primary" id="corresponsal-btns">
-        <a href="#">Acciones</a>
-    </button>#}
+        <a class="btn btn-primary" href="{{ path('corresponsal_new') }}">Añadir</a>
     {% endif %}
 {% endblock %}
 

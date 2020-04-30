@@ -100,18 +100,18 @@ class PaisCorrespondenciaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="pais_correspondencia_delete", methods={"DELETE"})
+     * @Route("/{id}", name="pais_correspondencia_delete", methods={"GET","POST"})
      */
     public function delete(Request $request, PaisCorrespondencia $paisCorrespondencium): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
-        if ($this->isCsrfTokenValid('delete'.$paisCorrespondencium->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$paisCorrespondencium->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->find(PaisCorrespondencia::class, $paisCorrespondencium->getId());
             $paisCorrespondencium->setEsActivo(false);
            // $entityManager->remove($paisCorrespondencium);
             $entityManager->flush();
-        }
+        //}
 
         return $this->redirectToRoute('pais_correspondencia_index');
     }

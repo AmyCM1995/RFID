@@ -87,18 +87,18 @@ class EquipoCorresponsalesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="equipo_corresponsales_delete", methods={"DELETE"})
+     * @Route("/{id}", name="equipo_corresponsales_delete", methods={"GET","POST"})
      */
     public function delete(Request $request, EquipoCorresponsales $equipoCorresponsale): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
-        if ($this->isCsrfTokenValid('delete'.$equipoCorresponsale->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$equipoCorresponsale->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->find(EquipoCorresponsales::class, $equipoCorresponsale->getId());
             $equipoCorresponsale->setEsActivo(false);
             //$entityManager->remove($equipoCorresponsale);
             $entityManager->flush();
-        }
+        //}
 
         return $this->redirectToRoute('equipo_corresponsales_index');
     }

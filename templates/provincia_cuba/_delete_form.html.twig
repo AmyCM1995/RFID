@@ -1,7 +1,0 @@
-<form method="post" action="{{ path('provincia_cuba_delete', {'id': provincia_cuba.id}) }}" onsubmit="return confirm('Desea borrar la provinica seleccionada?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ provincia_cuba.id) }}">
-    <button class="btn bg-primary">
-        <a style="color: #FFFFFF">Borrar</a>
-    </button>
-</form>

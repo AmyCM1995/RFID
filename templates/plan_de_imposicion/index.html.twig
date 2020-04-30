@@ -51,11 +51,6 @@
                 {% else %}
                     <td>{{ plan_de_imposicion_csv.envio31 }}</td>
                 {% endif %}
-
-                {#<td>
-                    <a href="{{ path('plan_de_imposicion_show', {'id': plan_de_imposicion.id}) }}">Mostrar</a>
-                    <a href="{{ path('plan_de_imposicion_edit', {'id': plan_de_imposicion.id}) }}">Editar</a>
-                </td>#}
             </tr>
         {% else %}
             <tr>
@@ -64,15 +59,8 @@
         {% endfor %}
         </tbody>
     </table>
-    <button class="btn bg-primary" id="corresponsal-btns">
-        <a href="{{ path('plan_de_imposicion_pdf') }}">Exportar</a>
-    </button>
-    <button class="btn bg-primary" id="corresponsal-btns">
-        <a href="{{ path('plan_estadisticas_pdf') }}">Exportar con totales y materiales</a>
-    </button>
-    <button class="btn bg-primary" id="corresponsal-btns">
-        <a href="{{ path('plan_imposicion_visualizar_cumplimiento') }}">Cumplimiento</a>
-    </button>
-
+    <a class="btn btn-primary"  href="{{ path('plan_de_imposicion_pdf') }}">Exportar</a>
+    <a class="btn btn-primary"  href="{{ path('plan_estadisticas_pdf') }}">Exportar con totales y materiales</a>
+    <a class="btn btn-primary"  href="{{ path('plan_imposicion_visualizar_cumplimiento') }}">Cumplimiento</a>
 
 {% endblock %}

@@ -71,16 +71,16 @@ class RegionMundialController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="region_mundial_delete", methods={"DELETE"})
+     * @Route("/{id}", name="region_mundial_delete", methods={"GET","POST"})
      */
     public function delete(Request $request, RegionMundial $regionMundial): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
-        if ($this->isCsrfTokenValid('delete'.$regionMundial->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$regionMundial->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($regionMundial);
             $entityManager->flush();
-        }
+        //}
 
         return $this->redirectToRoute('region_mundial_index');
     }

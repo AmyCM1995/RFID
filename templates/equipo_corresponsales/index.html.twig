@@ -10,7 +10,6 @@
     <table class="table">
         <thead>
             <tr>
-                {#<th>Id</th>#}
                 <th>Código</th>
                 <th>Miembros</th>
                 <th>Coordinador</th>
@@ -18,25 +17,30 @@
                 {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                 <th>Acciones</th>
                 {% endif %}
-
             </tr>
         </thead>
         <tbody>
         {% for equipo_corresponsale in equipo_corresponsales %}
             {%  if  equipo_corresponsale.esActivo == true %}
                 <tr>
-                    {#<td>{{ equipo_corresponsale.id }}</td>#}
                     <td>{{ equipo_corresponsale.codigo }}</td>
                     <td>{{ equipo_corresponsale.cantidadMiembros }}</td>
                     <td>{{ equipo_corresponsale.CorresponsalCoordinador.nombre }}</td>
                     <td>
                         {% for corresponsals in equipo_corresponsale.corresponsals %}
-                            {{ corresponsals.nombre }}
+                            {% if corresponsals.esActivo == true %}
+                                {{ corresponsals.nombre }}
+                            {% endif %}
                         {% endfor %}
                     </td>
             {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
-                        <a href="{{ path('equipo_corresponsales_edit', {'id': equipo_corresponsale.id}) }}">Editar</a>
+                        <a href="{{ path('equipo_corresponsales_edit', {'id': equipo_corresponsale.id}) }}">
+                            <img src="{{ asset('img/editar.png') }}" style="width: 15%">
+                        </a>
+                        <a href="{{ path('equipo_corresponsales_delete', {'id': equipo_corresponsale.id}) }}">
+                            <img src="{{ asset('img/borrar.png') }}" style="width: 15%">
+                        </a>
                     </td>
             {% endif %}
 
@@ -51,12 +55,7 @@
     </table>
 
     {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-        <button class="btn bg-primary" id="corresponsal-btns">
-            <a href="{{ path('equipo_corresponsales_new') }}">Nuevo</a>
-        </button>
-        {#<button class="btn bg-primary" id="corresponsal-btns">
-            <a href="#">Acciones</a>
-        </button>#}
+        <a class="btn btn-primary"  href="{{ path('equipo_corresponsales_new') }}">Nuevo</a>
     {% endif %}
 
 {% endblock %}
