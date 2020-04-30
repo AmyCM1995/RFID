@@ -13,16 +13,30 @@
     <div class="content" align="center">
         <h1>Bienvenid@</h1>
 
-        {#información para mostrar sobre retrasos#}
+        {#***************************PI***********************************#}
+        {% if ultimoPI > 29 %}
         <p class="alert alert-danger alert-dismissible text-justify">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            Hace 2 días debió importar el plan de imposición
+            El tiempo del plan de imposición actual se ha vencido. Importe un nuevo plan de imposición.
         </p>
-        <p class="alert alert-primary alert-dismissible text-justify">
+        {% elseif ultimoPI > 26 %}
+        <p class="alert alert-warning alert-dismissible text-justify">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            Hoy debe importar el cumplimiento del plan de imposición
+            Hace {{ ultimoPI }} días importó el último plan de imposición. Debería de realizar una nueva importación.
         </p>
-
+        {% endif %}
+        {#***************************LecturasCSV***********************************#}
+        {% if ultimaLecturaCSV > 29 %}
+            <p class="alert alert-danger alert-dismissible text-justify">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                El tiempo del plan de las lecturas importadas de la UPU se ha vencido. Importe el nuevo fichero con las lecturas.
+            </p>
+        {% elseif ultimaLecturaCSV > 26 %}
+            <p class="alert alert-warning alert-dismissible text-justify">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Hace {{ ultimaLecturaCSV }} días importó el fichero con las últimas lecturas de la UPU. Debería de realizar una nueva importación.
+            </p>
+        {% endif %}
 
 
 
