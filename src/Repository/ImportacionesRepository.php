@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\ImportacionesPI;
+use App\Entity\Importaciones;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method ImportacionesPI|null find($id, $lockMode = null, $lockVersion = null)
- * @method ImportacionesPI|null findOneBy(array $criteria, array $orderBy = null)
- * @method ImportacionesPI[]    findAll()
- * @method ImportacionesPI[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Importaciones|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Importaciones|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Importaciones[]    findAll()
+ * @method Importaciones[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ImportacionesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ImportacionesPI::class);
+        parent::__construct($registry, Importaciones::class);
     }
 
     // /**
-    //  * @return ImportacionesPI[] Returns an array of ImportacionesPI objects
+    //  * @return ImportacionesPI[] Returns an array of Importaciones objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ImportacionesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?ImportacionesPI
+    public function findOneBySomeField($value): ?Importaciones
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.exampleField = :val')
