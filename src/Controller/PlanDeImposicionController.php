@@ -338,6 +338,7 @@ class PlanDeImposicionController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $corresponsales = null;
         $corres = null;
+        $existe = null;
         foreach ($records as $offset=>$record){
             if($offset <= 4){
                 if ($offset == 0){
@@ -353,10 +354,13 @@ class PlanDeImposicionController extends AbstractController
 
                     $importacion->setFechaInicioPlan($fechaI->before('to'));
                     $importacion->setFechaFinPlan($fechaF->before(';'));
-
-                    $entityManager->persist($importacion);
-                    $entityManager->flush();
-
+                    //verificar si existe un plan con esos datos
+                    $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
+                    $existe = $importacionRepositorio->existeImportacionMismoRangoFechas($fechaI->before('to'), $fechaF->before(';'));
+                    if($existe == false){ //no existe, es un nuevo plan
+                        $entityManager->persist($importacion);
+                        $entityManager->flush();
+                    }
                 }elseif ($offset == 3){
                     //corresponsales
                     $rec = new UnicodeString($record[0]);
@@ -416,8 +420,6 @@ class PlanDeImposicionController extends AbstractController
                             $envio5 = $envio56;
                         }
                     }
-
-
                     if($envio1 != null){
                         $plan = new PlanDeImposicion();
                         $plan->setImportacion($importacion);
@@ -430,7 +432,6 @@ class PlanDeImposicionController extends AbstractController
                             $this->persistirPlanDeImposicion($plan1, $corresponsales[0], $envio2);
                         }
                     }
-
                     if($envio3 != null){
                         $plan2 = new PlanDeImposicion();
                         $plan2->setImportacion($importacion);
@@ -443,7 +444,6 @@ class PlanDeImposicionController extends AbstractController
                             $this->persistirPlanDeImposicion($plan3, $corresponsales[1], $envio4);
                         }
                     }
-
                     if($envio5 != null){
                         $plan4 = new PlanDeImposicion();
                         $plan4->setImportacion($importacion);
@@ -461,17 +461,19 @@ class PlanDeImposicionController extends AbstractController
 
             }
         }
-        //*****************************************Plan de imposicion CSV
-        $plan_de_imposicions = $this->llenarPlanDeImposicionCSV();
-        //********************************************Estadísticas
-        $paises = $this->paisesDelPlan($plan_de_imposicions);
-        $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
-        $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
-        $this->borrarTotalesAnteriores();
-        $this->persistirTotales($totales);
-        //*********************************************Limpiar Plan de Imposicion
-        $importacionUltima = $this->utimaImportacion();
-        $this->limpiarPlanImposicion($importacionUltima);
+        if($existe == false){ //si es un PI nuevo
+            //*****************************************Plan de imposicion CSV
+            $plan_de_imposicions = $this->llenarPlanDeImposicionCSV();
+            //********************************************Estadísticas
+            $paises = $this->paisesDelPlan($plan_de_imposicions);
+            $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
+            $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
+            $this->borrarTotalesAnteriores();
+            $this->persistirTotales($totales);
+            //*********************************************Limpiar Plan de Imposicion
+            $importacionUltima = $this->utimaImportacion();
+            $this->limpiarPlanImposicion($importacionUltima);
+        }
     }
 
     public function llenarPlanDeImposicionCSV(){
@@ -498,7 +500,7 @@ class PlanDeImposicionController extends AbstractController
         return $plan_de_imposicions;
     }
 
-
+    //quita los PI de anteriores importaciones
     public function limpiarPlanImposicion($importacionUltima){
         $planImposicionRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $planImposicionsNuevos = $planImposicionRepository->findByImposicion($importacionUltima);

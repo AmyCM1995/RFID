@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\CumplimientoPlan;
 use App\Entity\FechasNoCorrespondencia;
+use App\Entity\ImportacionCumplimientoPlan;
 use App\Entity\PlanDeImposicion;
 use App\Entity\PlanImposicionCsv;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,6 +60,15 @@ class CumplimientoPlanController extends AbstractController
 
     //**********************************************************************************************************
     public function procesarFila($row){
+        $importacion = new ImportacionCumplimientoPlan();
+        $importacion->setFecha(new \DateTime('now'));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($importacion);
+        $entityManager->flush();
+
+        $importacionesRepository = $this->getDoctrine()->getRepository(ImportacionCumplimientoPlan::class);
+        $importacion = $importacionesRepository->findUltimaImportacion();
+
         $cellIterator = $row->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(false);
         $columna = 0;
@@ -123,13 +133,15 @@ class CumplimientoPlanController extends AbstractController
         $en_tiempo = false;
         $id_planImposicion = null;
         foreach ($planesFechaPlan as $planFechaPlan){
-            if($planFechaPlan->getCodCorresponsal()->getCodigo() == $corrEnvia){
-                if($planFechaPlan->getCodEnvio() == $corrRecibe){
-                    $ocurrencia = true;
-                    //Comprobar cumplimiento
-                    if($fecha_plan == $fecha_real){
-                        $en_tiempo = true;
-                        $id_planImposicion = $planFechaPlan;
+            if($planFechaPlan != null){
+                if($planFechaPlan->getCodCorresponsal()->getCodigo() == $corrEnvia){
+                    if($planFechaPlan->getCodEnvio() == $corrRecibe){
+                        $ocurrencia = true;
+                        //Comprobar cumplimiento
+                        if($fecha_plan == $fecha_real){
+                            $en_tiempo = true;
+                            $id_planImposicion = $planFechaPlan;
+                        }
                     }
                 }
             }

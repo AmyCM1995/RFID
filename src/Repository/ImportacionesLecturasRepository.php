@@ -50,7 +50,11 @@ class ImportacionesLecturasRepository extends ServiceEntityRepository
     */
     public function findUltimaImportacion(){
         $importaciones = $this->findAll();
-        $size = sizeof($importaciones)-1;
-        return $importaciones[$size];
+        $resultado = null;
+        if($importaciones != null){
+            $size = sizeof($importaciones)-1;
+            $resultado = $importaciones[$size];
+        }
+        return $resultado;
     }
 }

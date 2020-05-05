@@ -47,6 +47,11 @@ class CumplimientoPlan
      */
     private $id_plan_imposicion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ImportacionCumplimientoPlan", inversedBy="cumplimientoPlans")
+     */
+    private $importado;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +125,18 @@ class CumplimientoPlan
     public function setIdPlanImposicion(PlanDeImposicion $id_plan_imposicion): self
     {
         $this->id_plan_imposicion = $id_plan_imposicion;
+
+        return $this;
+    }
+
+    public function getImportado(): ?ImportacionCumplimientoPlan
+    {
+        return $this->importado;
+    }
+
+    public function setImportado(?ImportacionCumplimientoPlan $importado): self
+    {
+        $this->importado = $importado;
 
         return $this;
     }

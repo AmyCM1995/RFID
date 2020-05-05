@@ -2,11 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/csv/Data Entry Test 2.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ImportacionCumplimientoPlanController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ImportacionesLecturasController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/ImportacionCumplimientoPlan.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/ImportacionCumplimientoPlanRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/importacion_cumplimiento_plan/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/importaciones_lecturas/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ImportacionesPIController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ImportacionesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CumplimientoPlanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CumplimientoPlanController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/PrincipalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PrincipalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/ImportacionesPI.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ImportacionesPIRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ImportacionesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/CumplimientoPlan.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/CumplimientoPlan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ImportacionesLecturasRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ImportacionesLecturasRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ImportacionesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ImportacionesRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/principal/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/principal/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -291,6 +300,7 @@
       <workItem from="1586999734252" duration="283000" />
       <workItem from="1587221043991" duration="1505000" />
       <workItem from="1587664476771" duration="57631000" />
+      <workItem from="1588598970628" duration="7808000" />
     </task>
     <servers />
   </component>
