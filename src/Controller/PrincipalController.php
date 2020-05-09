@@ -15,6 +15,9 @@ class PrincipalController extends AbstractController
      */
     public function index()
     {
+        $ultimoPI = null;
+        $ultimaLecturaCSV = null;
+        $ultimoCumplimientoPI = null;
         $usuario = $this->getUser();
         $rol = $usuario->getRoles();
         $hoy = new \DateTime('now');

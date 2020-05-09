@@ -26,7 +26,23 @@ class SalvaRestauraBDController extends AbstractController
      */
     public function salvaPI()
     {
-        $process = Process::fromShellCommandline('echo "AMY"');
+        /*$process = new Process('mysqldump --user={{ db_user }} --password={{ db_pass }} {{db_name}} > {{ db_backup_path }}');
+        $process->run(null, [
+           'db_user' => getenv('DB_USER'),
+           'db_password' => getenv('DB_PASS'),
+           'db_name' => 'GMS_RFID_2',
+           'db_backup_path' => '/var/backup/db-'.time().'.sql',
+        ]);*/
+        $dbName = 'GMS_RFID_2';
+        $process = new Process(array(
+           'mysqldump',
+           '--user='.getenv('DB_USER'),
+           '--password'.getenv('DB_PASS'),
+           $dbName,
+        ));
+        //$process->setTimeout(3600);
+        $process->run();
+
         return $this->render('salva_restaura_bd/index.html.twig', [
             'controller_name' => 'SalvaRestauraBDController',
         ]);

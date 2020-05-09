@@ -13,57 +13,60 @@
     <div class="content" align="center">
         <h1>Bienvenid@</h1>
 
-        {#***************************PI***********************************#}
-        {% if ultimoPI == null %}
-        <p class="alert alert-danger alert-dismissible text-justify">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            No hay registros de algún plan de imposición. Realice una importación.
-        </p>
-        {% elseif ultimoPI > 29 %}
-        <p class="alert alert-danger alert-dismissible text-justify">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            El tiempo del plan de imposición actual se ha vencido. Importe un nuevo plan de imposición.
-        </p>
-        {% elseif ultimoPI > 26 %}
-        <p class="alert alert-warning alert-dismissible text-justify">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            Hace {{ ultimoPI }} días importó el último plan de imposición. Debería de realizar una nueva importación.
-        </p>
+        {%  if  app.user.roles[0] == 'ROLE_ESPECIALISTA_DC' %}
+            {#***************************PI***********************************#}
+            {% if ultimoPI == null %}
+                <p class="alert alert-danger alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    No hay registros de algún plan de imposición. Realice una importación.
+                </p>
+            {% elseif ultimoPI > 29 %}
+                <p class="alert alert-danger alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    El tiempo del plan de imposición actual se ha vencido. Importe un nuevo plan de imposición.
+                </p>
+            {% elseif ultimoPI > 26 %}
+                <p class="alert alert-warning alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Hace {{ ultimoPI }} días importó el último plan de imposición. Debería de realizar una nueva importación.
+                </p>
+            {% endif %}
+            {#***************************LecturasCSV***********************************#}
+            {% if ultimaLecturaCSV == null %}
+                <p class="alert alert-danger alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    No hay registros de alguna lectura. Realice una importación.
+                </p>
+            {% elseif ultimaLecturaCSV > 29 %}
+                <p class="alert alert-danger alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    El tiempo del plan de las lecturas importadas de la UPU se ha vencido. Importe el nuevo fichero con las lecturas.
+                </p>
+            {% elseif ultimaLecturaCSV > 26 %}
+                <p class="alert alert-warning alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Hace {{ ultimaLecturaCSV }} días importó el fichero con las últimas lecturas de la UPU. Debería de realizar una nueva importación.
+                </p>
+            {% endif %}
+            {#***************************Cumplimiento PI***********************************#}
+            {% if ultimoCumplimientoPI == null %}
+                <p class="alert alert-danger alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    No hay registros de algún cumplimiento de plan de imposición. Realice una importación.
+                </p>
+            {% elseif ultimoCumplimientoPI > 9 %}
+                <p class="alert alert-danger alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    El tiempo del cumplimiento del plan de imposición se ha vencido. Importe el nuevo fichero con el cumplimiento.
+                </p>
+            {% elseif ultimoCumplimientoPI > 7 %}
+                <p class="alert alert-warning alert-dismissible text-justify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Hace {{ ultimaLecturaCSV }} días importó el fichero con el cumplimiento del plan de imposición. Debería de realizar una nueva importación.
+                </p>
+            {% endif %}
         {% endif %}
-        {#***************************LecturasCSV***********************************#}
-        {% if ultimaLecturaCSV == null %}
-        <p class="alert alert-danger alert-dismissible text-justify">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            No hay registros de alguna lectura. Realice una importación.
-        </p>
-        {% elseif ultimaLecturaCSV > 29 %}
-            <p class="alert alert-danger alert-dismissible text-justify">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                El tiempo del plan de las lecturas importadas de la UPU se ha vencido. Importe el nuevo fichero con las lecturas.
-            </p>
-        {% elseif ultimaLecturaCSV > 26 %}
-            <p class="alert alert-warning alert-dismissible text-justify">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                Hace {{ ultimaLecturaCSV }} días importó el fichero con las últimas lecturas de la UPU. Debería de realizar una nueva importación.
-            </p>
-        {% endif %}
-        {#***************************Cumplimiento PI***********************************#}
-        {% if ultimoCumplimientoPI == null %}
-        <p class="alert alert-danger alert-dismissible text-justify">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            No hay registros de algún cumplimiento de plan de imposición. Realice una importación.
-        </p>
-        {% elseif ultimoCumplimientoPI > 9 %}
-            <p class="alert alert-danger alert-dismissible text-justify">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                El tiempo del cumplimiento del plan de imposición se ha vencido. Importe el nuevo fichero con el cumplimiento.
-            </p>
-        {% elseif ultimoCumplimientoPI > 7 %}
-            <p class="alert alert-warning alert-dismissible text-justify">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                Hace {{ ultimaLecturaCSV }} días importó el fichero con el cumplimiento del plan de imposición. Debería de realizar una nueva importación.
-            </p>
-        {% endif %}
+
 
 
 
