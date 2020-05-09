@@ -260,5 +260,25 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
         return $totalEnvios;
     }
 
+    public function compararPIdeImportacionesDiferentes($idImportacionNueva, $idImportacionVieja){
+        $piNuevos = $this->findByImposicion($idImportacionNueva);
+        $piViejos = $this->findByImposicion($idImportacionVieja);
+        $iguales = true;
+        if(sizeof($piNuevos) == sizeof($piViejos)){
+            for($i=0; $i<sizeof($piNuevos); $i++){
+                if($piNuevos[$i]->getFecha()->diff($piViejos[$i]->getFecha())->format('%d') != 0 ||
+                    $piNuevos[$i]->getCodEnvio() != $piViejos[$i]->getCodEnvio() ||
+                    $piNuevos[$i]->getCodCorresponsal()->getId() != $piViejos[$i]->getCodCorresponsal()->getId()){
+                    $iguales = false;
+                }
+                if($iguales == false){
+                    break;
+                }
+            }
+        }else{
+            $iguales = false;
+        }
+        return $iguales;
+    }
 }
 

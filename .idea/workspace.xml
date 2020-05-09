@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/{{" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PrincipalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PrincipalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SalvaRestauraBDController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SalvaRestauraBDController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/principal/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/principal/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/csv/Posting plan (2019) mitad.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/csv/Posting plan (2019) mitad.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ImportacionesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ImportacionesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/importacion_correcta.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_imposicion_csv/importacion_correcta.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -292,7 +293,7 @@
       <workItem from="1587664476771" duration="57631000" />
       <workItem from="1588598970628" duration="8023000" />
       <workItem from="1588817116324" duration="4000" />
-      <workItem from="1588857034187" duration="5905000" />
+      <workItem from="1588857034187" duration="14711000" />
     </task>
     <servers />
   </component>

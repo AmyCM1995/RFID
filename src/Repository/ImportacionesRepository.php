@@ -56,19 +56,15 @@ class ImportacionesRepository extends ServiceEntityRepository
         }
         return $resultado;
     }
-    public function existeImportacionMismoRangoFechas($fechaI, $fechaF){
-        $existe = false;
-        $result = $this->createQueryBuilder('i')
+    public function importacionesMismoRangoFechas($fechaI, $fechaF){
+        return $this->createQueryBuilder('i')
             ->andWhere('i.fecha_inicio_plan = :val')
             ->andWhere('i.fecha_fin_plan = :v')
             ->setParameter('val', $fechaI)
             ->setParameter('v', $fechaF)
+            ->setMaxResults(100)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
-        if($result != null){
-            $existe = true;
-        }
-        return $existe;
+            ->getResult()
+            ;
     }
 }

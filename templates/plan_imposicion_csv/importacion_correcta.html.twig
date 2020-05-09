@@ -8,5 +8,19 @@
     <br>
     <h5>EL documento se importó correctamente</h5>
 
+    {% if alertas != null %}
+        {% if alertas == false %}
+            <p class="alert alert-warning alert-dismissible text-justify">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Hubo cambios en el plan de imposición.
+            </p>
+        {% elseif alertas == true %}
+            <p class="alert alert-info alert-dismissible text-justify">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                No hubo cambios en el plan de imposición.
+            </p>
+        {% endif %}
+    {% endif %}
+
 
 {% endblock %}

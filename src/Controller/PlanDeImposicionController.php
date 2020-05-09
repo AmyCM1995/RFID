@@ -67,25 +67,29 @@ class PlanDeImposicionController extends AbstractController
             $file = $form['file']->getData();
             $nombre = new UnicodeString($file->getClientOriginalName());
             $extension = $nombre->after('.');
+            $notificar = null;
             if($extension->equalsTo('csv')){
                 $file->move('csv', $file->getClientOriginalName());
                 $csv = Reader::createFromPath('csv/'.$file->getClientOriginalName());
                 $records = $csv->getRecords();
-                $this->principalPersistirCSV($records);
+                $notificar = $this->principalPersistirCSV($records);
             }else{
                 if($extension->equalsTo('xlsx')){
                     $file->move('csv', $file->getClientOriginalName());
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
                     $spreadsheet = $reader->load("csv/".$file->getClientOriginalName());
                     $sheet = $spreadsheet->getActiveSheet();
-                    $this->principalPersistirXls($sheet);
+                    $notificar = $this->principalPersistirXls($sheet);
                 }elseif ($extension->equalsTo('xls')){
                     echo "no se aceptan ficheros xls";
                 }
             }
-
+            //si $notificar == null -> es un nuevo PI
+            //si $notificar == false -> hubo cambios en el PI
+            //si $notificar == true -> no hubo cambios en el PI
             return $this->render('plan_imposicion_csv/importacion_correcta.html.twig', [
-                'encabezado' => "Importar plan de imposición"
+                'encabezado' => "Importar plan de imposición",
+                'alertas' => $notificar
             ]);
         }
 
@@ -204,7 +208,6 @@ class PlanDeImposicionController extends AbstractController
         }
         return $danger;
     }
-
     public function borrarCSVAnteriores(){
         $repositorio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
         $entityManager = $this->getDoctrine()->getManager();
@@ -215,17 +218,16 @@ class PlanDeImposicionController extends AbstractController
 
         }
     }
-
     public function persistirCSV($planescsv){
         $entityManager = $this->getDoctrine()->getManager();
         for($i=0; $i<sizeof($planescsv);$i++){
             $entityManager->persist($planescsv[$i]);
             $entityManager->flush();
         }
-
     }
-
     public function principalPersistirXls($sheet){
+        $result = null;
+        $existe = null;
         $importacion = new Importaciones();
         $importacion->setFechaImportado(new \DateTime('now'));
         $columnas = 0;
@@ -234,7 +236,6 @@ class PlanDeImposicionController extends AbstractController
         $corresponsales[] = null;
         $corres[] = null;
         $sizeCorr = 0;
-
         foreach ($sheet->getRowIterator() as $row){
             $filaActual++;
             $cellIterator = $row->getCellIterator();
@@ -258,10 +259,11 @@ class PlanDeImposicionController extends AbstractController
                             $fecha = new UnicodeString($cell->getCalculatedValue());
                             $fechaI = $fecha->after('from');
                             $fechaF = $fechaI->after('to');
-
                             $importacion->setFechaInicioPlan($fechaI->before('to'));
                             $importacion->setFechaFinPlan($fechaF);
-
+                            //verificar si existen planes con esos datos
+                            $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
+                            $existe = $importacionRepositorio->importacionesMismoRangoFechas($fechaI->before('to'), $fechaF->before(';'));
                             $entityManager->persist($importacion);
                             $entityManager->flush();
                         }
@@ -318,23 +320,50 @@ class PlanDeImposicionController extends AbstractController
                 }
             }
         }
-        //*****************************************Plan de imposicion CSV
-        $plan_de_imposicions = $this->llenarPlanDeImposicionCSV();
-        //********************************************Estadísticas
-        $paises = $this->paisesDelPlan($plan_de_imposicions);
-        $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
-        $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
-        $this->borrarTotalesAnteriores();
-        $this->persistirTotales($totales);
-        //*********************************************Limpiar Plan de Imposicion
-        $importacionUltima = $this->utimaImportacion();
-        $this->limpiarPlanImposicion($importacionUltima);
+        $iguales = false;
+        if(sizeof($existe) != 0){//existe un PI con las mismas fechas de inicio y fin
+            $importacionUltima = $this->utimaImportacion();
+            $piRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+            for($i=sizeof($existe)-1; $i>=0; $i--){ //recorro el array de fin a inicio
+                //verificar si la importación tiene PI
+                $pis = $piRepositorio->findByImposicion($existe[$i]->getId());
+                if(sizeof($pis) != 0){
+                    //verificar si hay cambios en los 2 PI
+                    $iguales = $piRepositorio->compararPIdeImportacionesDiferentes($importacionUltima->getId(), $existe[$i]->getId());
+                    break;
+                }
+            }
+            //notificar que existieron cambios o no en el PI en dependencia del resultado de $iguales
+            $result = $iguales;
+        }
+        if($iguales == true){
+            //borrar los PI nuevos y dejar la importación
+            $piBorrar = $piRepositorio->findByImposicion($importacionUltima->getId());
+            foreach ($piBorrar as $pi){
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($pi);
+                $entityManager->flush();
+            }
+        }
+        if(sizeof($existe) == 0 || $iguales == false) { //si es un PI nuevo o existen cambios con el anterior
+            //*****************************************Plan de imposicion CSV
+            $plan_de_imposicions = $this->llenarPlanDeImposicionCSV();
+            //********************************************Estadísticas
+            $paises = $this->paisesDelPlan($plan_de_imposicions);
+            $envios = $this->enviosCorresponsalesEnviosDelPlan($plan_de_imposicions);
+            $totales=$this->generarTotales($corresponsales, $envios, $paises, $plan_de_imposicions);
+            $this->borrarTotalesAnteriores();
+            $this->persistirTotales($totales);
+            //*********************************************Limpiar Plan de Imposicion
+            $importacionUltima = $this->utimaImportacion();
+            $this->limpiarPlanImposicion($importacionUltima);
+        }
+        return $result;
     }
-
     public function principalPersistirCSV($records){
+        $result = null;
         $importacion = new Importaciones();
         $importacion->setFechaImportado(new \DateTime('now'));
-
         $entityManager = $this->getDoctrine()->getManager();
         $corresponsales = null;
         $corres = null;
@@ -351,16 +380,13 @@ class PlanDeImposicionController extends AbstractController
                     $fecha = new UnicodeString($record[0]);
                     $fechaI = $fecha->after('from');
                     $fechaF = $fechaI->after('to');
-
                     $importacion->setFechaInicioPlan($fechaI->before('to'));
                     $importacion->setFechaFinPlan($fechaF->before(';'));
-                    //verificar si existe un plan con esos datos
+                    //verificar si existen planes con esos datos
                     $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
-                    $existe = $importacionRepositorio->existeImportacionMismoRangoFechas($fechaI->before('to'), $fechaF->before(';'));
-                    if($existe == false){ //no existe, es un nuevo plan
-                        $entityManager->persist($importacion);
-                        $entityManager->flush();
-                    }
+                    $existe = $importacionRepositorio->importacionesMismoRangoFechas($fechaI->before('to'), $fechaF->before(';'));
+                    $entityManager->persist($importacion);
+                    $entityManager->flush();
                 }elseif ($offset == 3){
                     //corresponsales
                     $rec = new UnicodeString($record[0]);
@@ -456,12 +482,35 @@ class PlanDeImposicionController extends AbstractController
                             $this->persistirPlanDeImposicion($plan5, $corresponsales[2], $envio6);
                         }
                     }
-
                 }
-
             }
         }
-        if($existe == false){ //si es un PI nuevo
+        $iguales = false;
+        if(sizeof($existe) != 0){//existe un PI con las mismas fechas de inicio y fin
+            $importacionUltima = $this->utimaImportacion();
+            $piRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+            for($i=sizeof($existe)-1; $i>=0; $i--){ //recorro el array de fin a inicio
+                //verificar si la importación tiene PI
+                $pis = $piRepositorio->findByImposicion($existe[$i]->getId());
+                if(sizeof($pis) != 0){
+                    //verificar si hay cambios en los 2 PI
+                    $iguales = $piRepositorio->compararPIdeImportacionesDiferentes($importacionUltima->getId(), $existe[$i]->getId());
+                    break;
+                }
+            }
+            //notificar que existieron cambios o no en el PI en dependencia del resultado de $iguales
+            $result = $iguales;
+        }
+        if($iguales == true){
+            //borrar los PI nuevos y dejar la importación
+            $piBorrar = $piRepositorio->findByImposicion($importacionUltima->getId());
+            foreach ($piBorrar as $pi){
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($pi);
+                $entityManager->flush();
+            }
+        }
+        if(sizeof($existe) == 0 || $iguales == false){ //si es un PI nuevo o existen cambios con el anterior
             //*****************************************Plan de imposicion CSV
             $plan_de_imposicions = $this->llenarPlanDeImposicionCSV();
             //********************************************Estadísticas
@@ -474,8 +523,8 @@ class PlanDeImposicionController extends AbstractController
             $importacionUltima = $this->utimaImportacion();
             $this->limpiarPlanImposicion($importacionUltima);
         }
+        return $result;
     }
-
     public function llenarPlanDeImposicionCSV(){
         $importacionUltima = $this->utimaImportacion();
         $planImposicionRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
@@ -499,7 +548,6 @@ class PlanDeImposicionController extends AbstractController
         $this->persistirCSV($planescsv);
         return $plan_de_imposicions;
     }
-
     //quita los PI de anteriores importaciones
     public function limpiarPlanImposicion($importacionUltima){
         $planImposicionRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
@@ -516,7 +564,6 @@ class PlanDeImposicionController extends AbstractController
         }
 
     }
-
     public function persistirPlanDeImposicion(PlanDeImposicion $plan, Corresponsal $corresponsal, $envio){
         $entityManager = $this->getDoctrine()->getManager();
         $codpais = $envio->slice(0,2);
@@ -530,8 +577,6 @@ class PlanDeImposicionController extends AbstractController
         $entityManager->persist($plan);
         $entityManager->flush();
     }
-
-
     public function buscarCorrespnsales($c1, $c2, $c3){
         $repositorioCorresponsal = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corr1 = $repositorioCorresponsal->findOneByCodigo($c1);
@@ -540,20 +585,16 @@ class PlanDeImposicionController extends AbstractController
         $resultado = [$corr1, $corr2, $corr3];
         return $resultado;
     }
-
-public function buscarCorresponsalesAPartirDeCodigos ($corresponsales){
-    $repositorioCorresponsal = $this->getDoctrine()->getRepository(Corresponsal::class);
-    $resultado[] = null;
-    $size = 0;
-    foreach ($corresponsales as $c){
-        $resultado[$size] = $repositorioCorresponsal->findOneByCodigo($c);
-        $size++;
+    public function buscarCorresponsalesAPartirDeCodigos ($corresponsales){
+        $repositorioCorresponsal = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $resultado[] = null;
+        $size = 0;
+        foreach ($corresponsales as $c){
+            $resultado[$size] = $repositorioCorresponsal->findOneByCodigo($c);
+            $size++;
+        }
+        return $resultado;
     }
-    return $resultado;
-}
-
-
-
     public function buscarPlanesPorCorresponsales($plan, $corresponsal){
         $Plancorr = null;
         $size = 0;
@@ -565,8 +606,6 @@ public function buscarCorresponsalesAPartirDeCodigos ($corresponsales){
         }
         return $Plancorr;
     }
-
-
     public function generarPlanDeImposicionCSV($plan, &$planesCorr1, &$planesCorr2, &$planesCorr3){
         $planCSV = new PlanImposicionCsv();
         $i = 0;
@@ -628,9 +667,6 @@ public function buscarCorresponsalesAPartirDeCodigos ($corresponsales){
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
         return $importacionUltima;
     }
-
-
-
     public function paisesDelPlan($plan_de_imposicions){
         $paises = [$plan_de_imposicions[0]->getCodPais()];
         $size = 1;
@@ -751,7 +787,6 @@ public function buscarCorresponsalesAPartirDeCodigos ($corresponsales){
         }
         return $totales;
     }
-
     public function persistirTotales($totales){
         $entityManager = $this->getDoctrine()->getManager();
         for($i=0; $i<sizeof($totales);$i++){
