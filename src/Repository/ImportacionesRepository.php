@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Importaciones;
+use App\Entity\PlanDeImposicion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @method Importaciones|null find($id, $lockMode = null, $lockVersion = null)
@@ -53,6 +55,21 @@ class ImportacionesRepository extends ServiceEntityRepository
         if($importaciones != null){
             $size = sizeof($importaciones)-1;
             $resultado = $importaciones[$size];
+        }
+        return $resultado;
+    }
+    public function findUltimaImportacionConPI($piRepositorio){
+        $importaciones = $this->findAll();
+        $resultado = null;
+        if($importaciones != null){
+            for($i=sizeof($importaciones)-1; $i>=0; $i--) { //recorro el array de fin a inicio
+                //verificar si la importación tiene PI
+                $pis = $piRepositorio->findByImposicion($importaciones[$i]->getId());
+                if (sizeof($pis) != 0) {
+                    $resultado = $importaciones[$i];
+                    break;
+                }
+            }
         }
         return $resultado;
     }

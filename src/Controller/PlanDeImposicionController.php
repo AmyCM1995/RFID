@@ -31,9 +31,9 @@ class PlanDeImposicionController extends AbstractController
     public function index(PlanDeImposicionRepository $planDeImposicionRepository): Response
     {
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
-        $importacionUltima = $this->utimaImportacion();
+        $importacionUltimaconPi = $this->utimaImportacionConPI();
         $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
-        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima);
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
         //cojer los plan csv de la bd
@@ -41,7 +41,7 @@ class PlanDeImposicionController extends AbstractController
         $planescsv = $csvReposirotio->findAll();
         return $this->render('plan_de_imposicion/index.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
-            'importacion' => $importacionUltima,
+            'importacion' => $importacionUltimaconPi,
             'corresponsales' =>$corresponsales,
         ]);
     }
@@ -665,6 +665,12 @@ class PlanDeImposicionController extends AbstractController
     public function utimaImportacion(){
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
+        return $importacionUltima;
+    }
+    public function utimaImportacionConPI(){
+        $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
+        $piRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $importacionUltima = $importacionRepositorio->findUltimaImportacionConPI($piRepositorio);
         return $importacionUltima;
     }
     public function paisesDelPlan($plan_de_imposicions){
