@@ -7,13 +7,12 @@
     <h5>Dimensión {{ importacion.dimension }}</h5>
     <h5>Ciclo {{ importacion.ciclo }}</h5>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
         <tr>
-            <th></th>
-            <th></th>
+            <th colspan="2" style="text-align: center"> Fecha</th>
             {% for corresponsal in corresponsales %}
-                <th>{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
+                <th colspan="2" style="text-align: center">{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
             {% endfor %}
         </tr>
         </thead>
@@ -34,7 +33,68 @@
                 <td>{{ plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('d-m-y') : '' }}</td>
 
                 {# *******************************ENVIOS**************************************#}
-                {% if plan_de_imposicion_csv.envio11 != null %}
+                {% if plan_de_imposicion_csv.cump11 != null %}
+                    {% if plan_de_imposicion_csv.cump11 == true %}
+                        <td class ="text-success">{{ plan_de_imposicion_csv.envio11 }}</td>
+                    {% elseif plan_de_imposicion_csv.cump11 == false %}
+                        <td class ="text-danger">{{ plan_de_imposicion_csv.envio11 }}</td>
+                    {% endif %}
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio11 }}</td>
+                {% endif %}
+
+                {% if plan_de_imposicion_csv.cump12 != null %}
+                    {% if plan_de_imposicion_csv.cump12 == true %}
+                        <td class ="text-success">{{ plan_de_imposicion_csv.envio12 }}</td>
+                    {% elseif plan_de_imposicion_csv.cump12 == false %}
+                        <td class ="text-danger">{{ plan_de_imposicion_csv.envio12 }}</td>
+                    {% endif %}
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio12 }}</td>
+                {% endif %}
+
+                {% if plan_de_imposicion_csv.cump21 != null %}
+                    {% if plan_de_imposicion_csv.cump21 == true %}
+                        <td class ="text-success">{{ plan_de_imposicion_csv.envio21 }}</td>
+                    {% elseif plan_de_imposicion_csv.cump21 == false %}
+                        <td class ="text-danger">{{ plan_de_imposicion_csv.envio21 }}</td>
+                    {% endif %}
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio21 }}</td>
+                {% endif %}
+
+                {% if plan_de_imposicion_csv.cump22 != null %}
+                    {% if plan_de_imposicion_csv.cump22 == true %}
+                        <td class ="text-success">{{ plan_de_imposicion_csv.envio22 }}</td>
+                    {% elseif plan_de_imposicion_csv.cump22 == false %}
+                        <td class ="text-danger">{{ plan_de_imposicion_csv.envio22 }}</td>
+                    {% endif %}
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio22 }}</td>
+                {% endif %}
+
+                {% if plan_de_imposicion_csv.cump31 != null %}
+                    {% if plan_de_imposicion_csv.cump31 == true %}
+                        <td class ="text-success">{{ plan_de_imposicion_csv.envio31 }}</td>
+                    {% elseif plan_de_imposicion_csv.cump31 == false %}
+                        <td class ="text-danger">{{ plan_de_imposicion_csv.envio31 }}</td>
+                    {% endif %}
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio31 }}</td>
+                {% endif %}
+
+                {% if plan_de_imposicion_csv.cump32 != null %}
+                    {% if plan_de_imposicion_csv.cump32 == true %}
+                        <td class ="text-success">{{ plan_de_imposicion_csv.envio32 }}</td>
+                    {% elseif plan_de_imposicion_csv.cump32 == false %}
+                        <td class ="text-danger">{{ plan_de_imposicion_csv.envio32 }}</td>
+                    {% endif %}
+                {% else %}
+                    <td>{{ plan_de_imposicion_csv.envio32 }}</td>
+                {% endif %}
+
+
+                {#} if plan_de_imposicion_csv.envio11 != null %}
                     {% if plan_de_imposicion_csv.cump11 != null %}
                         {% if plan_de_imposicion_csv.cump11 == true %}
                             {% if plan_de_imposicion_csv.envio12 == null %}
@@ -203,7 +263,7 @@
                             {% endif %}
                         {% endif %}
                     {% endif %}
-                {% endif %}
+                {% endif %#}
             </tr>
         {% else %}
             <tr>

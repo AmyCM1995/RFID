@@ -103,8 +103,9 @@ class TotalesController extends AbstractController
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
-        $importacionUltima = $importacionRepositorio->findUltimaImportacion();
-        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima);
+        $piRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $importacionUltimaconPi = $importacionRepositorio->findUltimaImportacionConPI($piRepositorio);
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
         //cojer los plan csv de la bd
@@ -141,7 +142,7 @@ class TotalesController extends AbstractController
         $html = $this->renderView('totales/pdf_planEstadisticas.html.twig', [
 
             'plan_de_imposicion_csvs' => $planescsv,
-            'importacion' => $importacionUltima,
+            'importacion' => $importacionUltimaconPi,
             'corresponsales' =>$corresponsales,
             'matriz' => $matriz,
             'totales' => $totales,
@@ -164,8 +165,8 @@ class TotalesController extends AbstractController
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $fi = $importacionUltima->getFechaInicioPlan();
-        $ff = $importacionUltima->getFechaFinPlan();
+        $fi = $importacionUltimaconPi->getFechaInicioPlan();
+        $ff = $importacionUltimaconPi->getFechaFinPlan();
         $nombre = "PI_estadisticas-".$fi."-".$ff.".pdf";
         $dompdf->stream($nombre, [
             "Attachment" => true

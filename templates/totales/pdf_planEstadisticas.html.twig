@@ -41,7 +41,7 @@
             <tr>
                 <th colspan="2"> </th>
                 {% for corresponsal in corresponsales %}
-                    <th>{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
+                    <th colspan="2">{{ corresponsal.codigo }} {{ corresponsal.nombre }}</th>
                 {% endfor %}
             </tr>
             </thead>
@@ -71,26 +71,18 @@
                     <td>{{ plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('d-m-y') : '' }}</td>
 
                     {# *******************************ENVIOS**************************************#}
-                    {% if plan_de_imposicion_csv.envio12 != null %}
-                        <td>{{ [plan_de_imposicion_csv.envio11,plan_de_imposicion_csv.envio12]|join(' y ') }}</td>
-                    {% else %}
-                        <td>{{ plan_de_imposicion_csv.envio11 }}</td>
-                    {% endif %}
-
-                    {% if plan_de_imposicion_csv.envio22 != null %}
-                        <td>{{ [plan_de_imposicion_csv.envio21,plan_de_imposicion_csv.envio22]|join(' y ') }}</td>
-                    {% else %}
-                        <td>{{ plan_de_imposicion_csv.envio21 }}</td>
-                    {% endif %}
-
-                    {% if plan_de_imposicion_csv.envio32 != null %}
-                        <td>{{ [plan_de_imposicion_csv.envio31,plan_de_imposicion_csv.envio32]|join(' y ') }}</td>
-                    {% else %}
-                        <td>{{ plan_de_imposicion_csv.envio31 }}</td>
-                    {% endif %}
+                    <td>{{ plan_de_imposicion_csv.envio11 }}</td>
+                    <td>{{ plan_de_imposicion_csv.envio12 }}</td>
+                    <td>{{ plan_de_imposicion_csv.envio21 }}</td>
+                    <td>{{ plan_de_imposicion_csv.envio22 }}</td>
+                    <td>{{ plan_de_imposicion_csv.envio31 }}</td>
+                    <td>{{ plan_de_imposicion_csv.envio32 }}</td>
                 </tr>
                 {% if dia == true %}
                     <tr>
+                        <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                        <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
+                        <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
                         <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
                         <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>
                         <td style="background-color: #FFFFFF; border-left-color: #FFFFFF; border-right-color: #FFFFFF"></td>

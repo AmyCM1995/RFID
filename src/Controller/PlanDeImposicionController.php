@@ -103,9 +103,9 @@ class PlanDeImposicionController extends AbstractController
     public function visualizarCumplimiento()
     {
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
-        $importacionUltima = $this->utimaImportacion();
+        $importacionUltimaconPi = $this->utimaImportacionConPI();
         $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
-        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima);
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
         //cojer los plan csv de la bd
@@ -115,7 +115,7 @@ class PlanDeImposicionController extends AbstractController
         $danger = $this->buscarDangerPlanes($planescsv);
         return $this->render('plan_de_imposicion/visualizarCumplimiento.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
-            'importacion' => $importacionUltima,
+            'importacion' => $importacionUltimaconPi,
             'corresponsales' => $corresponsales,
             'success' => $success,
             'danger' => $danger,
@@ -824,8 +824,8 @@ class PlanDeImposicionController extends AbstractController
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
-        $importacionUltima = $this->utimaImportacion();
-        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima);
+        $importacionUltimaconPi = $this->utimaImportacionConPI();
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
         //cojer los plan csv de la bd
         $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
@@ -834,14 +834,14 @@ class PlanDeImposicionController extends AbstractController
         //***********************PDF
         $html = $this->renderView('plan_de_imposicion/pdf_planImposicion.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
-            'importacion' => $importacionUltima,
+            'importacion' => $importacionUltimaconPi,
             'corresponsales' =>$corresponsales,
             ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $fi = $importacionUltima->getFechaInicioPlan();
-        $ff = $importacionUltima->getFechaFinPlan();
+        $fi = $importacionUltimaconPi->getFechaInicioPlan();
+        $ff = $importacionUltimaconPi->getFechaFinPlan();
         $nombre = "PI-".$fi."-".$ff.".pdf";
         $dompdf->stream($nombre, [
             "Attachment" => true
