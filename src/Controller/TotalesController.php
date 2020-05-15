@@ -38,6 +38,7 @@ class TotalesController extends AbstractController
         $enviosTotales = $totalesRepositorio->enviosTotales();
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
+        $cicloEspanol = $importacionRepositorio->traducirCicloEspañol($importacionUltima);
 
         return $this->render('totales/index.html.twig', [
             'matriz' => $matriz,
@@ -47,6 +48,7 @@ class TotalesController extends AbstractController
             'totalesPaises' => $totalesPaises,
             'totalEnvios' => $enviosTotales,
             'importacion' => $importacionUltima,
+            'cicloEspanol' => $cicloEspanol,
         ]);
     }
 
@@ -75,6 +77,7 @@ class TotalesController extends AbstractController
 
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
+        $cicloEspanol = $importacionRepositorio->traducirCicloEspañol($importacionUltima);
 
         return $this->render('totales/materiales.html.twig',[
             'totales' => $totales,
@@ -89,6 +92,7 @@ class TotalesController extends AbstractController
             'paisesDestino' => $paisesDestino,
             'totalEnvios' => $enviosTotales,
             'importacion' => $importacionUltima,
+            'cicloEspanol' => $cicloEspanol,
         ]);
     }
     /**
@@ -105,6 +109,8 @@ class TotalesController extends AbstractController
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $piRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $importacionUltimaconPi = $importacionRepositorio->findUltimaImportacionConPI($piRepositorio);
+        $importacionRepository = $this->getDoctrine()->getRepository(Importaciones::class);
+        $cicloEspanol = $importacionRepository->traducirCicloEspañol($importacionUltimaconPi);
         $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
@@ -143,6 +149,7 @@ class TotalesController extends AbstractController
 
             'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltimaconPi,
+            'cicloEspanol' => $cicloEspanol,
             'corresponsales' =>$corresponsales,
             'matriz' => $matriz,
             'totales' => $totales,
@@ -184,6 +191,7 @@ class TotalesController extends AbstractController
         $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
+        $cicloEspanol = $importacionRepositorio->traducirCicloEspañol($importacionUltima);
         $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltima);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
@@ -220,6 +228,7 @@ class TotalesController extends AbstractController
         return $this->render('totales/pdf_planEstadisticas.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltima,
+            'cicloEspanol' => $cicloEspanol,
             'corresponsales' =>$corresponsales,
             'matriz' => $matriz,
             'totales' => $totales,
@@ -304,6 +313,7 @@ class TotalesController extends AbstractController
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
         $ciclo = $importacionUltima->getCiclo();
+        $cicloEspanol = $importacionRepositorio->traducirCicloEspañol($importacionUltima);
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $planAnno = $planRepository->findByCiclo($ciclo);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
@@ -339,7 +349,7 @@ class TotalesController extends AbstractController
             'totalesPaises' => $totalesPaises,
             'totalEnvios' => $totalEnvios,
             'totalesPorCorresponsales' => $totalesPorCorresponsales,
-            'ciclo' => $ciclo,
+            'cicloEspanol' => $cicloEspanol,
             'totalEnvios065' => $totalEnvios065,
             'totalEnvios075' => $totalEnvios075,
             'totalEnvios085' => $totalEnvios085,
@@ -427,6 +437,7 @@ class TotalesController extends AbstractController
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
         $importacionUltima = $importacionRepositorio->findUltimaImportacion();
         $ciclo = $importacionUltima->getCiclo();
+        $cicloEspanol = $importacionRepositorio->traducirCicloEspañol($importacionUltima);
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $planAnno = $planRepository->findByCiclo($ciclo);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
@@ -461,7 +472,7 @@ class TotalesController extends AbstractController
             'paisesDestino' => $paises,
             'totalesPaises' => $totalesPaises,
             'totalEnvios' => $totalEnvios,
-            'ciclo' => $ciclo,
+            'cicloEspanol' => $cicloEspanol,
             'totalesPorCorresponsales' => $totalesPorCorresponsales,
             'totalEnvios065' => $totalEnvios065,
             'totalEnvios075' => $totalEnvios075,
@@ -530,7 +541,6 @@ class TotalesController extends AbstractController
         }
         return $matriz;
     }
-
     public function cantEnviosCorresponsalCodPais($plan, $corrCubano, $paisDestino){
         $cant = 0;
         foreach ($plan as $p){
@@ -542,7 +552,6 @@ class TotalesController extends AbstractController
         }
         return $cant;
     }
-
     public function cantEnviosCorresponsalPais($plan, $corrCubano, $paisDestino){
         $cant = 0;
         foreach ($plan as $p){
@@ -554,7 +563,6 @@ class TotalesController extends AbstractController
         }
         return $cant;
     }
-
     public function cantEnviosEntre($plan, $corrCubano, $corrDestino){
         $cant = 0;
         foreach ($plan as $p){
@@ -564,7 +572,6 @@ class TotalesController extends AbstractController
         }
         return $cant;
     }
-
     public function codigoCorresponsalesApartirCorresponsales($corresponsales){
         $codigos = [];
         $size = 0;
@@ -574,7 +581,6 @@ class TotalesController extends AbstractController
         }
         return $codigos;
     }
-
     public function arregloTotalesCorresponsal($corresponsalesCubanos, $corresponsalesDestino){
         $arr[] = 0;
         $size = 0;

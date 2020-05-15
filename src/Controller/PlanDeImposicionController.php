@@ -36,12 +36,15 @@ class PlanDeImposicionController extends AbstractController
         $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
+        $importacionRepository = $this->getDoctrine()->getRepository(Importaciones::class);
+        $cicloEspanol = $importacionRepository->traducirCicloEspañol($importacionUltimaconPi);
         //cojer los plan csv de la bd
         $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
         $planescsv = $csvReposirotio->findAll();
         return $this->render('plan_de_imposicion/index.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltimaconPi,
+            'cicloEspanol' => $cicloEspanol,
             'corresponsales' =>$corresponsales,
         ]);
     }
@@ -108,6 +111,8 @@ class PlanDeImposicionController extends AbstractController
         $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
         $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
+        $importacionRepository = $this->getDoctrine()->getRepository(Importaciones::class);
+        $cicloEspanol = $importacionRepository->traducirCicloEspañol($importacionUltimaconPi);
         //cojer los plan csv de la bd
         $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
         $planescsv = $csvReposirotio->findAll();
@@ -116,6 +121,7 @@ class PlanDeImposicionController extends AbstractController
         return $this->render('plan_de_imposicion/visualizarCumplimiento.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltimaconPi,
+            'cicloEspanol' => $cicloEspanol,
             'corresponsales' => $corresponsales,
             'success' => $success,
             'danger' => $danger,
@@ -827,6 +833,8 @@ class PlanDeImposicionController extends AbstractController
         $importacionUltimaconPi = $this->utimaImportacionConPI();
         $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
         $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
+        $importacionRepository = $this->getDoctrine()->getRepository(Importaciones::class);
+        $cicloEspanol = $importacionRepository->traducirCicloEspañol($importacionUltimaconPi);
         //cojer los plan csv de la bd
         $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
         $planescsv = $csvReposirotio->findAll();
@@ -835,6 +843,7 @@ class PlanDeImposicionController extends AbstractController
         $html = $this->renderView('plan_de_imposicion/pdf_planImposicion.html.twig', [
             'plan_de_imposicion_csvs' => $planescsv,
             'importacion' => $importacionUltimaconPi,
+            'cicloEspanol' => $cicloEspanol,
             'corresponsales' =>$corresponsales,
             ]);
         $dompdf->loadHtml($html);

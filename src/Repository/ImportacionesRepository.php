@@ -7,6 +7,7 @@ use App\Entity\PlanDeImposicion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\String\UnicodeString;
 
 /**
  * @method Importaciones|null find($id, $lockMode = null, $lockVersion = null)
@@ -83,5 +84,49 @@ class ImportacionesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function traducirCicloEspañol($importación){
+        $ciclo = new UnicodeString($importación->getCiclo());
+        $inicio = $ciclo->before(" to ");
+        $anoInicio = $inicio->slice($inicio->length()-4, $inicio->length());
+        $mesInicio = $inicio->slice(1, $inicio->length()-6);
+        $fin = $ciclo->after(" to ");
+        $anoFin = $fin->slice($fin->length()-4, $fin->length());
+        $mesFin = $fin->slice(0, $fin->length()-5);
+        $mesInicioEspanol = $this->equivalenciasMeses($mesInicio);
+        $mesFinEspanol = $this->equivalenciasMeses($mesFin);
+        $cicloEspanol = $mesInicioEspanol." ".$anoInicio." a ".$mesFinEspanol." ".$anoFin;
+        return $cicloEspanol;
+    }
+
+    public function equivalenciasMeses($mesIngles){
+        $mesEspanol = null;
+        if($mesIngles == "January"){
+            $mesEspanol = "Enero";
+        }elseif ($mesIngles == "February"){
+            $mesEspanol = "Febrero";
+        }elseif ($mesIngles == "March"){
+            $mesEspanol = "Marzo";
+        }elseif ($mesIngles == "April"){
+            $mesEspanol = "Abril";
+        }elseif ($mesIngles == "May"){
+            $mesEspanol = "Mayo";
+        }elseif ($mesIngles == "June"){
+            $mesEspanol = "Junio";
+        }elseif ($mesIngles == "July"){
+            $mesEspanol = "Julio";
+        }elseif ($mesIngles == "August"){
+            $mesEspanol = "Agosto";
+        }elseif ($mesIngles == "September"){
+            $mesEspanol = "Septiembre";
+        }elseif ($mesIngles == "October"){
+            $mesEspanol = "Octubre";
+        }elseif ($mesIngles == "November"){
+            $mesEspanol = "Noviembre";
+        }elseif ($mesIngles == "December"){
+            $mesEspanol = "Diciembre";
+        }
+        return $mesEspanol;
     }
 }
