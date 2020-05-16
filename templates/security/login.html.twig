@@ -7,7 +7,12 @@
         <div class="col-6 offset-3">
             <form method="post">
                 {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% if error.messageKey == 'Invalid credentials.' %}
+                        <div class="alert alert-danger">La contraseña es incorrecta</div>
+                    {% elseif error.messageKey == 'Nombre could not be found.' %}
+                        <div class="alert alert-danger">El usuario es incorrecto</div>
+                    {% endif %}
+                    {#<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
                 {% endif %}
 
                         {#{% if app.user %}
