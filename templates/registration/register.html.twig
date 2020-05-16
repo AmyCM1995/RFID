@@ -5,25 +5,16 @@
 {% block contenido %}
     {{ parent() }}
 
-    <div class="row">
-        <div class="col-10">
-            <div class="card bg-light">
-                <div class="card-body">
-                    <h1 class="text-center">Nuevo usuario</h1>
+    <h1>Nuevo usuario</h1>
 
-                    {{ form_start(registrationForm) }}
-                    {{ form_row(registrationForm.nombre) }}
-                    {{ form_row(registrationForm.correo) }}
-                    {{ form_row(registrationForm.plainPassword) }}
-                    {{ form_row(registrationForm.roles) }}
-                    {# {{ form_row(registrationForm.agreeTerms) }}  #}
+    {{ form_start(registrationForm) }}
+    {{ form_row(registrationForm.nombre) }}
+    {{ form_row(registrationForm.correo) }}
+    {{ form_row(registrationForm.plainPassword) }}
+    {{ form_row(registrationForm.roles) }}
+    {# {{ form_row(registrationForm.agreeTerms) }}  #}
+    <button class="btn btn-primary" id="general-btns">Registrar</button>
+    {{ form_end(registrationForm) }}
 
-
-                    <button class="btn btn-primary" id="general-btns">Registrar</button>
-                    {{ form_end(registrationForm) }}
-                 </div>
-            </div>
-        </div>
-    </div>
 
 {% endblock %}

@@ -50,8 +50,8 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-                'first_options' => ['label' => 'Contraseña'],
-                'second_options' => ['label' => 'Confirmar contraseña'],
+                'first_options' => ['label' => 'Contraseña', 'attr' => array('class' => 'form-control')],
+                'second_options' => ['label' => 'Confirmar contraseña', 'attr' => array('class' => 'form-control')],
                 'invalid_message' => 'Su contraseña no coincide'
             ])
             ->add('roles', ChoiceType::class, array(
