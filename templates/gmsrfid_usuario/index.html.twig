@@ -24,11 +24,16 @@
                 <td>{{ g_m_s_r_f_i_d_usuario.nombre }}</td>
                 <td>{{ g_m_s_r_f_i_d_usuario.correo }}</td>
                 <td>{{ g_m_s_r_f_i_d_usuario.roles ? g_m_s_r_f_i_d_usuario.roles|json_encode : '' }}</td>
-                {#<td>{{ g_m_s_r_f_i_d_usuario.password }}</td>#}
+                {% if is_granted('ROLE_ADMIN') %}
                 <td>
-                    <a href="{{ path('g_m_s_r_f_i_d_usuario_show', {'id': g_m_s_r_f_i_d_usuario.id}) }}">Mostrar</a>
-                    <a href="{{ path('g_m_s_r_f_i_d_usuario_edit', {'id': g_m_s_r_f_i_d_usuario.id}) }}">Editar</a>
+                    <a href="{{ path('g_m_s_r_f_i_d_usuario_edit', {'id': g_m_s_r_f_i_d_usuario.id}) }}">
+                        <img src="{{ asset('img/editar.png') }}" style="width: 15%">
+                    </a>
+                    <a href="{{ path('g_m_s_r_f_i_d_usuario_delete', {'id': g_m_s_r_f_i_d_usuario.id}) }}">
+                        <img src="{{ asset('img/borrar.png') }}" style="width: 15%">
+                    </a>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -37,5 +42,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('app_register') }}">Nuevo usuario</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-primary"  href="{{ path('app_register') }}">Nuevo</a>
+    {% endif %}
 {% endblock %}

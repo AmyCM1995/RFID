@@ -23,10 +23,6 @@
                 <th>Roles</th>
                 <td>{{ g_m_s_r_f_i_d_usuario.roles ? g_m_s_r_f_i_d_usuario.roles|json_encode : '' }}</td>
             </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ g_m_s_r_f_i_d_usuario.password }}</td>
-            </tr>
         </tbody>
     </table>
 
@@ -34,5 +30,5 @@
 
     <a href="{{ path('g_m_s_r_f_i_d_usuario_edit', {'id': g_m_s_r_f_i_d_usuario.id}) }}">edit</a>
 
-    {{ include('g_m_s_r_f_i_d_usuario/_delete_form.html.twig') }}
+    {{ include('gmsrfid_usuario/_delete_form.html.twig') }}
 {% endblock %}

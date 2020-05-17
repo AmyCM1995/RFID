@@ -52,15 +52,15 @@ class GMSRFIDUsuarioController extends AbstractController
         ]);
     }
 
-    /**
+    /*
      * @Route("/{id}", name="g_m_s_r_f_i_d_usuario_show", methods={"GET"})
      */
-    public function show(GMSRFIDUsuario $gMSRFIDUsuario): Response
+    /*public function show(GMSRFIDUsuario $gMSRFIDUsuario): Response
     {
         return $this->render('gmsrfid_usuario/show.html.twig', [
             'g_m_s_r_f_i_d_usuario' => $gMSRFIDUsuario,
         ]);
-    }
+    }*/
 
     /**
      * @Route("/{id}/edit", name="g_m_s_r_f_i_d_usuario_edit", methods={"GET","POST"})
@@ -70,12 +70,12 @@ class GMSRFIDUsuarioController extends AbstractController
         $form = $this->createForm(GMSRFIDUsuarioType::class, $gMSRFIDUsuario);
         $form->handleRequest($request);
 
+        echo $gMSRFIDUsuario->getPassword();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('g_m_s_r_f_i_d_usuario_index');
         }
-
         return $this->render('gmsrfid_usuario/edit.html.twig', [
             'g_m_s_r_f_i_d_usuario' => $gMSRFIDUsuario,
             'form' => $form->createView(),
@@ -83,15 +83,16 @@ class GMSRFIDUsuarioController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="g_m_s_r_f_i_d_usuario_delete", methods={"DELETE"})
+     * @Route("/{id}", name="g_m_s_r_f_i_d_usuario_delete", methods={"GET","POST"})
      */
     public function delete(Request $request, GMSRFIDUsuario $gMSRFIDUsuario): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$gMSRFIDUsuario->getId(), $request->request->get('_token'))) {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        //if ($this->isCsrfTokenValid('delete'.$gMSRFIDUsuario->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($gMSRFIDUsuario);
             $entityManager->flush();
-        }
+        //}
 
         return $this->redirectToRoute('g_m_s_r_f_i_d_usuario_index');
     }
