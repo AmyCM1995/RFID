@@ -10,6 +10,7 @@
         <thead>
             <tr>
                 <th>País</th>
+                <th>Sitio</th>
                 <th>Codigo</th>
                 <th>Nombre</th>
                 <th>Proposito</th>
@@ -20,15 +21,16 @@
         {% for lector in lectors %}
             <tr>
                 <td>{{ lector.sitio.pais.nombre }}</td>
+                <td>{{ lector.sitio.nombre }}</td>
                 <td>{{ lector.codigo }}</td>
                 <td>{{ lector.nombre }}</td>
                 <td>{{ lector.proposito }}</td>
                 <td>
                     <a href="{{ path('lector_edit', {'id': lector.id}) }}">
-                        <img src="{{ asset('img/editar.png') }}" style="width: 10%">
+                        <img src="{{ asset('img/editar.png') }}" style="width: 18%">
                     </a>
                     <a href="{{ path('lector_delete', {'id': lector.id}) }}">
-                        <img src="{{ asset('img/borrar.png') }}" style="width: 10%">
+                        <img src="{{ asset('img/borrar.png') }}" style="width: 18%">
                     </a>
                 </td>
             </tr>
