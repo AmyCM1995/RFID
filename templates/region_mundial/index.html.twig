@@ -30,7 +30,7 @@
                     <a href="{{ path('region_mundial_edit', {'id': region_mundial.id}) }}">
                         <img src="{{ asset('img/editar.png') }}" style="width: 8%">
                     </a>
-                    <a href="{{ path('region_mundial_delete', {'id': region_mundial.id}) }}">
+                    <a href="{{ path('region_mundial_delete', {'id': region_mundial.id}) }}"onclick="return confirm('¿Desea borrar la región seleccionada?');">
                         <img src="{{ asset('img/borrar.png') }}" style="width: 8%">
                     </a>
                 </td>

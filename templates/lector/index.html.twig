@@ -29,7 +29,7 @@
                     <a href="{{ path('lector_edit', {'id': lector.id}) }}">
                         <img src="{{ asset('img/editar.png') }}" style="width: 18%">
                     </a>
-                    <a href="{{ path('lector_delete', {'id': lector.id}) }}">
+                    <a href="{{ path('lector_delete', {'id': lector.id}) }}"onclick="return confirm('¿Desea borrar el lector seleccionado?');">
                         <img src="{{ asset('img/borrar.png') }}" style="width: 18%">
                     </a>
                 </td>

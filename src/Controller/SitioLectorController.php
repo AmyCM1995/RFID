@@ -48,15 +48,6 @@ class SitioLectorController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sitio_lector_show", methods={"GET"})
-     */
-    public function show(SitioLector $sitioLector): Response
-    {
-        return $this->render('sitio_lector/show.html.twig', [
-            'sitio_lector' => $sitioLector,
-        ]);
-    }
 
     /**
      * @Route("/{id}/edit", name="sitio_lector_edit", methods={"GET","POST"})
@@ -79,15 +70,15 @@ class SitioLectorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="sitio_lector_delete", methods={"DELETE"})
+     * @Route("/{id}", name="sitio_lector_delete", methods={"GET","POST"})
      */
     public function delete(Request $request, SitioLector $sitioLector): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sitioLector->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$sitioLector->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($sitioLector);
             $entityManager->flush();
-        }
+       // }
 
         return $this->redirectToRoute('sitio_lector_index');
     }

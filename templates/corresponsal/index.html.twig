@@ -38,7 +38,7 @@
                         <a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">
                             <img src="{{ asset('img/editar.png') }}" style="width: 15%">
                         </a>
-                        <a href="{{ path('corresponsal_delete', {'id': corresponsal.id}) }}">
+                        <a href="{{ path('corresponsal_delete', {'id': corresponsal.id}) }}" onclick="return confirm('¿Desea borrar el corresponsal seleccionado?');">
                             <img src="{{ asset('img/borrar.png') }}" style="width: 15%">
                         </a>
                     </td>

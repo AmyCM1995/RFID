@@ -26,7 +26,7 @@
                         <a href="{{ path('provincia_cuba_edit', {'id': provincia_cuba.id}) }}">
                             <img src="{{ asset('img/editar.png') }}" style="width: 5%">
                         </a>
-                        <a href="{{ path('provincia_cuba_delete', {'id': provincia_cuba.id}) }}">
+                        <a href="{{ path('provincia_cuba_delete', {'id': provincia_cuba.id}) }}"onclick="return confirm('¿Desea borrar la provincia seleccionada?');">
                             <img src="{{ asset('img/borrar.png') }}" style="width: 5%">
                         </a>
                     </td>

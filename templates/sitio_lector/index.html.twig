@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SitioLector index{% endblock %}
+{% block title %}{{ parent() }}{% endblock %}
 
-{% block body %}
+{% block contenido %}
+    {{ parent() }}
     <h1>SitioLector index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>País</th>
                 <th>Codigo</th>
                 <th>Nombre</th>
                 <th>actions</th>
@@ -17,12 +18,16 @@
         <tbody>
         {% for sitio_lector in sitio_lectors %}
             <tr>
-                <td>{{ sitio_lector.id }}</td>
+                <td>{{ sitio_lector.pais.nombre }}</td>
                 <td>{{ sitio_lector.codigo }}</td>
                 <td>{{ sitio_lector.nombre }}</td>
                 <td>
-                    <a href="{{ path('sitio_lector_show', {'id': sitio_lector.id}) }}">show</a>
-                    <a href="{{ path('sitio_lector_edit', {'id': sitio_lector.id}) }}">edit</a>
+                    <a href="{{ path('sitio_lector_edit', {'id': sitio_lector.id}) }}">
+                        <img src="{{ asset('img/editar.png') }}" style="width: 8%">
+                    </a>
+                    <a id="delete" href="{{ path('sitio_lector_delete', {'id': sitio_lector.id}) }}" onclick="return confirm('¿Desea borrar el sitio seleccionado?');">
+                        <img src="{{ asset('img/borrar.png') }}" style="width: 8%">
+                    </a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('sitio_lector_new') }}">Create new</a>
+    <a class="btn btn-primary"  href="{{ path('sitio_lector_new') }}">Nuevo</a>
 {% endblock %}

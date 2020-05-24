@@ -31,7 +31,7 @@
                         <a href="{{ path('pais_correspondencia_edit', {'id': pais_correspondencium.id}) }}">
                             <img src="{{ asset('img/editar.png') }}" style="width: 7%">
                         </a>
-                        <a href="{{ path('pais_correspondencia_delete', {'id': pais_correspondencium.id}) }}">
+                        <a href="{{ path('pais_correspondencia_delete', {'id': pais_correspondencium.id}) }}"onclick="return confirm('¿Desea borrar el país seleccionado?');">
                             <img src="{{ asset('img/borrar.png') }}" style="width: 7%">
                         </a>
                     </td>

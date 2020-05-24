@@ -38,7 +38,7 @@
                         <a href="{{ path('equipo_corresponsales_edit', {'id': equipo_corresponsale.id}) }}">
                             <img src="{{ asset('img/editar.png') }}" style="width: 15%">
                         </a>
-                        <a href="{{ path('equipo_corresponsales_delete', {'id': equipo_corresponsale.id}) }}">
+                        <a href="{{ path('equipo_corresponsales_delete', {'id': equipo_corresponsale.id}) }}"onclick="return confirm('¿Desea borrar el equipo seleccionado?');">
                             <img src="{{ asset('img/borrar.png') }}" style="width: 15%">
                         </a>
                     </td>

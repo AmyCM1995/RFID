@@ -29,7 +29,7 @@
                     <a href="{{ path('g_m_s_r_f_i_d_usuario_edit', {'id': g_m_s_r_f_i_d_usuario.id}) }}">
                         <img src="{{ asset('img/editar.png') }}" style="width: 15%">
                     </a>
-                    <a href="{{ path('g_m_s_r_f_i_d_usuario_delete', {'id': g_m_s_r_f_i_d_usuario.id}) }}">
+                    <a href="{{ path('g_m_s_r_f_i_d_usuario_delete', {'id': g_m_s_r_f_i_d_usuario.id}) }}"onclick="return confirm('¿Desea borrar el usuario seleccionado?');">
                         <img src="{{ asset('img/borrar.png') }}" style="width: 15%">
                     </a>
                 </td>

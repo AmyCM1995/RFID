@@ -35,7 +35,7 @@
                     <a href="{{ path('fechas_no_correspondencia_edit', {'id': fechas_no_correspondencium.id}) }}">
                         <img src="{{ asset('img/editar.png') }}" style="width: 15%">
                     </a>
-                    <a href="{{ path('fechas_no_correspondencia_delete', {'id': fechas_no_correspondencium.id}) }}">
+                    <a href="{{ path('fechas_no_correspondencia_delete', {'id': fechas_no_correspondencium.id}) }}"onclick="return confirm('¿Desea borrar la fecha seleccionada?');">
                         <img src="{{ asset('img/borrar.png') }}" style="width: 15%">
                     </a>
                 </td>
