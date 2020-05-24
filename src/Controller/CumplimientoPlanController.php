@@ -29,7 +29,8 @@ class CumplimientoPlanController extends AbstractController
             ->add('file', FileType::class, [
                 'mapped' => false, 'label' => ' '
             ])
-            ->add('save', SubmitType::class, [ 'label' => 'Guardar'])
+            ->add('save', SubmitType::class, [ 'label' => 'Guardar',  'attr' =>
+                array('onclick' => 'cargando()')])
             ->getForm();
         $form->handleRequest($request);
 
@@ -236,5 +237,7 @@ class CumplimientoPlanController extends AbstractController
         $resultado = $fechasNoCorrespondenciaRepository->findOneByFecha($fecha);
         return $resultado;
     }
+
+
 
 }

@@ -61,7 +61,7 @@ class PlanDeImposicionController extends AbstractController
                 'mapped' => false, 'label' => ' '
             ])
             ->add('save', SubmitType::class, [ 'label' => 'Guardar',
-                'attr' => array('class' => 'btn btn-primary')
+                'attr' => array('onclick' => 'cargando()')
                 ])
             ->getForm();
         $form->handleRequest($request);
@@ -104,6 +104,33 @@ class PlanDeImposicionController extends AbstractController
      * @Route("/plan/imposicion/visualizar/cumplimiento", name="plan_imposicion_visualizar_cumplimiento")
      */
     public function visualizarCumplimiento()
+    {
+        $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $importacionUltimaconPi = $this->utimaImportacionConPI();
+        $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
+        $importacionRepository = $this->getDoctrine()->getRepository(Importaciones::class);
+        $cicloEspanol = $importacionRepository->traducirCicloEspañol($importacionUltimaconPi);
+        //cojer los plan csv de la bd
+        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $planescsv = $csvReposirotio->findAll();
+        $success = $this->buscarSuccessPlanes($planescsv);
+        $danger = $this->buscarDangerPlanes($planescsv);
+        return $this->render('plan_de_imposicion/visualizarCumplimiento.html.twig', [
+            'plan_de_imposicion_csvs' => $planescsv,
+            'importacion' => $importacionUltimaconPi,
+            'cicloEspanol' => $cicloEspanol,
+            'corresponsales' => $corresponsales,
+            'success' => $success,
+            'danger' => $danger,
+        ]);
+    }
+    /**
+     * @Route("/{cod}/plan/imposicion/visualizar/cumplimiento/corresponsal", name="plan_imposicion_visualizar_cumplimiento_corresponsal", methods={"GET","POST"})
+     */
+    public function visualizarCumplimientoCorresponsal($codCorresponsal)
     {
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $importacionUltimaconPi = $this->utimaImportacionConPI();

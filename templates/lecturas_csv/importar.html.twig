@@ -7,4 +7,17 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+
+
+    <script type="text/javascript">
+        function cargando() {
+            img = '<img src="{{ asset('img/cargando.gif') }}" style="width: 5%">'
+            document.getElementById('imagenCargando').innerHTML = img;
+        }
+    </script>
+    <center>
+        <br><br>
+        <div id="imagenCargando" ></div>
+    </center>
+
 {% endblock %}
