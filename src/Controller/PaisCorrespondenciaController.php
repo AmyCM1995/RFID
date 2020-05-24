@@ -22,7 +22,7 @@ class PaisCorrespondenciaController extends AbstractController
     public function index(PaisCorrespondenciaRepository $paisCorrespondenciaRepository): Response
     {
         return $this->render('pais_correspondencia/index.html.twig', [
-            'pais_correspondencias' => $paisCorrespondenciaRepository->findAllByNombre(),
+            'pais_correspondencias' => $paisCorrespondenciaRepository->findAllByNombreMenosCuba(),
         ]);
     }
 

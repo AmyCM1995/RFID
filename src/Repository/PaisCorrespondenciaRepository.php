@@ -34,6 +34,18 @@ class PaisCorrespondenciaRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findAllByNombreMenosCuba(){
+       $paisesActivos = $this->findAllByNombre();
+       $paisesActivosMenosCuba[] = null;
+       $size = 0;
+       foreach ($paisesActivos as $pais){
+           if($pais->getCodigo() != "CU"){
+               $paisesActivosMenosCuba[$size] = $pais;
+               $size++;
+           }
+       }
+       return $paisesActivosMenosCuba;
+    }
 
     public function findAllByNombre(){
         return $this->createQueryBuilder('p')

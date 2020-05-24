@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Lectores</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>País</th>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Proposito</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lector in lectors %}
+            <tr>
+                <td>{{ lector.sitio.pais.nombre }}</td>
+                <td>{{ lector.codigo }}</td>
+                <td>{{ lector.nombre }}</td>
+                <td>{{ lector.proposito }}</td>
+                <td>
+                    <a href="{{ path('lector_edit', {'id': lector.id}) }}">
+                        <img src="{{ asset('img/editar.png') }}" style="width: 10%">
+                    </a>
+                    <a href="{{ path('lector_delete', {'id': lector.id}) }}">
+                        <img src="{{ asset('img/borrar.png') }}" style="width: 10%">
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary"  href="{{ path('lector_new') }}">Nuevo</a>
+{% endblock %}

@@ -30,14 +30,10 @@ class Area
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ciudad", inversedBy="areas")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $ciudad;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SitioLector", mappedBy="area")
-     */
-    private $sitioLectors;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Envio", mappedBy="area_origen")

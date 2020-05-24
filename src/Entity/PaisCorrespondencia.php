@@ -43,9 +43,15 @@ class PaisCorrespondencia
      */
     private $ciudades;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SitioLector", mappedBy="pais_id")
+     */
+    private $sitioLectors;
+
     public function __construct()
     {
         $this->ciudades = new ArrayCollection();
+        $this->sitioLectors = new ArrayCollection();
     }
 
 
@@ -127,6 +133,37 @@ class PaisCorrespondencia
             // set the owning side to null (unless already changed)
             if ($ciudade->getPais() === $this) {
                 $ciudade->setPais(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SitioLector[]
+     */
+    public function getSitioLectors(): Collection
+    {
+        return $this->sitioLectors;
+    }
+
+    public function addSitioLector(SitioLector $sitioLector): self
+    {
+        if (!$this->sitioLectors->contains($sitioLector)) {
+            $this->sitioLectors[] = $sitioLector;
+            $sitioLector->setPaisId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSitioLector(SitioLector $sitioLector): self
+    {
+        if ($this->sitioLectors->contains($sitioLector)) {
+            $this->sitioLectors->removeElement($sitioLector);
+            // set the owning side to null (unless already changed)
+            if ($sitioLector->getPaisId() === $this) {
+                $sitioLector->setPaisId(null);
             }
         }
 

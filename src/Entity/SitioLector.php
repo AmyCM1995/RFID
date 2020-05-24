@@ -29,15 +29,14 @@ class SitioLector
     private $nombre;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Area", inversedBy="sitioLectors")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $area;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Lector", mappedBy="sitio")
      */
     private $lectors;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PaisCorrespondencia", inversedBy="sitioLectors")
+     */
+    private $pais;
 
     public function __construct()
     {
@@ -73,18 +72,6 @@ class SitioLector
         return $this;
     }
 
-    public function getArea(): ?Area
-    {
-        return $this->area;
-    }
-
-    public function setArea(?Area $area): self
-    {
-        $this->area = $area;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Lector[]
      */
@@ -112,6 +99,18 @@ class SitioLector
                 $lector->setSitio(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPais(): ?PaisCorrespondencia
+    {
+        return $this->pais;
+    }
+
+    public function setPais(?PaisCorrespondencia $pais): self
+    {
+        $this->pais = $pais;
 
         return $this;
     }
