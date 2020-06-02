@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<br>
+<button class="btn btn-primary">
+    {{ button_label|default('Aceptar') }}
+</button>
+<a class="btn btn-primary" href="{{ path('i_p_lector_cubano_index') }}">Regresar</a>
+{{ form_end(form) }}

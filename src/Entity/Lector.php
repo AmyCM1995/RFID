@@ -44,6 +44,11 @@ class Lector
      */
     private $lecturas;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\IPLectorCubano", mappedBy="lector", cascade={"persist", "remove"})
+     */
+    private $iPLectorCubano;
+
     public function __construct()
     {
         $this->lecturas = new ArrayCollection();
@@ -128,6 +133,24 @@ class Lector
             if ($lectura->getLector() === $this) {
                 $lectura->setLector(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getIPLectorCubano(): ?IPLectorCubano
+    {
+        return $this->iPLectorCubano;
+    }
+
+    public function setIPLectorCubano(?IPLectorCubano $iPLectorCubano): self
+    {
+        $this->iPLectorCubano = $iPLectorCubano;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newLector = $iPLectorCubano === null ? null : $this;
+        if ($newLector !== $iPLectorCubano->getLector()) {
+            $iPLectorCubano->setLector($newLector);
         }
 
         return $this;

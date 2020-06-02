@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Editar IP de lector RFID</h1>
+
+    {{ include('ip_lector_cubano/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+{% endblock %}

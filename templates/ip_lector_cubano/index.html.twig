@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>IP de lectores RFID cubanos</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sitio</th>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th>IP</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i_p_lector_cubano in i_p_lector_cubanos %}
+            <tr>
+                <td>{{ i_p_lector_cubano.lector.sitio.nombre }}</td>
+                <td>{{ i_p_lector_cubano.lector.nombre }}</td>
+                <td>{{ i_p_lector_cubano.lector.codigo }}</td>
+                <td>{{ i_p_lector_cubano.ip }}</td>
+                <td>
+                    <a href="{{ path('i_p_lector_cubano_edit', {'id': i_p_lector_cubano.id}) }}">
+                        <img src="{{ asset('img/editar.png') }}" style="width: 15%">
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary"  href="{{ path('i_p_lector_cubano_new') }}">Nuevo</a>
+{% endblock %}

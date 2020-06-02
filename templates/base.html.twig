@@ -73,8 +73,12 @@
                             <div class="sidebar-btns"><a href="{{path('salva_restaura_b_d')}}">Salvas y Restauras</a></div>
                         {% endif %}
                             {%  if is_granted('ROLE_ADMIN') %}
-                        <li class="sidebtns">
-                            <div class="sidebar-btns"><a href="{{path('g_m_s_r_f_i_d_usuario_index')}}">Usuarios</a></div>
+                        <li class="dropdown-sidebar">
+                            <div class="dropdown dropdown-sidebar-btn"><a>Nomencladores</a></div>
+                            <div class="dropdown-sidebar-content">
+                                <a href="{{ path('g_m_s_r_f_i_d_usuario_index') }}">Usuarios</a>
+                                <a href="{{ path('i_p_lector_cubano_index') }}">IP de lectores</a>
+                            </div>
                         {% endif %}
 
                         {% if is_granted('ROLE_CORRESPONSAL') %}
@@ -127,7 +131,7 @@
                             </div>
                         </li>
                             <li class="dropdown-sidebar">
-                                <div class="dropdown-sidebar-btn"><a>Traceroute</a></div>
+                                <div class="dropdown-sidebar-btn"><a>Lectores RFID</a></div>
                                 <div class="dropdown-sidebar-content">
                                     <a href="{{ path('traceroute_ping') }}">Ping</a>
                                     <a href="#">Tracert</a>
