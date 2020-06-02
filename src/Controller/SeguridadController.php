@@ -6,11 +6,13 @@ use App\Entity\GMSRFIDUsuario;
 use App\Form\CambiarUsuarioType;
 use App\Repository\GMSRFIDUsuarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SeguridadController extends AbstractController
@@ -43,21 +45,27 @@ class SeguridadController extends AbstractController
     /**
      * @Route("/{nombreUsuario}/cambiar/contrasena", name="user_contrasena_cambiar", methods={"GET","POST"})
      */
-    public function cambiarContraseña(Request $request, $nombreUsuario){
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(GMSRFIDUsuario::class)->findBy(['nombre' => $nombreUsuario]);
+    public function cambiarContrasena(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user){
 
-        if(null === $user){
-            return new RedirectResponse($this->generateUrl('resetting_request'));
-        }
+        $nueva = $request->get('new_password');
+        $nueva_confirm = $request->get('new_password_confirm');
+        //$user = $this->getUser();
         $form = $this->createForm(CambiarUsuarioType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $user->setConfirmationToken(null);
-            $user->setPassword(null);
-            $em->persist($user);
-            $em->flush();
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $nueva
+                )
+            );
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            /*$new_pwd_encoded = $passwordEncoder->encodePassword($user, $nueva);
+            $user->setPassword($new_pwd_encoded);
+            $this->getDoctrine()->getManager()->flush();*/
 
             $this->addFlash("success", "Su contraseña ha cambiado correctamente. Por favor inicie sesión nuevamente");
             $url = $this->generateUrl('app_login');

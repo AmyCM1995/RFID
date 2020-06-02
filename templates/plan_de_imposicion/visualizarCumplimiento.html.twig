@@ -17,6 +17,31 @@
         </tr>
         </thead>
         <tbody>
+
+        <select id="corresponsales" class="form-control">
+            <option value="todos">Todos</option>
+            {% for corresponsal in corresponsales %}
+            <option>{{ corresponsal.codigo }}</option>
+            {% endfor %}
+        </select>
+        <button  class="btn btn-primary" onclick="filtro()"> Filtrar</button>
+        <input type="hidden" value="{{ path('plan_imposicion_visualizar_cumplimiento') }}" id="rutaTodos" />
+        <input type="hidden" value="{{ path('fechas_no_correspondencia_delete', {'cod': fechas_no_correspondencium.id}) }}" id="rutaTodos" />
+
+        <script type="text/javascript">
+            function filtro(){
+                var valor = document.getElementById('corresponsales').value;
+                if(valor == "todos"){
+                    var ruta = document.getElementById('rutaTodos').value;
+                    window.location= ruta;
+                }else{
+                    alert(valor);
+                }
+
+            }
+        </script>
+
+
         {% for plan_de_imposicion_csv in plan_de_imposicion_csvs %}
             <tr>
                 {% if plan_de_imposicion_csv.fecha ? plan_de_imposicion_csv.fecha|date('l') == 'Monday' %}
@@ -92,178 +117,6 @@
                 {% else %}
                     <td>{{ plan_de_imposicion_csv.envio32 }}</td>
                 {% endif %}
-
-
-                {#} if plan_de_imposicion_csv.envio11 != null %}
-                    {% if plan_de_imposicion_csv.cump11 != null %}
-                        {% if plan_de_imposicion_csv.cump11 == true %}
-                            {% if plan_de_imposicion_csv.envio12 == null %}
-                                <td class="text-success">{{ plan_de_imposicion_csv.envio11 }}</td>
-                                {% else %}
-                                    {% if plan_de_imposicion_csv.cump12 != null %}
-                                        {% if plan_de_imposicion_csv.cump12 == true %}
-                                            <td><p class="text-success">{{ plan_de_imposicion_csv.envio11 }}</p>
-                                                <p class="text-success">{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                                            {% elseif plan_de_imposicion_csv.cump12 == false %}
-                                                <td><p class="text-success">{{ plan_de_imposicion_csv.envio11 }}</p>
-                                                    <p class="text-danger">{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                                        {% endif %}
-                                        {% else %}
-                                            <td><p class="text-success">{{ plan_de_imposicion_csv.envio11 }}</p>
-                                                <p>{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                                    {% endif %}
-                            {% endif %}
-                        {% elseif plan_de_imposicion_csv.cump11 == false %}
-                            {% if plan_de_imposicion_csv.envio12 == null %}
-                                <td class="text-danger">{{ plan_de_imposicion_csv.envio11 }}</td>
-                            {% else %}
-                                 {% if plan_de_imposicion_csv.cump12 != null %}
-                                     {% if plan_de_imposicion_csv.cump12 == true %}
-                                         <td><p class="text-danger">{{ plan_de_imposicion_csv.envio11 }}</p>
-                                             <p class="text-success">{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                                     {% elseif plan_de_imposicion_csv.cump12 == false %}
-                                         <td><p class="text-danger">{{ plan_de_imposicion_csv.envio11 }}</p>
-                                             <p class="text-danger">{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                                     {% endif %}
-                                 {% else %}
-                                     <td><p class="text-danger">{{ plan_de_imposicion_csv.envio11 }}</p>
-                                         <p>{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                                 {% endif %}
-                            {% endif %}
-                        {% endif %}
-                    {% else %}
-                        {% if plan_de_imposicion_csv.envio12 == null %}
-                            <td>{{ plan_de_imposicion_csv.envio11 }}</td>
-                        {% else %}
-                            {% if plan_de_imposicion_csv.cump12 != null %}
-                                {% if plan_de_imposicion_csv.cump12 == true %}
-                                    <td><p>{{ plan_de_imposicion_csv.envio11 }}</p>
-                                        <p class="text-success">{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                                {% elseif plan_de_imposicion_csv.cump12 == false %}
-                                    <td><p>{{ plan_de_imposicion_csv.envio11 }}</p>
-                                        <p class="text-danger">{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                                {% endif %}
-                            {% else %}
-                                <td><p>{{ plan_de_imposicion_csv.envio11 }}</p>
-                                    <p>{{ plan_de_imposicion_csv.envio12 }}</p></td>
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-
-                {% if plan_de_imposicion_csv.envio21 != null %}
-                    {% if plan_de_imposicion_csv.cump21 != null %}
-                        {% if plan_de_imposicion_csv.cump21 == true %}
-                            {% if plan_de_imposicion_csv.envio22 == null %}
-                                <td class="text-success">{{ plan_de_imposicion_csv.envio21 }}</td>
-                            {% else %}
-                                {% if plan_de_imposicion_csv.cump22 != null %}
-                                    {% if plan_de_imposicion_csv.cump22 == true %}
-                                        <td><p class="text-success">{{ plan_de_imposicion_csv.envio21 }}</p>
-                                            <p class="text-success">{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                                    {% elseif plan_de_imposicion_csv.cump22 == false %}
-                                        <td><p class="text-success">{{ plan_de_imposicion_csv.envio21 }}</p>
-                                            <p class="text-danger">{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                                    {% endif %}
-                                {% else %}
-                                    <td><p class="text-success">{{ plan_de_imposicion_csv.envio21 }}</p>
-                                        <p>{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                                {% endif %}
-                            {% endif %}
-                        {% elseif plan_de_imposicion_csv.cump21 == false %}
-                            {% if plan_de_imposicion_csv.envio22 == null %}
-                                <td class="text-danger">{{ plan_de_imposicion_csv.envio21 }}</td>
-                            {% else %}
-                                {% if plan_de_imposicion_csv.cump22 != null %}
-                                    {% if plan_de_imposicion_csv.cump22 == true %}
-                                        <td><p class="text-danger">{{ plan_de_imposicion_csv.envio21 }}</p>
-                                            <p class="text-success">{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                                    {% elseif plan_de_imposicion_csv.cump22 == false %}
-                                        <td><p class="text-danger">{{ plan_de_imposicion_csv.envio21 }}</p>
-                                            <p class="text-danger">{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                                    {% endif %}
-                                {% else %}
-                                    <td><p class="text-danger">{{ plan_de_imposicion_csv.envio21 }}</p>
-                                        <p>{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                                {% endif %}
-                            {% endif %}
-                        {% endif %}
-                    {% else %}
-                        {% if plan_de_imposicion_csv.envio22 == null %}
-                            <td>{{ plan_de_imposicion_csv.envio21 }}</td>
-                        {% else %}
-                            {% if plan_de_imposicion_csv.cump22 != null %}
-                                {% if plan_de_imposicion_csv.cump22 == true %}
-                                    <td><p>{{ plan_de_imposicion_csv.envio21 }}</p>
-                                        <p class="text-success">{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                                {% elseif plan_de_imposicion_csv.cump22 == false %}
-                                    <td><p>{{ plan_de_imposicion_csv.envio21 }}</p>
-                                        <p class="text-danger">{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                                {% endif %}
-                            {% else %}
-                                <td><p>{{ plan_de_imposicion_csv.envio21 }}</p>
-                                    <p>{{ plan_de_imposicion_csv.envio22 }}</p></td>
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-
-                {% if plan_de_imposicion_csv.envio31 != null %}
-                    {% if plan_de_imposicion_csv.cump31 != null %}
-                        {% if plan_de_imposicion_csv.cump31 == true %}
-                            {% if plan_de_imposicion_csv.envio32 == null %}
-                                <td class="text-success">{{ plan_de_imposicion_csv.envio31 }}</td>
-                            {% else %}
-                                {% if plan_de_imposicion_csv.cump32 != null %}
-                                    {% if plan_de_imposicion_csv.cump32 == true %}
-                                        <td><p class="text-success">{{ plan_de_imposicion_csv.envio31 }}</p>
-                                            <p class="text-success">{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                                    {% elseif plan_de_imposicion_csv.cump32 == false %}
-                                        <td><p class="text-success">{{ plan_de_imposicion_csv.envio31 }}</p>
-                                            <p class="text-danger">{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                                    {% endif %}
-                                {% else %}
-                                    <td><p class="text-success">{{ plan_de_imposicion_csv.envio31 }}</p>
-                                        <p>{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                                {% endif %}
-                            {% endif %}
-                        {% elseif plan_de_imposicion_csv.cump31 == false %}
-                            {% if plan_de_imposicion_csv.envio32 == null %}
-                                <td class="text-danger">{{ plan_de_imposicion_csv.envio31 }}</td>
-                            {% else %}
-                                {% if plan_de_imposicion_csv.cump32 != null %}
-                                    {% if plan_de_imposicion_csv.cump32 == true %}
-                                        <td><p class="text-danger">{{ plan_de_imposicion_csv.envio31 }}</p>
-                                            <p class="text-success">{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                                    {% elseif plan_de_imposicion_csv.cump32 == false %}
-                                        <td><p class="text-danger">{{ plan_de_imposicion_csv.envio31 }}</p>
-                                            <p class="text-danger">{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                                    {% endif %}
-                                {% else %}
-                                    <td><p class="text-danger">{{ plan_de_imposicion_csv.envio31 }}</p>
-                                        <p>{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                                {% endif %}
-                            {% endif %}
-                        {% endif %}
-                    {% else %}
-                        {% if plan_de_imposicion_csv.envio32 == null %}
-                            <td>{{ plan_de_imposicion_csv.envio31 }}</td>
-                        {% else %}
-                            {% if plan_de_imposicion_csv.cump32 != null %}
-                                {% if plan_de_imposicion_csv.cump32 == true %}
-                                    <td><p>{{ plan_de_imposicion_csv.envio31 }}</p>
-                                        <p class="text-success">{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                                {% elseif plan_de_imposicion_csv.cump32 == false %}
-                                    <td><p>{{ plan_de_imposicion_csv.envio31 }}</p>
-                                        <p class="text-danger">{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                                {% endif %}
-                            {% else %}
-                                <td><p>{{ plan_de_imposicion_csv.envio31 }}</p>
-                                    <p>{{ plan_de_imposicion_csv.envio32 }}</p></td>
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                {% endif %#}
             </tr>
         {% else %}
             <tr>

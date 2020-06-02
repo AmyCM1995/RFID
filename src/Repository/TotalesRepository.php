@@ -39,9 +39,6 @@ class TotalesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-
-
     public function findOneByCorresponsalDestino($value1, $value2): ?Totales
     {
         return $this->createQueryBuilder('t')
@@ -243,7 +240,6 @@ class TotalesRepository extends ServiceEntityRepository
 
         return $matriz;
     }
-
     public function totalesPorCorresponsales($corresponsalesCubanos, $repositorio, $paisesDestino){
         $totales = [];
         $size = 0;
@@ -260,7 +256,6 @@ class TotalesRepository extends ServiceEntityRepository
         }
         return $totales;
     }
-
     public function findOneByCorresCubanoYDestino($corrCuba, $corrDest){
         return $this->createQueryBuilder('t')
             ->andWhere('t.corresponsalCuba = :val')
@@ -271,8 +266,6 @@ class TotalesRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
-
-
     //**********************************************************Materiales
     public function paisesDestinoTarifas($paises, $tarifa){
         $paisesTarifa = [];
@@ -296,8 +289,11 @@ class TotalesRepository extends ServiceEntityRepository
         $arr = [];
         $size = 0;
         for($i=0; $i<sizeof($paisesDestino); $i++){
-            $arr[$size] = $repositorio->findOneByCorresponsalDestino($corresponsal, $paisesDestino[$i]->getCodigo())->getTotalEnvios();
-            $size++;
+            $temp = $repositorio->findOneByCorresponsalDestino($corresponsal, $paisesDestino[$i]->getCodigo());
+            if($temp != null){
+                $arr[$size] = $temp->getTotalEnvios();
+                $size++;
+            }
         }
         return $arr;
     }

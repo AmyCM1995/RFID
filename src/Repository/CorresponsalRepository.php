@@ -35,8 +35,6 @@ class CorresponsalRepository extends ServiceEntityRepository
         ;
     }
     */
-
-
     public function findOneByCodigo($value): ?Corresponsal
     {
         return $this->createQueryBuilder('c')

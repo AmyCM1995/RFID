@@ -2,10 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Corresponsal;
 use App\Entity\Materiales;
+use App\Entity\ProvinciaCuba;
 use App\Form\MaterialesType;
 use App\Repository\MaterialesRepository;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +29,43 @@ class MaterialesController extends AbstractController
         return $this->render('materiales/index.html.twig', [
             'materiales' => $materialesRepository->findAll(),
         ]);
+    }
+    /**
+     * @Route("/introducir", name="materiales_escoger_corresponsal")
+     */
+    public function escogerCorresopnsal(Request $request): Response
+    {
+        $form = $this->createFormBuilder()
+            ->add('Escoja_al_corresponsal_que_se_le_va_a_realizar_la_entrega', EntityType::class, [
+            'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
+                'class'=> Corresponsal::class,
+                'query_builder' => function (EntityRepository $er){
+                    return $er->createQueryBuilder('c')->andWhere('c.es_activo = :val')
+                        ->setParameter('val', true)->orderBy('c.codigo', 'ASC');
+                    },
+                'choice_label' => 'nombre',
+                'multiple' => false,
+                'required' => true,
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $this->introducirMateriales();
+        }
+
+        return $this->render('materiales/introducirCorresponsal.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
+
+    /**
+     * @Route("/introducir", name="materiales_escoger_corresponsal")
+     */
+    public function introducirMateriales(Request $request, $corresponsal): Response
+    {
+
     }
 
     /**
@@ -91,4 +134,6 @@ class MaterialesController extends AbstractController
 
         return $this->redirectToRoute('materiales_index');
     }
+
+
 }

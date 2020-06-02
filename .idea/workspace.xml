@@ -2,9 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/materiales/introducirCorresponsal.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/materiales/pdf_materialesCorreaponsalIncompleto.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/materiales/pdf_materialesCorresponsal.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GMS-RFIDv2.0.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GMS-RFIDv2.0.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ImportacionesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ImportacionesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/csv/Lecturas 1row.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/csv/Lecturas 1row.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/csv/Lecturas 5row.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/csv/Lecturas 5row.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MaterialesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MaterialesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SeguridadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SeguridadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TotalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TotalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Corresponsal.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Corresponsal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Importaciones.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Importaciones.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CambiarUsuarioType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CambiarUsuarioType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/FechasNoCorrespondenciaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/FechasNoCorrespondenciaType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/CorresponsalRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CorresponsalRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TotalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TotalesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fechas_no_correspondencia/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/lecturas_csv/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/lecturas_csv/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/visualizarCumplimiento.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/visualizarCumplimiento.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/forgot.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/forgot.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/totales/reportesGenerales.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/reportesGenerales.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,6 +67,7 @@
       <list>
         <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -183,6 +211,7 @@
       <path value="$PROJECT_DIR$/vendor/php-http/httplug" />
       <path value="$PROJECT_DIR$/vendor/php-http/promise" />
       <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
+      <path value="$PROJECT_DIR$/vendor/php-translation/translator" />
     </include_path>
   </component>
   <component name="ProjectId" id="1T49G70Y0wIeSjxsVim6sNxgzqD" />
@@ -191,6 +220,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/img" />
@@ -201,10 +231,10 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\img" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\lecturas_csv" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\plan_de_imposicion" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src\Command" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\totales" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src\Data" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\img" />
@@ -226,12 +256,16 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHP Script.ping.php">
+    <configuration name="ping.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/templates/Traceroute/ping.php">
+      <method v="2" />
+    </configuration>
     <configuration name="salvaPI.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/src/Command/salvaPI.php">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHP Script.ping.php" />
         <item itemvalue="PHP Script.salvaPI.php" />
       </list>
     </recent_temporary>
@@ -290,7 +324,10 @@
       <workItem from="1587664476771" duration="57631000" />
       <workItem from="1588598970628" duration="8023000" />
       <workItem from="1588817116324" duration="4000" />
-      <workItem from="1588857034187" duration="17026000" />
+      <workItem from="1588857034187" duration="50318000" />
+      <workItem from="1589658145783" duration="71628000" />
+      <workItem from="1590349181934" duration="15709000" />
+      <workItem from="1590674479344" duration="26284000" />
     </task>
     <servers />
   </component>

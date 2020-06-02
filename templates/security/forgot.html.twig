@@ -7,12 +7,15 @@
 
     <h1>Cambiar contraseña de {{ app.user.username }}</h1>
 
-    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button class="btn bg-primary" id="corresponsal-btns" style="color: #FFFFFF">{{ button_label|default('Actualizar') }}</button>
-        <button class="btn bg-primary" id="corresponsal-btns" style="margin-top: 2px">
-            <a href="{{ path('provincia_cuba_index') }}">Cancelar</a>
+        <br>
+        <button class="btn btn-primary">
+            {{ button_label|default('Actualizar') }}
         </button>
-    {{ form_end(form) }}
+        <a class="btn btn-primary" href="{{ path('principal') }}">Cancelar</a>
+        {{ form_end(form) }}
+    </div>
 
 {% endblock %}

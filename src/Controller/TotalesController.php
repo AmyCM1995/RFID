@@ -7,10 +7,15 @@ use App\Entity\Importaciones;
 use App\Entity\PaisCorrespondencia;
 use App\Entity\PlanDeImposicion;
 use App\Entity\PlanImposicionCsv;
+use App\Entity\ProvinciaCuba;
 use App\Entity\Totales;
 use App\Repository\PlanDeImposicionRepository;
 use App\Repository\TotalesRepository;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -36,8 +41,9 @@ class TotalesController extends AbstractController
         $corresponsalesDestinoConPaises = $totalesRepositorio->agregarPaisesCorresponsalesDestino($corresponsalesDestino, $paisesDestino, sizeof($corresponsalesCubanos));
         $matriz = $totalesRepositorio->matrizTotales($corresponsalesCubanos, $corresponsalesDestinoConPaises);
         $enviosTotales = $totalesRepositorio->enviosTotales();
+        $piRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
-        $importacionUltima = $importacionRepositorio->findUltimaImportacion();
+        $importacionUltima = $importacionRepositorio->findUltimaImportacionConPI($piRepository);
         $cicloEspanol = $importacionRepositorio->traducirCicloEspañol($importacionUltima);
 
         return $this->render('totales/index.html.twig', [
@@ -53,9 +59,9 @@ class TotalesController extends AbstractController
     }
 
     /**
-     * @Route("/materiales", name="materiales", methods={"GET"})
+     * @Route("/pdf/materiales", name="pdf_materiales", methods={"GET"})
      */
-    public function materialesIndex(TotalesRepository $totalesRepositorio): Response
+    public function pdf_materialesIndex(TotalesRepository $totalesRepositorio): Response
     {
         $repositorio = $this->getDoctrine()->getRepository(PaisCorrespondencia::class);
         $corresponsalesCubanos = $totalesRepositorio->buscarCorresponsalesCubanos();
@@ -250,14 +256,42 @@ class TotalesController extends AbstractController
     }
 
     /**
-     * @Route("/pdf/estadisticas/anuales/view/{$anno}", name="pdf_estadisticas_anuales_view", methods={"GET"})
+     * @Route("/pdf/estadisticas/anuales/view", name="pdf_estadisticas_anuales_view")
      */
     public function pdf_estadisticasAnuales_view(Request $request): Response
     {
-        $anno = 0;
-        $form = $this->createForm(AnnoType::class, $anno);
+        $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $annos = $planRepository->diferentesAnnos();
+        $ejemploDQL = $planRepository->findByEjemplo();
+        foreach ($ejemploDQL as $ejemploDQ){
+            echo $ejemploDQ->getId()."/";
+        }
+
+        /*$form = $this->createFormBuilder()
+            ->add('anno', ChoiceType::class, [
+                'label' => 'Año', 'attr' => array('required' => true),
+                'choices' => $annos,
+                //'choice_value' => $annos,
+                'multiple' => false,
+                'required' => true,
+            ])
+            ->getForm();*/
+        $form = $this->createFormBuilder()
+            ->add('anno', EntityType::class, [
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
+                'class'=> PlanDeImposicion::class,
+                'query_builder' => function (EntityRepository $er){
+                    return $er->createQuery('SELECT DISTINCT YEAR (fecha) FROM plan_de_imposicion');
+                },
+                'choice_label' => 'nombre',
+                'multiple' => true,
+                'required' => true,
+            ])
+            ->getForm();
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $anno = $form['anno']->getData();
             $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
             $planAnno = $planRepository->findByAnno($anno);
             $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
@@ -301,7 +335,9 @@ class TotalesController extends AbstractController
                 'totales' => $totales,
             ]);
         }
-        return $this->redirectToRoute('reportes_generales');
+        return $this->render('totales/reportesGenerales.html.twig', [
+            'form' => $form->createView(),
+        ]);
 
     }
 
@@ -364,7 +400,7 @@ class TotalesController extends AbstractController
     }
 
     /**
-     * @Route("/pdf/estadisticas/anuales/{$anno}", name="pdf_estadisticas_anuales", methods={"GET"})
+     * @Route("/pdf/estadisticas/anuales", name="pdf_estadisticas_anuales")
      */
     public function pdf_estadisticasAnuales($anno): Response
     {
@@ -492,30 +528,118 @@ class TotalesController extends AbstractController
             "Attachment" => true
         ]);
     }
-
     /**
-     * @Route("/reportes/generales", name="reportes_generales")
+     * @Route("/pdf/materiales/corresponsal/incompleto", name="pdf_materiales_corresponsal_incompleto")
      */
-    public function reportesGenerales(Request $request): Response
+    public function pdf_materiales_corresponsal_incompleto(Request $request): Response
     {
         $form = $this->createFormBuilder()
-            ->add('anno', NumberType::class, [
-                'mapped' => false,
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Año'
+            ->add('corresponsal', EntityType::class, [
+                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
+                'label' => "Escoja el corresponsal al que se le va a realizar la entrega",
+                'class'=> Corresponsal::class,
+                'query_builder' => function (EntityRepository $er){
+                    return $er->createQueryBuilder('c')->andWhere('c.es_activo = :val')
+                        ->setParameter('val', true)->orderBy('c.codigo', 'ASC');
+                },
+                'choice_label' => 'nombre',
+                'multiple' => false,
+                'required' => true,
             ])
             ->getForm();
         $form->handleRequest($request);
+        $array = $form->getData();
         if($form->isSubmitted() && $form->isValid()){
+            $idCorresponsal = -1;
+            $corresponsal = null;
+            foreach ($array as $arra){
+                if($arra != null){
+                    $idCorresponsal = $arra->getId();
+                }
+            }
+            if($idCorresponsal != -1){
+                //buscar corresponsal
+                $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+                $corresponsal = $corresponsalRepository->findOneById($idCorresponsal);
+            }
+            $piRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+            $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
+            $importacionUltima = $importacionRepositorio->findUltimaImportacionConPI($piRepository);
+            $plan = $piRepository->findByImposicion($importacionUltima);
+            $sobres = $this->cantEnviosCorresponsal($plan, $corresponsal->getCodigo());
+            $totalesRepositorio = $this->getDoctrine()->getRepository(Totales::class);
+            $repositorio = $this->getDoctrine()->getRepository(PaisCorrespondencia::class);
+            $paisesDestino = $totalesRepositorio->buscarPaises($repositorio);
+            $paisesDestino065 = $totalesRepositorio->paisesDestinoTarifas($paisesDestino, 0.65);
+            $paisesDestino075 = $totalesRepositorio->paisesDestinoTarifas($paisesDestino, 0.75);
+            $total065 = $totalesRepositorio->totalEnviosCorresponsalTarifa($corresponsal->getCodigo(), $paisesDestino065);
+            $total075 = $totalesRepositorio->totalEnviosCorresponsalTarifa($corresponsal->getCodigo(), $paisesDestino075);
+            $arrTotalesPaises = $totalesRepositorio->arrTotalCorresponsalesPaises($totalesRepositorio, $corresponsal->getCodigo(), $paisesDestino);
+            $corresponsalesPaisesDestino = $totalesRepositorio->buscarCorresponsalesDestino();
+            $codPaises65 = $this->arregloCodigosPaises($paisesDestino065);
+            $codPaises75 = $this->arregloCodigosPaises($paisesDestino075);
 
+
+            return $this->render('materiales/pdf_materialesCorreaponsalIncompleto.html.twig', [
+                'form' => $form->createView(),
+                'corresponsal' => $corresponsal,
+                'sobres' => $sobres,
+                'sellos65' => $total065,
+                'sellos75' => $total075,
+                'paises65' => $paisesDestino065,
+                'paises75' => $paisesDestino075,
+                'codPaises65' => $codPaises65,
+                'codPaises75' => $codPaises75,
+                'paisesDestino' => $paisesDestino,
+                'corresponsalesPaisesDestino' => $corresponsalesPaisesDestino,
+                'arrTotalesPaises' => $arrTotalesPaises,
+                'importacion' => $importacionUltima,
+
+            ]);
         }
 
-        return $this->render('totales/reportesGenerales.html.twig', [
+        return $this->render('materiales/introducirCorresponsal.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/{id}/pdf/materiales/corresponsal", name="pdf_materiales_corresponsal", methods={"GET"})
+     */
+    public function pdf_materiales_corresponsal(Corresponsal $corresponsal): Response
+    {
+        $piRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $importacionRepositorio = $this->getDoctrine()->getRepository(Importaciones::class);
+        $importacionUltima = $importacionRepositorio->findUltimaImportacionConPI($piRepository);
+        $plan = $piRepository->findByImposicion($importacionUltima);
+        $sobres = $this->cantEnviosCorresponsal($plan, $corresponsal->getCodigo());
+        $totalesRepositorio = $this->getDoctrine()->getRepository(Totales::class);
+        $repositorio = $this->getDoctrine()->getRepository(PaisCorrespondencia::class);
+        $paisesDestino = $totalesRepositorio->buscarPaises($repositorio);
+        $paisesDestino065 = $totalesRepositorio->paisesDestinoTarifas($paisesDestino, 0.65);
+        $paisesDestino075 = $totalesRepositorio->paisesDestinoTarifas($paisesDestino, 0.75);
+        $total065 = $totalesRepositorio->totalEnviosCorresponsalTarifa($corresponsal->getCodigo(), $paisesDestino065);
+        $total075 = $totalesRepositorio->totalEnviosCorresponsalTarifa($corresponsal->getCodigo(), $paisesDestino075);
+        $arrTotalesPaises = $totalesRepositorio->arrTotalCorresponsalesPaises($totalesRepositorio, $corresponsal->getCodigo(), $paisesDestino);
+        $corresponsalesPaisesDestino = $totalesRepositorio->buscarCorresponsalesDestino();
+        $codPaises65 = $this->arregloCodigosPaises($paisesDestino065);
+        $codPaises75 = $this->arregloCodigosPaises($paisesDestino075);
 
+        return $this->render('materiales/pdf_materialesCorresponsal.html.twig', [
+            'corresponsal' => $corresponsal,
+            'sobres' => $sobres,
+            'sellos65' => $total065,
+            'sellos75' => $total075,
+            'paises65' => $paisesDestino065,
+            'paises75' => $paisesDestino075,
+            'codPaises65' => $codPaises65,
+            'codPaises75' => $codPaises75,
+            'paisesDestino' => $paisesDestino,
+            'corresponsalesPaisesDestino' => $corresponsalesPaisesDestino,
+            'arrTotalesPaises' => $arrTotalesPaises,
+            'importacion' => $importacionUltima,
 
-
+        ]);
+    }
     public function matrizPlanAnual($plan, $corresponsalesCubanos, $corresponsalesDestino){
         $matriz[][] = 0;
         for($i=0; $i<sizeof($corresponsalesCubanos);$i++){
@@ -532,6 +656,16 @@ class TotalesController extends AbstractController
         }
         return $matriz;
     }
+    public function arregloCodigosPaises($paises){
+        $codPaises[] = null;
+        $size = 0;
+        foreach ($paises as $pais){
+            $codPaises[$size] = $pais->getCodigo();
+            $size++;
+        }
+        return $codPaises;
+    }
+
     public function matrizTranspondedoresCartasAnual($plan, $corresponsalesCubanos, $paisesDestino){
         $matriz[][] = 0;
         for($i=0; $i<sizeof($corresponsalesCubanos); $i++){
@@ -621,5 +755,6 @@ class TotalesController extends AbstractController
         }
         return $arr;
     }
+
 
 }

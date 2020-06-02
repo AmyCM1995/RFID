@@ -53,6 +53,16 @@ class Corresponsal
      */
     private $es_activo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Materiales", mappedBy="corresponsal")
+     */
+    private $materiales;
+
+    public function __construct()
+    {
+        $this->materiales = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -141,6 +151,37 @@ class Corresponsal
     public function setEsActivo(?bool $es_activo): self
     {
         $this->es_activo = $es_activo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Materiales[]
+     */
+    public function getMateriales(): Collection
+    {
+        return $this->materiales;
+    }
+
+    public function addMateriale(Materiales $materiale): self
+    {
+        if (!$this->materiales->contains($materiale)) {
+            $this->materiales[] = $materiale;
+            $materiale->setCorresponsal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMateriale(Materiales $materiale): self
+    {
+        if ($this->materiales->contains($materiale)) {
+            $this->materiales->removeElement($materiale);
+            // set the owning side to null (unless already changed)
+            if ($materiale->getCorresponsal() === $this) {
+                $materiale->setCorresponsal(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h3>A: {{ corresponsal.nombre }} {{ corresponsal.apellidos }} ({{ corresponsal.codigo }})</h3>
+    <p>
+        Le estoy entregando los materiales para la imposición del servicio de correspondencia ordinaria del Sistema GMS RFID
+        de la UPU para el período del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}, estos deberán
+        utilizarse y controlarse según lo indicado en la Guía de Operaciones GMS E2E Internal.
+    </p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Observaciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Sobres blancos para cartas A5</td>
+            <td>{{ sobres }}</td>
+        </tr>
+        <tr>
+            <td>Sellos postal Orquídea, 65 cent CUC ({{ codPaises65|join(', ') }})</td>
+            <td>{{ sellos65 }}</td>
+        </tr>
+        <tr>
+            <td>Sellos postal Orquídea, 75 cent CUC ({{ codPaises75|join(', ') }})</td>
+            <td>{{ sellos75 }}</td>
+        </tr>
+        {% for paisDestino in paisesDestino %}
+            {% set sizePaisesDest = loop.index %}
+            <tr>
+                <td>Transpondedor RFID pasivo CU a {{ paisDestino.codigo }}</td>
+                {% for arrTotalesPais in arrTotalesPaises %}
+                    {% if loop.index == sizePaisesDest %}
+                        <td>{{ arrTotalesPais }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        {% for paisDestino in paisesDestino %}
+            {% set sizePaisesDest = loop.index %}
+            <tr>
+                <td>Carta corresponsal CU a {{ paisDestino.codigo }}</td>
+                {% for arrTotalesPais in arrTotalesPaises %}
+                    {% if loop.index == sizePaisesDest %}
+                        <td>{{ arrTotalesPais }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        {% for paisDestino in paisesDestino %}
+            {% set sizePaisesDest = loop.index %}
+            <tr>
+                <td>Hoja de etiquetas con direcciones de corresponsales en {{ paisDestino.codigo }}</td>
+                <td>?</td>
+                <td>
+                    {% for corresponsalPaisesDestino in corresponsalesPaisesDestino %}
+                        {% if paisDestino.codigo in corresponsalPaisesDestino %}
+                            {{ corresponsalPaisesDestino }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>Formulario P (Imposición), Formulario R (Recepción)</td>
+            <td>Digital</td>
+            <td>Entregado digital</td>
+        </tr>
+        <tr>
+            <td>Plan de encaminamiento</td>
+            <td>1</td>
+            <td>Del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

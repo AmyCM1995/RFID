@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6316c7cdf5cd6d65ef2e769e62b94f1",
+    "content-hash": "1c5270e028f688b67cf302168e91069f",
     "packages": [
         {
             "name": "backup-manager/backup-manager",
@@ -2766,6 +2766,53 @@
                 "promise"
             ],
             "time": "2016-01-26T13:27:02+00:00"
+        },
+        {
+            "name": "php-translation/translator",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/translator.git",
+                "reference": "4ba5e31194758298bffd2187415c0aee528d8eb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/translator/zipball/4ba5e31194758298bffd2187415c0aee528d8eb6",
+                "reference": "4ba5e31194758298bffd2187415c0aee528d8eb6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "php-http/client-implementation": "^1.0",
+                "php-http/discovery": "^1.7",
+                "php-http/httplug": "^1.0 || ^2.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "nyholm/nsa": "^1.1",
+                "nyholm/psr7": "^1.2",
+                "php-http/curl-client": "^1.0 || ^2.0",
+                "php-http/message": "^1.8",
+                "phpunit/phpunit": "^4.8.36 || ^5.5 || ^6.2 || ^7.5 || ^8.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Translation\\Translator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Translator services",
+            "time": "2020-01-16T21:17:03+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",

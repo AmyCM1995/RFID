@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+        <h3>Corresponsal: {{ corresponsal.nombre }} {{ corresponsal.apellidos }} ({{ corresponsal.codigo }})</h3>
+        <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Observaciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Sobres blancos para cartas A5</td>
+                <td>{{ sobres }}</td>
+            </tr>
+            <tr>
+                <td>Sellos postal Orquídea, 65 cent CUC ({{ codPaises65|join(', ') }})</td>
+                <td>{{ sellos65 }}</td>
+            </tr>
+            <tr>
+                <td>Sellos postal Orquídea, 75 cent CUC ({{ codPaises75|join(', ') }})</td>
+                <td>{{ sellos75 }}</td>
+            </tr>
+            {% for paisDestino in paisesDestino %}
+                {% set sizePaisesDest = loop.index %}
+            <tr>
+                <td>Transpondedor RFID pasivo CU a {{ paisDestino.codigo }}</td>
+                {% for arrTotalesPais in arrTotalesPaises %}
+                    {% if loop.index == sizePaisesDest %}
+                        <td>{{ arrTotalesPais }}</td>
+                    {% endif %}
+                {% endfor %}
+                <td>Del <input type="text" id="transpondedorInicio" maxlength="17" minlength="17">
+                    al <input type="text" id="transpondedorFinal" maxlength="17" minlength="17">
+                </td>
+            </tr>
+            {% endfor %}
+            {% for paisDestino in paisesDestino %}
+                {% set sizePaisesDest = loop.index %}
+                <tr>
+                    <td>Carta corresponsal CU a {{ paisDestino.codigo }}</td>
+                    {% for arrTotalesPais in arrTotalesPaises %}
+                        {% if loop.index == sizePaisesDest %}
+                            <td>{{ arrTotalesPais }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td>Del CU <input type="text" id="cartaInicio" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                        al CU <input type="text" id="cartaInicio" maxlength="6" minlength="6"> {{ paisDestino.codigo }}</td>
+                </tr>
+            {% endfor %}
+            {% for paisDestino in paisesDestino %}
+                {% set sizePaisesDest = loop.index %}
+                <tr>
+                    <td>Hoja de etiquetas con direcciones de corresponsales en {{ paisDestino.codigo }}</td>
+                    <td>?</td>
+                    <td>
+                    {% for corresponsalPaisesDestino in corresponsalesPaisesDestino %}
+                        {% if paisDestino.codigo in corresponsalPaisesDestino %}
+                            {{ corresponsalPaisesDestino }}
+                        {% endif %}
+                    {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>Formulario P (Imposición), Formulario R (Recepción)</td>
+                <td>Digital</td>
+                <td>Entregado digital</td>
+            </tr>
+            <tr>
+                <td>Plan de encaminamiento</td>
+                <td>1</td>
+                <td>Del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" id="guardar" onclick="obtenerValoresMostrarExportar()">Guardar datos introducidos</a>
+    <a class="btn btn-primary" id="exportar" style="display: none"  href="{{ path('pdf_materiales_corresponsal', {'id': corresponsal.id}) }}">Exportar</a>
+
+    <script type="text/javascript">
+        function obtenerValoresMostrarExportar() {
+            var transpondedores = [document.getElementsByClassName("transpondedorInicio").value];
+            alert(transpondedores.length);
+            //mostrar y ocultar botones
+            document.getElementById("exportar").style.display = "block";
+            document.getElementById("guardar").style.display = "none";
+        }
+    </script>
+
+{% endblock %}

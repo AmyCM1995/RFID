@@ -87,7 +87,7 @@
                                     <a href="{{ path('cumplimiento_plan_importar') }}">Importar cumplimiento del plan</a>
                                 {% endif %}
                                 <a href="{{ path('totales') }}">Totales</a>
-                                <a href="{{ path('materiales') }}">Materiales</a>
+                                <a href="{{ path('pdf_materiales') }}">Materiales</a>
                             </div>
                         </li>
                         {% endif %}
@@ -112,19 +112,27 @@
                                 <a href="{{ path('corresponsal_index') }}">Corresponsales</a>
                                 <a href="{{ path('equipo_corresponsales_index') }}">Equipos</a>
                                 <a href="{{ path('provincia_cuba_index') }}">Provincias de Cuba</a>
-                                <a href="{{ path('pais_correspondencia_index') }}">País</a>
                                 <a href="{{ path('region_mundial_index') }}">Tarifas postales</a>
-                                {#<a href="{{ path('importaciones_index') }}">ImportacionesPI</a>#}
-                                <a href="{{ path('borrado_propio_index') }}">Criterios de borrado</a>
+                                <a href="{{ path('pais_correspondencia_index') }}">Paises</a>
+                                <a href="{{ path('sitio_lector_index') }}">Sitios</a>
+                                <a href="{{ path('lector_index') }}">Lectores</a>
                             </div>
                         </li>
                         <li class="dropdown-sidebar">
                             <div class="dropdown-sidebar-btn"><a>Reportes</a></div>
                             <div class="dropdown-sidebar-content">
-                                <a href="{{ path('reportes_generales') }}">Plan de Imposición</a>
-                                <a href="#">Nomencladores</a>
+                                <a href="{{ path('pdf_estadisticas_anuales_view') }}">Totales y materiales en un año</a>
+                                <a href={{ path('pdf_estadisticas_ciclo_view') }}>Totales y materiales en el último ciclo</a>
+                                <a href={{ path('pdf_materiales_corresponsal_incompleto') }}>Entrega de materiales a corresponsales</a>
                             </div>
                         </li>
+                            <li class="dropdown-sidebar">
+                                <div class="dropdown-sidebar-btn"><a>Traceroute</a></div>
+                                <div class="dropdown-sidebar-content">
+                                    <a href="{{ path('traceroute_ping') }}">Ping</a>
+                                    <a href="#">Tracert</a>
+                                </div>
+                            </li>
                         {% endif %}
                     </ul>
                 {% endblock %}

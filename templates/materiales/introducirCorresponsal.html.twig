@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Entrega de materiales a corresponsales</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">
+        {{ button_label|default('Generar') }}
+    </button>
+    {{ form_end(form) }}
+
+
+{% endblock %}

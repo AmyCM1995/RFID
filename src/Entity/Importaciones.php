@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,6 +42,16 @@ class Importaciones
      * @ORM\Column(type="string", length=255)
      */
     private $dimension;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Materiales", mappedBy="importacionPi")
+     */
+    private $materiales;
+
+    public function __construct()
+    {
+        $this->materiales = new ArrayCollection();
+    }
 
 
 
@@ -105,6 +116,37 @@ class Importaciones
     public function setDimension(string $dimension): self
     {
         $this->dimension = $dimension;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Materiales[]
+     */
+    public function getMateriales(): Collection
+    {
+        return $this->materiales;
+    }
+
+    public function addMateriale(Materiales $materiale): self
+    {
+        if (!$this->materiales->contains($materiale)) {
+            $this->materiales[] = $materiale;
+            $materiale->setImportacionPi($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMateriale(Materiales $materiale): self
+    {
+        if ($this->materiales->contains($materiale)) {
+            $this->materiales->removeElement($materiale);
+            // set the owning side to null (unless already changed)
+            if ($materiale->getImportacionPi() === $this) {
+                $materiale->setImportacionPi(null);
+            }
+        }
 
         return $this;
     }

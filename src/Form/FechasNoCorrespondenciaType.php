@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Corresponsal;
+
 use App\Entity\FechasNoCorrespondencia;
 use App\Entity\ProvinciaCuba;
 use Doctrine\ORM\EntityRepository;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Repository\ProvinciaCubaController;
+
 
 
 class FechasNoCorrespondenciaType extends AbstractType
@@ -25,7 +25,7 @@ class FechasNoCorrespondenciaType extends AbstractType
             ->add('fecha', DateType::class, ['label' => 'Fecha', 'widget' => 'single_text', 'data' => $date,
                  'attr' => array('class' => 'form-control')])
             ->add('es_anual', CheckboxType::class, [
-                'attr' => array('class' => 'form-check-input'), 'label' => 'Anual','required' => false
+                'label' => 'Anual','required' => false
             ])
             ->add('descripcion', TextType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Descripción',])

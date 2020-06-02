@@ -6,6 +6,7 @@ use App\Entity\Corresponsal;
 use App\Entity\PlanDeImposicion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\String\UnicodeString;
 
 /**
  * @method PlanDeImposicion|null find($id, $lockMode = null, $lockVersion = null)
@@ -36,6 +37,23 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
         ;
     }
 
+
+    public function findByEjemplo()
+    {
+        return $this->createQueryBuilder('p')
+            ->distinct('p.fecha.year')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
+
+
+
+
     /**
      * @return PlanDeImposicion[] Returns an array of PlanDeImposicion objects
      */
@@ -49,6 +67,21 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+    /**
+     * @return PlanDeImposicion[] Returns an array of PlanDeImposicion objects
+     */
+    public function diferentesAnnos(){
+        $piTodos = $this->findAll();
+        $annos[0] = $piTodos[0]->getFecha()->format('Y');
+        $size = 1;
+        foreach ($piTodos as $pi){
+            if($this->existeAnno($annos, $pi->getFecha()->format('Y')) == false){
+                $annos[$size] = $pi->getFecha()->format('Y');
+                $size++;
+            }
+        }
+        return $annos;
     }
     public function findByCiclo($value)
     {
@@ -279,6 +312,16 @@ class PlanDeImposicionRepository extends ServiceEntityRepository
             $iguales = false;
         }
         return $iguales;
+    }
+    public function existeAnno($annos, $ano){
+        $existe = false;
+        foreach ($annos as $anno){
+            if($anno == $ano){
+                $existe = true;
+                break;
+            }
+        }
+        return $existe;
     }
 }
 
