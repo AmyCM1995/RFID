@@ -40,6 +40,11 @@ class Area
      */
     private $envios;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $es_activo;
+
     public function __construct()
     {
         $this->sitioLectors = new ArrayCollection();
@@ -145,6 +150,18 @@ class Area
                 $envio->setAreaOrigen(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEsActivo(): ?bool
+    {
+        return $this->es_activo;
+    }
+
+    public function setEsActivo(bool $es_activo): self
+    {
+        $this->es_activo = $es_activo;
 
         return $this;
     }

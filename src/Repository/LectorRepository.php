@@ -19,6 +19,16 @@ class LectorRepository extends ServiceEntityRepository
         parent::__construct($registry, Lector::class);
     }
 
+    public function findOneByIpLectores($value): ?Lector
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Lector[] Returns an array of Lector objects
     //  */

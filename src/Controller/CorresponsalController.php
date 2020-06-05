@@ -23,7 +23,7 @@ class CorresponsalController extends AbstractController
     public function index(CorresponsalRepository $corresponsalRepository): Response
     {
         return $this->render('corresponsal/index.html.twig', [
-            'corresponsals' => $corresponsalRepository->findAll(),
+            'corresponsals' => $corresponsalRepository->findByActivo(),
         ]);
     }
 

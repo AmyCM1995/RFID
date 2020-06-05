@@ -19,6 +19,16 @@ class IPLectorCubanoRepository extends ServiceEntityRepository
         parent::__construct($registry, IPLectorCubano::class);
     }
 
+    public function findOneByIdLector($value): ?IPLectorCubano
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.lector = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return IPLectorCubano[] Returns an array of IPLectorCubano objects
     //  */

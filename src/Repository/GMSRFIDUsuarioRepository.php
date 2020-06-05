@@ -21,7 +21,16 @@ class GMSRFIDUsuarioRepository extends ServiceEntityRepository implements UserLo
     {
         parent::__construct($registry, GMSRFIDUsuario::class);
     }
-
+    public function findByActivo()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.es_activo = 1')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(1000)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     public function loadUserByUsername($nombreUsuario){
         $user = $this->createQueryBuilder('u')
             ->where('u.username = :username')

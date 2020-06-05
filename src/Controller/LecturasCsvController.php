@@ -112,9 +112,9 @@ class LecturasCsvController extends AbstractController
                 $lectura = new LecturasCsv();
                 $lectura->setCodigoPaisOrigen($record[0]);
                 $lectura->setCodigoCiudadOrigen($record[1]);
-                $lectura->setNombreCiudadOrigen($record[2]);
+                $lectura->setNombreCiudadOrigen(utf8_encode($record[2]));
                 $lectura->setCodigoAreaOrigen($record[3]);
-                $lectura->setNombreAreaOrigen($record[4]);
+                $lectura->setNombreAreaOrigen(utf8_encode($record[4]));
                 $lectura->setTipoDimension($record[5]);
                 $lectura->setIdEnvio($record[6]);
                 $lectura->setIdTranspondedor($record[7]);
@@ -122,9 +122,9 @@ class LecturasCsvController extends AbstractController
                 $lectura->setFechaRealEnviada($record[9]);
                 $lectura->setCodigoPaisDestino($record[10]);
                 $lectura->setCodigoCiudadDestino($record[11]);
-                $lectura->setNombreCiudadDestino($record[12]);
+                $lectura->setNombreCiudadDestino(utf8_encode($record[12]));
                 $lectura->setCodigoAreaDestino($record[13]);
-                $lectura->setNombreAreaDestino($record[14]);
+                $lectura->setNombreAreaDestino(utf8_encode($record[14]));
                 $lectura->setFechaRecibida($record[15]);
                 $lectura->setValidado($record[16]);
                 $lectura->setValido($record[17]);
@@ -132,8 +132,8 @@ class LecturasCsvController extends AbstractController
                 $lectura->setDiaLectura($record[19]);
                 $lectura->setCodigoSitioPais($record[20]);
                 $lectura->setCodigoSitio($record[21]);
-                $lectura->setNombreSitio($record[22]);
-                $lectura->setNombreSitioArea($record[23]);
+                $lectura->setNombreSitio(utf8_encode($record[22]));
+                $lectura->setNombreSitioArea(utf8_encode($record[23]));
                 $lectura->setNombreLector($record[24]);
                 $lectura->setIdLector($record[25]);
                 $lectura->setPropositoLector($record[26]);

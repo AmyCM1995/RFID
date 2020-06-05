@@ -24,7 +24,7 @@ class GMSRFIDUsuarioController extends AbstractController
     public function index(GMSRFIDUsuarioRepository $gMSRFIDUsuarioRepository): Response
     {
         return $this->render('gmsrfid_usuario/index.html.twig', [
-            'g_m_s_r_f_i_d_usuarios' => $gMSRFIDUsuarioRepository->findAll(),
+            'g_m_s_r_f_i_d_usuarios' => $gMSRFIDUsuarioRepository->findByActivo(),
         ]);
     }
 
@@ -90,7 +90,8 @@ class GMSRFIDUsuarioController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         //if ($this->isCsrfTokenValid('delete'.$gMSRFIDUsuario->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($gMSRFIDUsuario);
+            $gMSRFIDUsuario->setEsActivo(false);
+            //$entityManager->remove($gMSRFIDUsuario);
             $entityManager->flush();
         //}
 

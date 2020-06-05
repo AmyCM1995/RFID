@@ -18,7 +18,16 @@ class EquipoCorresponsalesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, EquipoCorresponsales::class);
     }
-
+    public function findByActivo()
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.es_activo = false')
+            ->orderBy('e.id', 'ASC')
+            ->setMaxResults(1000)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return EquipoCorresponsales[] Returns an array of EquipoCorresponsales objects
     //  */

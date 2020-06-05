@@ -2,36 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/materiales/introducirCorresponsal.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/materiales/pdf_materialesCorreaponsalIncompleto.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/materiales/pdf_materialesCorresponsal.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/GMS-RFIDv2.0.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GMS-RFIDv2.0.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/seleccionar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/traceroute.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/traceroute_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/HistorialLectoresController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/HistorialLectores.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/HistorialLectoresType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/HistorialLectoresRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/Traceroute/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/historial_lectores/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/historial_lectores/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/historial_lectores/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/historial_lectores/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/historial_lectores/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/historial_lectores/seleccionar_lector.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/historial_lectores/show.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/csv/Lecturas 1row.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/csv/Lecturas 1row.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/csv/Lecturas 5row.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/csv/Lecturas 5row.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MaterialesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MaterialesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SeguridadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SeguridadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TotalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TotalesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Corresponsal.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Corresponsal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Importaciones.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Importaciones.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/CambiarUsuarioType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CambiarUsuarioType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/FechasNoCorrespondenciaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/FechasNoCorrespondenciaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CorresponsalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CorresponsalController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EquipoCorresponsalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EquipoCorresponsalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TracerouteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TracerouteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Area.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Area.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/GMSRFIDUsuario.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/GMSRFIDUsuario.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/IPLectorCubano.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/IPLectorCubano.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/IPLectorCubanoType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/IPLectorCubanoType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/CorresponsalRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CorresponsalRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PlanDeImposicionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/TotalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TotalesRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/EquipoCorresponsalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/EquipoCorresponsalesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/GMSRFIDUsuarioRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/GMSRFIDUsuarioRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/IPLectorCubanoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/IPLectorCubanoRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/LectorRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/LectorRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Traceroute/ping.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Traceroute/manual.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fechas_no_correspondencia/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/lecturas_csv/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/lecturas_csv/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_de_imposicion/visualizarCumplimiento.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_de_imposicion/visualizarCumplimiento.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/forgot.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/forgot.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/totales/reportesGenerales.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/totales/reportesGenerales.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ip_lector_cubano/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ip_lector_cubano/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/lector/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/lector/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -229,19 +234,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\img" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\lecturas_csv" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\plan_de_imposicion" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src\Command" />
-      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\totales" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\img" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\totales" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\css" />
       <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\public\img" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\lecturas_csv" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\plan_de_imposicion" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\src\Command" />
+      <recent name="C:\xampp\htdocs\GMS-RFIDv2.0\templates\totales" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -327,7 +332,7 @@
       <workItem from="1588857034187" duration="50318000" />
       <workItem from="1589658145783" duration="71628000" />
       <workItem from="1590349181934" duration="15709000" />
-      <workItem from="1590674479344" duration="26284000" />
+      <workItem from="1590674479344" duration="56268000" />
     </task>
     <servers />
   </component>

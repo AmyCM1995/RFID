@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Lectores</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Sitio</th>
+            <th>Nombre</th>
+            <th>Codigo</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for lector in lectors %}
+            <tr>
+                <td>{{ lector.sitio.nombre }}</td>
+                <td>{{ lector.nombre }}</td>
+                <td>{{ lector.codigo }}</td>
+                <td>
+                    <a href="{{ path('historial_lectores_index', {'id': lector.id}) }}">
+                        <img src="{{ asset('img/seleccionar.png') }}" style="width: 18%">
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

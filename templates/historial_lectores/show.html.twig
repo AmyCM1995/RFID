@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HistorialLectores{% endblock %}
+
+{% block body %}
+    <h1>HistorialLectores</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ historial_lectore.id }}</td>
+            </tr>
+            <tr>
+                <th>Resultado</th>
+                <td>{{ historial_lectore.resultado }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ historial_lectore.estado }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('historial_lectores_index') }}">back to list</a>
+
+    <a href="{{ path('historial_lectores_edit', {'id': historial_lectore.id}) }}">edit</a>
+
+    {{ include('historial_lectores/_delete_form.html.twig') }}
+{% endblock %}

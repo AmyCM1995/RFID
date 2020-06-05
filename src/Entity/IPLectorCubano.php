@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,16 @@ class IPLectorCubano
      * @ORM\Column(type="string", length=255)
      */
     private $ip;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HistorialLectores", mappedBy="ipLector")
+     */
+    private $historialLectores;
+
+    public function __construct()
+    {
+        $this->historialLectores = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +63,37 @@ class IPLectorCubano
     public function setIp(string $ip): self
     {
         $this->ip = $ip;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HistorialLectores[]
+     */
+    public function getHistorialLectores(): Collection
+    {
+        return $this->historialLectores;
+    }
+
+    public function addHistorialLectore(HistorialLectores $historialLectore): self
+    {
+        if (!$this->historialLectores->contains($historialLectore)) {
+            $this->historialLectores[] = $historialLectore;
+            $historialLectore->setIpLector($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistorialLectore(HistorialLectores $historialLectore): self
+    {
+        if ($this->historialLectores->contains($historialLectore)) {
+            $this->historialLectores->removeElement($historialLectore);
+            // set the owning side to null (unless already changed)
+            if ($historialLectore->getIpLector() === $this) {
+                $historialLectore->setIpLector(null);
+            }
+        }
 
         return $this;
     }

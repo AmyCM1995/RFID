@@ -18,7 +18,16 @@ class CorresponsalRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Corresponsal::class);
     }
-
+    public function findByActivo()
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.es_activo = 1')
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(1000)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Corresponsal[] Returns an array of Corresponsal objects
     //  */

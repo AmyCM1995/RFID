@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New HistorialLectores{% endblock %}
+
+{% block body %}
+    <h1>Create new HistorialLectores</h1>
+
+    {{ include('historial_lectores/_form.html.twig') }}
+
+    <a href="{{ path('historial_lectores_index') }}">back to list</a>
+{% endblock %}

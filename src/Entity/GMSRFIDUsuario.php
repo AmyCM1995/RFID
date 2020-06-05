@@ -56,6 +56,11 @@ class GMSRFIDUsuario implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $es_activo;
+
 
     public function getId(): ?int
     {
@@ -132,6 +137,18 @@ class GMSRFIDUsuario implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getEsActivo(): ?bool
+    {
+        return $this->es_activo;
+    }
+
+    public function setEsActivo(bool $es_activo): self
+    {
+        $this->es_activo = $es_activo;
+
+        return $this;
     }
 
 

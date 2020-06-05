@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Lectores</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Sitio</th>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Proposito</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for lector in lectors %}
+            <tr>
+                <td>{{ lector.sitio.nombre }}</td>
+                <td>{{ lector.codigo }}</td>
+                <td>{{ lector.nombre }}</td>
+                <td>{{ lector.proposito }}</td>
+                <td>
+                    <a href="{{ path('traceroute_manual', {'id': lector.id}) }}">
+                        <img src="{{ asset('img/traceroute_2.png') }}" style="width: 18%">
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

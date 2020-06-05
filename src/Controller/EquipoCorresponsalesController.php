@@ -22,7 +22,7 @@ class EquipoCorresponsalesController extends AbstractController
     public function index(EquipoCorresponsalesRepository $equipoCorresponsalesRepository): Response
     {
         return $this->render('equipo_corresponsales/index.html.twig', [
-            'equipo_corresponsales' => $equipoCorresponsalesRepository->findAll(),
+            'equipo_corresponsales' => $equipoCorresponsalesRepository->findByActivo(),
         ]);
     }
 
@@ -51,7 +51,7 @@ class EquipoCorresponsalesController extends AbstractController
                     $entityManager->persist($corr);
                     $entityManager->flush();
                 }
-
+                $equipoCorresponsale->setEsActivo(true);
                 $entityManager->persist($equipoCorresponsale);
                 $entityManager->flush();
 

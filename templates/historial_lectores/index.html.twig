@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>HistorialLectores index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Resultado</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for historial_lectore in historial_lectores %}
+            <tr>
+                <td>{{ historial_lectore.id }}</td>
+                <td>{{ historial_lectore.resultado }}</td>
+                <td>{{ historial_lectore.estado }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('historial_lectores_new') }}">Create new</a>
+{% endblock %}

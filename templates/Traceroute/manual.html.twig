@@ -4,8 +4,7 @@
 
 {% block contenido %}
     {{ parent() }}
-    <h1>Nuevo IP de lector RFID </h1>
-
-    {{ include('ip_lector_cubano/_form.html.twig') }}
-
+        {% for output in output %}
+        {{ output }}
+        {% endfor %}
 {% endblock %}
