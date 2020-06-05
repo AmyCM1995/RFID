@@ -21,7 +21,7 @@ class LectorController extends AbstractController
     public function index(LectorRepository $lectorRepository): Response
     {
         return $this->render('lector/index.html.twig', [
-            'lectors' => $lectorRepository->findAll(),
+            'lectors' => $lectorRepository->findByActivo(),
         ]);
     }
 
@@ -36,6 +36,7 @@ class LectorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $lector->setEsActivo(true);
             $entityManager->persist($lector);
             $entityManager->flush();
 
@@ -76,7 +77,8 @@ class LectorController extends AbstractController
     {
         //if ($this->isCsrfTokenValid('delete'.$lector->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($lector);
+            $lector->setEsActivo(false);
+            //$entityManager->remove($lector);
             $entityManager->flush();
         //}
 

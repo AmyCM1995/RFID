@@ -38,6 +38,11 @@ class SitioLector
      */
     private $pais;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $es_activo;
+
     public function __construct()
     {
         $this->lectors = new ArrayCollection();
@@ -111,6 +116,18 @@ class SitioLector
     public function setPais(?PaisCorrespondencia $pais): self
     {
         $this->pais = $pais;
+
+        return $this;
+    }
+
+    public function getEsActivo(): ?bool
+    {
+        return $this->es_activo;
+    }
+
+    public function setEsActivo(bool $es_activo): self
+    {
+        $this->es_activo = $es_activo;
 
         return $this;
     }

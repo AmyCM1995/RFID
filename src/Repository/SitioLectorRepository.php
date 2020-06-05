@@ -18,7 +18,16 @@ class SitioLectorRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SitioLector::class);
     }
-
+    public function findByActivo()
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.es_activo = 1')
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return SitioLector[] Returns an array of SitioLector objects
     //  */

@@ -21,7 +21,7 @@ class SitioLectorController extends AbstractController
     public function index(SitioLectorRepository $sitioLectorRepository): Response
     {
         return $this->render('sitio_lector/index.html.twig', [
-            'sitio_lectors' => $sitioLectorRepository->findAll(),
+            'sitio_lectors' => $sitioLectorRepository->findByActivo(),
         ]);
     }
 
@@ -36,6 +36,7 @@ class SitioLectorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $sitioLector->setEsActivo(true);
             $entityManager->persist($sitioLector);
             $entityManager->flush();
 
@@ -76,6 +77,7 @@ class SitioLectorController extends AbstractController
     {
         //if ($this->isCsrfTokenValid('delete'.$sitioLector->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $sitioLector->setEsActivo(false);
             $entityManager->remove($sitioLector);
             $entityManager->flush();
        // }

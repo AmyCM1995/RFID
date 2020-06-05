@@ -18,7 +18,16 @@ class LectorRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Lector::class);
     }
-
+    public function findByActivo()
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.es_activo = 1')
+            ->orderBy('l.id', 'ASC')
+            ->setMaxResults(1000)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     public function findOneByIpLectores($value): ?Lector
     {
         return $this->createQueryBuilder('l')

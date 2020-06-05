@@ -49,6 +49,11 @@ class Lector
      */
     private $iPLectorCubano;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $es_activo;
+
     public function __construct()
     {
         $this->lecturas = new ArrayCollection();
@@ -152,6 +157,18 @@ class Lector
         if ($newLector !== $iPLectorCubano->getLector()) {
             $iPLectorCubano->setLector($newLector);
         }
+
+        return $this;
+    }
+
+    public function getEsActivo(): ?bool
+    {
+        return $this->es_activo;
+    }
+
+    public function setEsActivo(bool $es_activo): self
+    {
+        $this->es_activo = $es_activo;
 
         return $this;
     }
