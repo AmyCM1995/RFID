@@ -46,10 +46,7 @@ class SeguridadController extends AbstractController
      * @Route("/{nombreUsuario}/cambiar/contrasena", name="user_contrasena_cambiar", methods={"GET","POST"})
      */
     public function cambiarContrasena(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user){
-
-        $nueva = $request->get('new_password');
-        $nueva_confirm = $request->get('new_password_confirm');
-        //$user = $this->getUser();
+        
         $form = $this->createForm(CambiarUsuarioType::class, $user);
         $form->handleRequest($request);
 
@@ -57,7 +54,7 @@ class SeguridadController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $nueva
+                    $form->get('plainPassword')->getData()
                 )
             );
             $entityManager = $this->getDoctrine()->getManager();
