@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SeguridadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SeguridadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ip_lector_cubano/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ip_lector_cubano/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ip_lector_cubano/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ip_lector_cubano/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/lector/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/lector/_form.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -299,7 +305,7 @@
       <workItem from="1588857034187" duration="50318000" />
       <workItem from="1589658145783" duration="71628000" />
       <workItem from="1590349181934" duration="15709000" />
-      <workItem from="1590674479344" duration="59791000" />
+      <workItem from="1590674479344" duration="63303000" />
     </task>
     <servers />
   </component>

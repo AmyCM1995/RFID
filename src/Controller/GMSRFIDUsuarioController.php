@@ -70,8 +70,6 @@ class GMSRFIDUsuarioController extends AbstractController
         $form = $this->createForm(GMSRFIDUsuarioType::class, $gMSRFIDUsuario);
         $form->handleRequest($request);
 
-        echo $gMSRFIDUsuario->getPassword();
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('g_m_s_r_f_i_d_usuario_index');
