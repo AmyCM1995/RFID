@@ -21,7 +21,7 @@ class EquipoCorresponsalesRepository extends ServiceEntityRepository
     public function findByActivo()
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.es_activo = false')
+            ->andWhere('e.es_activo = true')
             ->orderBy('e.id', 'ASC')
             ->setMaxResults(1000)
             ->getQuery()

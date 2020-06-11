@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Cantidad de miembros en  los equipos de corresponsales</h1>
+    <br>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cantidad</th>
+                <th>{{ cant_miembros_equipo.cantidad }}</th>
+                <th>
+                {% if is_granted('ROLE_ESPECIALISTA_DC') %}
+                    <a href="{{ path('cant_miembros_equipo_new') }}">
+                        <img src="{{ asset('img/editar.png') }}" style="width: 6%">
+                    </a>
+                {% endif %}
+                </th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}

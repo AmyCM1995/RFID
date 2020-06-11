@@ -28,12 +28,6 @@ class EquipoCorresponsales
      */
     private $corresponsals;
 
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $cantidadMiembros;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Corresponsal", inversedBy="equipoCorresponsales")
      */
@@ -43,6 +37,11 @@ class EquipoCorresponsales
      * @ORM\Column(type="boolean")
      */
     private $es_activo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CantMiembrosEquipo", inversedBy="equipoCorresponsales")
+     */
+    private $cant_miembros;
 
     public function __construct()
     {
@@ -104,20 +103,6 @@ class EquipoCorresponsales
         return $this;
     }
 
-
-
-    public function getCantidadMiembros(): ?int
-    {
-        return $this->cantidadMiembros;
-    }
-
-    public function setCantidadMiembros(int $cantidadMiembros): self
-    {
-        $this->cantidadMiembros = $cantidadMiembros;
-
-        return $this;
-    }
-
     public function getCorresponsalCoordinador(): ?Corresponsal
     {
         return $this->CorresponsalCoordinador;
@@ -138,6 +123,18 @@ class EquipoCorresponsales
     public function setEsActivo(bool $es_activo): self
     {
         $this->es_activo = $es_activo;
+
+        return $this;
+    }
+
+    public function getCantMiembros(): ?CantMiembrosEquipo
+    {
+        return $this->cant_miembros;
+    }
+
+    public function setCantMiembros(?CantMiembrosEquipo $cant_miembros): self
+    {
+        $this->cant_miembros = $cant_miembros;
 
         return $this;
     }

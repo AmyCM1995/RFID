@@ -20,8 +20,6 @@ class EquipoCorresponsalesType extends AbstractType
             ->add('codigo', TextType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;',
                     'title' => 'El  código de un equipo debe comenzar por CU y el número correspondiente'), 'label' => 'Código', 'data' => 'CU',])
-            ->add('cantidadMiembros', NumberType::class, [
-                'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Cantidad de Miembros'])
             ->add('CorresponsalCoordinador', EntityType::class, [
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'), 'label' => 'Coordinador',
                 'class'=> Corresponsal::class,

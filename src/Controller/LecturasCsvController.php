@@ -248,7 +248,7 @@ class LecturasCsvController extends AbstractController
         $envio = new UnicodeString($lectura->getIdEnvio());
         $origen = $envio->slice(0, 2);
         $destino = $envio->slice($envio->length()-2, $envio->length());
-        if($envio->length() == 10 && $lectura->getCodigoPaisOrigen() == $origen){
+        if($envio->length() == 10 && $lectura->getCodigoPaisOrigen() == $origen && $lectura->getCodigoPaisDestino() == $destino){
             foreach ($paises as $pais){
                 if($destino == "CU" || $destino == $pais->getCodigo()){
                     $valido = true;

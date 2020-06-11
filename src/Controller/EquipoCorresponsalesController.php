@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\CantMiembrosEquipo;
 use App\Entity\Corresponsal;
 use App\Entity\EquipoCorresponsales;
 use App\Form\EquipoCorresponsalesType;
+use App\Repository\CantMiembrosEquipoRepository;
 use App\Repository\EquipoCorresponsalesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,23 +33,24 @@ class EquipoCorresponsalesController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $alerta = null;
+        $cantRepository =  $this->getDoctrine()->getRepository(CantMiembrosEquipo::class);
         $this->denyAccessUnlessGranted('ROLE_ESPECIALISTA_DC');
         $equipoCorresponsale = new EquipoCorresponsales();
         $equipoCorresponsale->setEsActivo(true);
+        $equipoCorresponsale->setCantMiembros($cantRepository->findUltimo());
 
-       // if($equipoCorresponsale->getCantidadMiembros() == sizeof($equipoCorresponsale->getCorresponsals())){
-            $form = $this->createForm(EquipoCorresponsalesType::class, $equipoCorresponsale);
-            $form->handleRequest($request);
-           // $equipoCorresponsale->setCantidadMiembros(sizeof($equipoCorresponsale->getCorresponsals()));
+        $form = $this->createForm(EquipoCorresponsalesType::class, $equipoCorresponsale);
+        $form->handleRequest($request);
 
-
+        if($equipoCorresponsale->getCantMiembros()->getCantidad() == sizeof($equipoCorresponsale->getCorresponsals())){
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
 
                 for ( $i = 0; $i < sizeof($equipoCorresponsale->getCorresponsals()); $i++){
                     $corr = new Corresponsal();
                     $corr = $equipoCorresponsale->getCorresponsals()[$i];
-                    $corr->addEquipo($equipoCorresponsale);
+                    $corr->setEquipo($equipoCorresponsale);
                     $entityManager->persist($corr);
                     $entityManager->flush();
                 }
@@ -57,11 +60,14 @@ class EquipoCorresponsalesController extends AbstractController
 
                 return $this->redirectToRoute('equipo_corresponsales_index');
             }
-       // }
+        }else{
+            $alerta = "El equipo debe tener ".$cantRepository->findUltimo()->getCantidad()." miembros.";
+        }
 
         return $this->render('equipo_corresponsales/new.html.twig', [
             'equipo_corresponsale' => $equipoCorresponsale,
             'form' => $form->createView(),
+            'alerta' => $alerta,
         ]);
     }
 

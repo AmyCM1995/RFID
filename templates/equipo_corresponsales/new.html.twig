@@ -8,5 +8,11 @@
     <h1>Crear nuevo equipo de corresponsales</h1>
 
     {{ include('equipo_corresponsales/_form.html.twig') }}
+    {% if alerta != null %}
+        <br>
+        <p class="alert alert-danger alert-dismissible text-justify">
+            {{ alerta }}
+        </p>
+    {% endif %}
 
 {% endblock %}

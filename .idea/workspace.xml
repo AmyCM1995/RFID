@@ -2,14 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Controller/CantMiembrosEquipoController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/CantMiembrosEquipo.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/CantMiembrosEquipoType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/CantMiembrosEquipoRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/cant_miembros_equipo/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/cant_miembros_equipo/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/cant_miembros_equipo/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/cant_miembros_equipo/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/cant_miembros_equipo/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/cant_miembros_equipo/show.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SeguridadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SeguridadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gmsrfid_usuario/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ip_lector_cubano/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ip_lector_cubano/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ip_lector_cubano/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ip_lector_cubano/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/lector/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/lector/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EquipoCorresponsalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EquipoCorresponsalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/EquipoCorresponsales.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/EquipoCorresponsales.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/EquipoCorresponsalesType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/EquipoCorresponsalesType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/EquipoCorresponsalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/EquipoCorresponsalesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ciudad/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ciudad/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/equipo_corresponsales/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/equipo_corresponsales/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/equipo_corresponsales/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/equipo_corresponsales/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fechas_no_correspondencia/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fechas_no_correspondencia/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -305,7 +318,9 @@
       <workItem from="1588857034187" duration="50318000" />
       <workItem from="1589658145783" duration="71628000" />
       <workItem from="1590349181934" duration="15709000" />
-      <workItem from="1590674479344" duration="63303000" />
+      <workItem from="1590674479344" duration="64026000" />
+      <workItem from="1591560562612" duration="1918000" />
+      <workItem from="1591898812743" duration="5452000" />
     </task>
     <servers />
   </component>

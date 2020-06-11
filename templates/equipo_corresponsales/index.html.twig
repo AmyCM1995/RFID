@@ -24,22 +24,24 @@
             {%  if  equipo_corresponsale.esActivo == true %}
                 <tr>
                     <td>{{ equipo_corresponsale.codigo }}</td>
-                    <td>{{ equipo_corresponsale.cantidadMiembros }}</td>
+                    <td>{{ equipo_corresponsale.cantMiembros.cantidad }}</td>
                     <td>{{ equipo_corresponsale.CorresponsalCoordinador.nombre }}</td>
                     <td>
                         {% for corresponsals in equipo_corresponsale.corresponsals %}
                             {% if corresponsals.esActivo == true %}
-                                {{ corresponsals.nombre }}
+                                {% if corresponsals.nombre != equipo_corresponsale.CorresponsalCoordinador.nombre %}
+                                    {{ corresponsals.nombre }}
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </td>
             {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
                         <a href="{{ path('equipo_corresponsales_edit', {'id': equipo_corresponsale.id}) }}">
-                            <img src="{{ asset('img/editar.png') }}" style="width: 15%">
+                            <img src="{{ asset('img/editar.png') }}" style="width: 10%">
                         </a>
                         <a href="{{ path('equipo_corresponsales_delete', {'id': equipo_corresponsale.id}) }}"onclick="return confirm('¿Desea borrar el equipo seleccionado?');">
-                            <img src="{{ asset('img/borrar.png') }}" style="width: 15%">
+                            <img src="{{ asset('img/borrar.png') }}" style="width: 10%">
                         </a>
                     </td>
             {% endif %}

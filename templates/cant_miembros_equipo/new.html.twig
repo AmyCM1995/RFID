@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block contenido %}
+    {{ parent() }}
+    <h1>Editar la cantidad de miembros de los equipos de corresponsales</h1>
+
+    {{ include('cant_miembros_equipo/_form.html.twig') }}
+
+{% endblock %}
