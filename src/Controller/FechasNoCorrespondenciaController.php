@@ -40,6 +40,9 @@ class FechasNoCorrespondenciaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            if($fechasNoCorrespondencium->getFechaFin() == $fechasNoCorrespondencium->getFechaInicio()){
+                $fechasNoCorrespondencium->setFechaFin(null);
+            }
             $entityManager->persist($fechasNoCorrespondencium);
             $entityManager->flush();
 
@@ -62,6 +65,9 @@ class FechasNoCorrespondenciaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($fechasNoCorrespondencium->getFechaFin() == $fechasNoCorrespondencium->getFechaInicio()){
+                $fechasNoCorrespondencium->setFechaFin(null);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('fechas_no_correspondencia_index');

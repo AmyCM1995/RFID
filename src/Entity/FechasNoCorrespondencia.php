@@ -19,11 +19,6 @@ class FechasNoCorrespondencia
     private $id;
 
     /**
-     * @ORM\Column(type="date")
-     */
-    private $fecha;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $es_anual;
@@ -43,6 +38,16 @@ class FechasNoCorrespondencia
      */
     private $provincia;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $fechaInicio;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $fechaFin;
+
     public function __construct()
     {
         $this->cumplimientoPlans = new ArrayCollection();
@@ -52,18 +57,6 @@ class FechasNoCorrespondencia
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFecha(): ?\DateTimeInterface
-    {
-        return $this->fecha;
-    }
-
-    public function setFecha(\DateTimeInterface $fecha): self
-    {
-        $this->fecha = $fecha;
-
-        return $this;
     }
 
     public function getEsAnual(): ?bool
@@ -143,6 +136,30 @@ class FechasNoCorrespondencia
         if ($this->provincia->contains($provincium)) {
             $this->provincia->removeElement($provincium);
         }
+
+        return $this;
+    }
+
+    public function getFechaInicio(): ?\DateTimeInterface
+    {
+        return $this->fechaInicio;
+    }
+
+    public function setFechaInicio(\DateTimeInterface $fechaInicio): self
+    {
+        $this->fechaInicio = $fechaInicio;
+
+        return $this;
+    }
+
+    public function getFechaFin(): ?\DateTimeInterface
+    {
+        return $this->fechaFin;
+    }
+
+    public function setFechaFin(?\DateTimeInterface $fechaFin): self
+    {
+        $this->fechaFin = $fechaFin;
 
         return $this;
     }

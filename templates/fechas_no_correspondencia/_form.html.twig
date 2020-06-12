@@ -1,13 +1,14 @@
     {{ form_start(form) }}
-    {{ form_row(form.fecha) }}
-    <br>
+    {{ form_row(form.fechaInicio) }}
+    {{ form_row(form.fechaFin) }}
+    {#<br>
     <input type="checkbox" name="rango" value="off" onclick="mostrarFechaFin()"> Rango de fechas
     <br>
     <div id="fechaFin" style="display: none">
         <br>
         Fecha fin <input type="date" name="fechaFin" class="form-control" id="fechaFin">
     </div>
-    <br>
+    <br>#}
     {{ form_row(form.es_anual) }}
     {{ form_row(form.descripcion) }}
     {{ form_row(form.provincia) }}
@@ -17,10 +18,10 @@
 </button>
 <a class="btn btn-primary" href="{{ path('fechas_no_correspondencia_index') }}">Regresar</a>
 
-    <script type="text/javascript">
+    {#<script type="text/javascript">
         function mostrarFechaFin() {
             document.getElementById("fechaFin").style.display = "block";
         }
-    </script>
+    </script>#}
 
 {{ form_end(form) }}

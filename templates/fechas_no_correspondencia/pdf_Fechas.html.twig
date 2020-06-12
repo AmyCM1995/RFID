@@ -12,7 +12,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Fecha</th>
+            <th style="width: 100px">Fecha</th>
             <th style="width: 60px; text-align: center" >Anual</th>
             <th style="width: 275px;">Descripción</th>
             <th style="width: 275px;">Provincias afectadas</th>
@@ -21,7 +21,12 @@
         <tbody>
         {% for fechas_no_correspondencium in fechas_no_correspondencias %}
             <tr>
-                <td>{{ fechas_no_correspondencium.fecha ? fechas_no_correspondencium.fecha|date('Y-m-d') : '' }}</td>
+                {% if fechas_no_correspondencium.fechaFin != null %}
+                    <td style="width: 100px">{{ fechas_no_correspondencium.fechaInicio ? fechas_no_correspondencium.fechaInicio|date('d-m-Y') : '' }}
+                        al {{ fechas_no_correspondencium.fechaFin ? fechas_no_correspondencium.fechaFin|date('d-m-Y') : ''  }}</td>
+                {% else %}
+                    <td style="width: 90px">{{ fechas_no_correspondencium.fechaInicio ? fechas_no_correspondencium.fechaInicio|date('d-m-Y') : '' }}</td>
+                {% endif %}
                 <td style="width: 60px; text-align: center">{{ fechas_no_correspondencium.esAnual ? 'Sí' : 'No' }}</td>
                 <td style="width: 275px;">{{ fechas_no_correspondencium.descripcion }}</td>
                 <td style="width: 275px;">

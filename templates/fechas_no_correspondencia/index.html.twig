@@ -21,7 +21,12 @@
         <tbody>
         {% for fechas_no_correspondencium in fechas_no_correspondencias %}
             <tr>
-                <td>{{ fechas_no_correspondencium.fecha ? fechas_no_correspondencium.fecha|date('Y-m-d') : '' }}</td>
+                {% if fechas_no_correspondencium.fechaFin != null %}
+                    <td>{{ fechas_no_correspondencium.fechaInicio ? fechas_no_correspondencium.fechaInicio|date('d-m-Y') : '' }}
+                    al {{ fechas_no_correspondencium.fechaFin ? fechas_no_correspondencium.fechaFin|date('d-m-Y') : ''  }}</td>
+                {% else %}
+                    <td>{{ fechas_no_correspondencium.fechaInicio ? fechas_no_correspondencium.fechaInicio|date('d-m-Y') : '' }}</td>
+                {% endif %}
                 <td>{{ fechas_no_correspondencium.esAnual ? 'Sí' : 'No' }}</td>
                 <td>{{ fechas_no_correspondencium.descripcion }}</td>
                 <td>
