@@ -21,7 +21,7 @@ class HistorialLectoresRepository extends ServiceEntityRepository
     public function findByLector($value)
     {
         return $this->createQueryBuilder('h')
-            ->innerJoin('h.ipLector', 'i', 'WITH', 'i.id = :ipLector')
+            ->innerJoin('h.ipLector', 'i')
             ->innerJoin('i.lector', 'l', 'WITH', 'l.id = :val')
             ->setParameter('val', $value)
             ->orderBy('h.id', 'ASC')
