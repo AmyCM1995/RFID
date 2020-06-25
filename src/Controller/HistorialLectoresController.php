@@ -26,6 +26,7 @@ class HistorialLectoresController extends AbstractController
         $historialLector = $historialLectoresRepository->findByLector($lector->getId());
         return $this->render('historial_lectores/index.html.twig', [
             'historial_lectores' => $historialLector,
+            'lector' => $lector,
         ]);
     }
     /**

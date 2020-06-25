@@ -4,7 +4,8 @@
 
 {% block contenido %}
     {{ parent() }}
-    <h1>HistorialLectores index</h1>
+    <h1>Historial del lector {{ lector.nombre }}</h1>
+    <p>Código: {{ lector.codigo }}</p>
 
     <table class="table">
         <thead>
@@ -23,7 +24,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No existe historial para este lector</td>
             </tr>
         {% endfor %}
         </tbody>

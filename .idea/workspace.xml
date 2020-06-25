@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/HistorialLectoresRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/HistorialLectoresRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HistorialLectoresController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HistorialLectoresController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/historial_lectores/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/historial_lectores/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -305,7 +305,7 @@
       <workItem from="1590674479344" duration="64026000" />
       <workItem from="1591560562612" duration="1918000" />
       <workItem from="1591898812743" duration="9189000" />
-      <workItem from="1592146144472" duration="12837000" />
+      <workItem from="1592146144472" duration="13128000" />
     </task>
     <servers />
   </component>
