@@ -1,13 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseReportes.html.twig' %}
+{% block reporte %}
 
-{% block title %}{{ parent() }}{% endblock %}
+    <div>
+        <p align="left" style="font-size: 14px">Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }} <br>
+            Dimensión {{ importacion.dimension }} <br>
+            Ciclo {{ cicloEspanol }}</p>
+    </div>
 
-{% block contenido %}
-    <h3>Plan de imposición del {{ importacion.fechaInicioPlan }} al {{ importacion.fechaFinPlan }}</h3>
-    <h5>Dimensión {{ importacion.dimension }}</h5>
-    <h5>Ciclo {{ cicloEspanol }}</h5>
+    <style type="text/css">
+        table, th, td {
+            border-collapse: collapse;
+            border: 1px solid gray;
+            padding: 2px;
+            font-size: 10px;
+        }
+    </style>
 
-    <table class="table table-bordered">
+    <table class="table">
         <thead>
         <tr>
             <th colspan="2" style="text-align: center"> Fecha</th>
@@ -101,5 +110,5 @@
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary"  href="{{ path('cumplimietnto_pdf') }}">Exportar</a>
+
 {% endblock %}

@@ -70,7 +70,7 @@ class GMSRFIDUsuarioController extends AbstractController
         $form = $this->createForm(GMSRFIDUsuarioType::class, $gMSRFIDUsuario);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('g_m_s_r_f_i_d_usuario_index');
         }

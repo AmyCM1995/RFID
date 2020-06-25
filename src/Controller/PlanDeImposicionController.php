@@ -128,6 +128,45 @@ class PlanDeImposicionController extends AbstractController
         ]);
     }
     /**
+     * @Route("/plan/imposicion/pdf/cumplimiento", name="cumplimietnto_pdf")
+     */
+    public function pdfCumplimiento()
+    {
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOptions);
+        //****************************************
+        $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $importacionUltimaconPi = $this->utimaImportacionConPI();
+        $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
+        $plan_de_imposicions = $planRepository->planesDeImposicionActuales($planDeImposicionRepositorio, $importacionUltimaconPi);
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $corresponsales = $planRepository->corresponsalesdelPlan($corresponsalRepository, $plan_de_imposicions);
+        $importacionRepository = $this->getDoctrine()->getRepository(Importaciones::class);
+        $cicloEspanol = $importacionRepository->traducirCicloEspañol($importacionUltimaconPi);
+        //cojer los plan csv de la bd
+        $csvReposirotio = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $planescsv = $csvReposirotio->findAll();
+        $success = $this->buscarSuccessPlanes($planescsv);
+        $danger = $this->buscarDangerPlanes($planescsv);
+        //****************************************
+        $html = $this->renderView('plan_de_imposicion/pdf_cumplimiento.html.twig', [
+            'plan_de_imposicion_csvs' => $planescsv,
+            'importacion' => $importacionUltimaconPi,
+            'cicloEspanol' => $cicloEspanol,
+            'corresponsales' => $corresponsales,
+            'success' => $success,
+            'danger' => $danger,
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $nombre = "Cumplimiento del PI.pdf";
+        $dompdf->stream($nombre, [
+            "Attachment" => true
+        ]);
+    }
+    /**
      * @Route("/{cod}/plan/imposicion/visualizar/cumplimiento/corresponsal", name="plan_imposicion_visualizar_cumplimiento_corresponsal", methods={"GET","POST"})
      */
     public function visualizarCumplimientoCorresponsal($codCorresponsal)
@@ -154,6 +193,7 @@ class PlanDeImposicionController extends AbstractController
             'danger' => $danger,
         ]);
     }
+
 
     public function buscarSuccessPlanes($planescsv){
         $success[] = null;

@@ -31,7 +31,7 @@ class HistorialLectoresController extends AbstractController
     /**
      * @Route("/seleccionar/lector", name="seleccionar_lector")
      */
-    public function seleccionarLecot(LectorRepository $lectorRepository): Response
+    public function seleccionarLector(LectorRepository $lectorRepository): Response
     {
         return $this->render('historial_lectores/seleccionar_lector.html.twig', [
             'lectors' => $lectorRepository->findAll(),

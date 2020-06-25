@@ -12,6 +12,7 @@ use App\Entity\Totales;
 use App\Repository\PlanDeImposicionRepository;
 use App\Repository\TotalesRepository;
 use Doctrine\ORM\EntityRepository;
+use DoctrineExtensions\Query\Mysql\Year;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -261,7 +262,7 @@ class TotalesController extends AbstractController
     public function pdf_estadisticasAnuales_view(Request $request): Response
     {
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
-        $annos = $planRepository->diferentesAnnos();
+        /*$annos = $planRepository->diferentesAnnos();
         $ejemploDQL = $planRepository->findByEjemplo();
         foreach ($ejemploDQL as $ejemploDQ){
             echo $ejemploDQ->getId()."/";
@@ -281,10 +282,11 @@ class TotalesController extends AbstractController
                 'attr' => array('class' => 'form-control', 'style' => 'margin:5px 0;'),
                 'class'=> PlanDeImposicion::class,
                 'query_builder' => function (EntityRepository $er){
-                    return $er->createQuery('SELECT DISTINCT YEAR (fecha) FROM plan_de_imposicion');
+                    return $er->createQueryBuilder('p')
+                    ->where(distinct('YEAR(p.fecha)'));
                 },
-                'choice_label' => 'nombre',
-                'multiple' => true,
+                'choice_label' => 'id',
+                'multiple' => false,
                 'required' => true,
             ])
             ->getForm();

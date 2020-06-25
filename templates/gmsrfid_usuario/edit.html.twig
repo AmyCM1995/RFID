@@ -9,8 +9,7 @@
     {{ form_row(form.nombre) }}
     {{ form_row(form.correo) }}
     {{ form_row(form.roles) }}
-    {{ form_label(form.password, 'Contraseña') }}
-    {{ form_widget(form.password, {'attr': {'value':'cambiarContraseña', 'class': 'form-control'}}) }}
+    {{ form_widget(form.password, {'attr': {'style':'display:none'}}) }}
 
     <br>
 
