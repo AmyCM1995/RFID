@@ -22,6 +22,25 @@ class SalvaRestauraBDController extends AbstractController
 
     /**
      * @IsGranted("ROLE_ADMIN")
+     * @Route("/salva/restaura/b/d/salva/bd", name="salva_restaura_b_d_salva_bd")
+     */
+    public function salvaBD()
+    {
+        $host = "localhost";
+        $usuario = "root";
+        $contrasena = "";
+        $nbBD = "GMS_RFID_2";
+        $nbBackup = "backup_db/myBackup.sql";
+        $tabas = "data";
+        $commando = 'mysqldump --opt -h' . $host .' -u' . $usuario . ' -p' . $contrasena .' ' .$nbBD . ' > ~/' .$nbBackup;
+        exec($commando);
+        return $this->render('salva_restaura_bd/index.html.twig', [
+            'controller_name' => 'SalvaRestauraBDController',
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/salva/restaura/b/d/salva/pi", name="salva_restaura_b_d_salva_pi")
      */
     public function salvaPI()

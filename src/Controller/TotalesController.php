@@ -174,7 +174,6 @@ class TotalesController extends AbstractController
             'total065' => $total065,
             'total075' => $total075,
             'total085' => $total085,
-
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
@@ -186,13 +185,11 @@ class TotalesController extends AbstractController
             "Attachment" => true
         ]);
     }
-
     /**
      * @Route("/pdf/view/plan/estadisticas", name="plan_estadisticas_pdf_view", methods={"GET"})
      */
     public function pdf_view_PlanEstadisticas(PlanDeImposicionRepository $planDeImposicionRepository): Response
     {
-
         //****************************************Plan de imposicion
         $planRepository = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
         $planDeImposicionRepositorio = $this->getDoctrine()->getRepository(PlanDeImposicion::class);
@@ -283,7 +280,8 @@ class TotalesController extends AbstractController
                 'class'=> PlanDeImposicion::class,
                 'query_builder' => function (EntityRepository $er){
                     return $er->createQueryBuilder('p')
-                    ->where(distinct('YEAR(p.fecha)'));
+                        ->select(' YEAR(p.fecha) AS year')
+                        ->groupBy('year');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,

@@ -21,6 +21,7 @@ class IPLectorCubanoType extends AbstractType
                 'class' => Lector::class,'query_builder' => function (EntityRepository $er){
                         return $er->createQueryBuilder('p')
                             ->innerJoin('p.sitio', 's', 'WITH', 's.pais = 250')
+                            ->where('l.id')
                             ->orderBy('p.nombre', 'ASC');
                     },
                     'choice_label' => 'nombre',

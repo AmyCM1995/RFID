@@ -36,8 +36,10 @@
                         <td>{{ arrTotalesPais }}</td>
                     {% endif %}
                 {% endfor %}
-                <td>Del <input type="text" id="transpondedorInicio" maxlength="17" minlength="17">
-                    al <input type="text" id="transpondedorFinal" maxlength="17" minlength="17">
+                {% set nbIni = 'transpondedorInicial'~ sizePaisesDest %}
+                {% set nbFin = 'transpondedorFinal'~ sizePaisesDest %}
+                <td>Del <input type="text" id=nbIni maxlength="17" minlength="17">
+                    al <input type="text" id=nbFin maxlength="17" minlength="17">
                 </td>
             </tr>
             {% endfor %}
@@ -51,7 +53,7 @@
                         {% endif %}
                     {% endfor %}
                     <td>Del CU <input type="text" id="cartaInicio" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
-                        al CU <input type="text" id="cartaInicio" maxlength="6" minlength="6"> {{ paisDestino.codigo }}</td>
+                        al CU <input type="text" id="cartaFinal" maxlength="6" minlength="6"> {{ paisDestino.codigo }}</td>
                 </tr>
             {% endfor %}
             {% for paisDestino in paisesDestino %}
@@ -85,11 +87,13 @@
 
     <script type="text/javascript">
         function obtenerValoresMostrarExportar() {
-            var transpondedores = [document.getElementsByClassName("transpondedorInicio").value];
-            alert(transpondedores.length);
+            alert("a");
+            var transpondedores = document.getElementById("transpondedorInicial1").value;
+            alert(transpondedores);
+
             //mostrar y ocultar botones
-            document.getElementById("exportar").style.display = "block";
-            document.getElementById("guardar").style.display = "none";
+            //document.getElementById("exportar").style.display = "block";
+            //document.getElementById("guardar").style.display = "none";
         }
     </script>
 

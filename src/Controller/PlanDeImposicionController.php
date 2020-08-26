@@ -194,6 +194,21 @@ class PlanDeImposicionController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/plan/imposicion/automaticamnete", name="plan_imposicion_automaticamente")
+     */
+    public function planImposicionImportadoAutomaticamente()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://gms.upu.org/STAR/login/Login.aspx?ReturnUrl=%2fSTAR%2fcontrols%2f");
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_exec($ch);
+        curl_close($ch);
+        return $this->render('plan_imposicion_csv/importacion_correcta.html.twig', [
+            'encabezado' => "automatico",
+            'alertas' => null
+        ]);
+    }
 
     public function buscarSuccessPlanes($planescsv){
         $success[] = null;
@@ -650,14 +665,14 @@ class PlanDeImposicionController extends AbstractController
         $entityManager->persist($plan);
         $entityManager->flush();
     }
-    public function buscarCorrespnsales($c1, $c2, $c3){
+    /*public function buscarCorrespnsales($c1, $c2, $c3){
         $repositorioCorresponsal = $this->getDoctrine()->getRepository(Corresponsal::class);
         $corr1 = $repositorioCorresponsal->findOneByCodigo($c1);
         $corr2 = $repositorioCorresponsal->findOneByCodigo($c2);
         $corr3 = $repositorioCorresponsal->findOneByCodigo($c3);
         $resultado = [$corr1, $corr2, $corr3];
         return $resultado;
-    }
+    }*/
     public function buscarCorresponsalesAPartirDeCodigos ($corresponsales){
         $repositorioCorresponsal = $this->getDoctrine()->getRepository(Corresponsal::class);
         $resultado[] = null;

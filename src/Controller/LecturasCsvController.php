@@ -208,7 +208,7 @@ class LecturasCsvController extends AbstractController
         $borradoRepository = $this->getDoctrine()->getRepository(BorradoPropio::class);
         $criterio = null;
         foreach ($lecturas as $lectura){
-            if($this->esValidaoPaisOrigen($lectura, $paisesActivos) == false){
+            if($this->esValidoPaisOrigen($lectura, $paisesActivos) == false){
                 $criterio = $borradoRepository->findOneByCodigo(8);
             }elseif($this->esValidoIdEnvio($lectura, $paisesActivos) == false){
                 $criterio = $borradoRepository->findOneByCodigo(9);
@@ -222,9 +222,6 @@ class LecturasCsvController extends AbstractController
                 //no tiene los datos de las lecturas: verificar id_envio y id_transpondedor para emitir o no alarma
                 $criterio = $borradoRepository->findOneByCodigo(13);
             }
-
-
-
             if($criterio != null){
                 //borrar la lectura
                 $lectura->setCodigoBorradoPropio($criterio);
@@ -234,7 +231,7 @@ class LecturasCsvController extends AbstractController
             }
         }
     }
-    public function esValidaoPaisOrigen($lectura, $paises){
+    public function esValidoPaisOrigen($lectura, $paises){
         $valido = false;
         foreach ($paises as $pais){
             if($lectura->getCodigoPaisOrigen() == "CU" || $lectura->getCodigoPaisOrigen() == $pais->getCodigo()){
@@ -274,16 +271,7 @@ class LecturasCsvController extends AbstractController
         }
         return $tiene;
     }
-
-
-
-
-
-
-
-
-
-    public function eliminarLecturasNoValidas(){
+    /*public function eliminarLecturasNoValidas(){
         $lecturasCsvRepository = $this->getDoctrine()->getRepository(LecturasCsv::class);
         $lecturas = $lecturasCsvRepository->findAll();
         $envios = $lecturasCsvRepository->findEveryEnvio();
@@ -300,9 +288,8 @@ class LecturasCsvController extends AbstractController
             $temporal = null;
             $size = 0;
         }
-    }
-
-    public function eliminarLecturasMismoEnvio($lecturas){
+    }*/
+    /*public function eliminarLecturasMismoEnvio($lecturas){
         $temporal = null;
         $size = 0;
         for ($i=0; $i<sizeof($lecturas); $i++){
@@ -319,9 +306,8 @@ class LecturasCsvController extends AbstractController
                 $this->eliminarLecturasSegunPropositoLectorPocoTiempoDiferencia($temporal);
             }
         }
-    }
-
-    public function eliminarLecturasSegunPropositoLectorPocoTiempoDiferencia($lecturas){
+    }*/
+    /*public function eliminarLecturasSegunPropositoLectorPocoTiempoDiferencia($lecturas){
         if(sizeof($lecturas) > 0){
             $borradoRepository = $this->getDoctrine()->getRepository(BorradoPropio::class);
             if($lecturas[0]->getPropositoLector() == "Reader at the office entrance"){
@@ -351,7 +337,7 @@ class LecturasCsvController extends AbstractController
                 }
             }
         }
-    }
+    }*/
     public function borrarLecturasAnteriores(){
         $lecturasRepository = $this->getDoctrine()->getRepository(LecturasCsv::class);
         $entityManager = $this->getDoctrine()->getManager();
