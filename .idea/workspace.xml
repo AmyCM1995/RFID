@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/Controller/LecturasCsvControllerTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/cookie.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.xml.dist" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml.dist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SalvaRestauraBDController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SalvaRestauraBDController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TotalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TotalesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/IPLectorCubanoType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/IPLectorCubanoType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/materiales/pdf_materialesCorreaponsalIncompleto.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/materiales/pdf_materialesCorreaponsalIncompleto.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/plan_imposicion_csv/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/salva_restaura_bd/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/salva_restaura_bd/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -321,6 +315,8 @@
       <workItem from="1592146144472" duration="15054000" />
       <workItem from="1593888766416" duration="17048000" />
       <workItem from="1596545893653" duration="9233000" />
+      <workItem from="1598478464966" duration="4431000" />
+      <workItem from="1600711274349" duration="1253000" />
     </task>
     <servers />
   </component>

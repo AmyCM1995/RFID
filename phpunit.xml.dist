@@ -5,6 +5,8 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.5/phpunit.xsd"
          backupGlobals="false"
          colors="true"
+         verbose = "true"
+         stopOnFailure = "false"
          bootstrap="config/bootstrap.php"
 >
     <php>

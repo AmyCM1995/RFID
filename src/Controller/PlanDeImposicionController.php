@@ -199,11 +199,9 @@ class PlanDeImposicionController extends AbstractController
      */
     public function planImposicionImportadoAutomaticamente()
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://gms.upu.org/STAR/login/Login.aspx?ReturnUrl=%2fSTAR%2fcontrols%2f");
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_exec($ch);
-        curl_close($ch);
+
+        //"https://gms.upu.org/STAR/login/Login.aspx?ReturnUrl=%2fSTAR%2fcontrols%2f"
+        echo $this->grab_page("https://gms.upu.org/STAR/login/Login.aspx?ReturnUrl=%2fSTAR%2fcontrols%2f");
         return $this->render('plan_imposicion_csv/importacion_correcta.html.twig', [
             'encabezado' => "automatico",
             'alertas' => null
@@ -947,6 +945,55 @@ class PlanDeImposicionController extends AbstractController
            'importacion' => $importacionUltima,
            'corresponsales' =>$corresponsales,
        ]);*/
+    }
+//*************************************************************CURL*********************************************
+    public function login($url, $data){
+        $fp = fopen("cookie.txt", "w");
+        fclose($fp);
+        $login = curl_init();
+        curl_setopt($login, CURLOPT_COOKIEJAR, "cookie.txt");
+        curl_setopt($login, CURLOPT_COOKIEFILE, "cookie.txt");
+        curl_setopt($login, CURLOPT_TIMEOUT, 40000);
+        curl_setopt($login, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($login, CURLOPT_URL, $url);
+        curl_setopt($login, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($login, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($login, CURLOPT_POST, true);
+        curl_setopt($login, CURLOPT_POSTFIELDS, $data);
+        ob_start();
+        return curl_exec($login);
+        ob_end_clean();
+        curl_close($login);
+        unset($login);
+    }
+    public function grab_page($site){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 40);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
+        curl_setopt($ch, CURLOPT_URL, $site);
+        ob_start();
+        return curl_exec($ch);
+        ob_end_clean();
+        curl_close($ch);
+    }
+    public function post_data($site, $data){
+        $datapost = curl_init();
+        $headers = array("Expect:");
+        curl_setopt($datapost, CURLOPT_URL, $site);
+        curl_setopt($datapost, CURLOPT_TIMEOUT, 40000);
+        curl_setopt($datapost, CURLOPT_HEADER, true);
+        curl_setopt($datapost, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($datapost, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($datapost, CURLOPT_POST, true);
+        curl_setopt($datapost, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($datapost, CURLOPT_COOKIEFILE, "cookie.txt");
+        ob_start();
+        return curl_exec($datapost);
+        ob_end_clean();
+        curl_close($datapost);
+        unset($datapost);
     }
 
 }
