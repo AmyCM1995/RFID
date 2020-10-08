@@ -199,9 +199,9 @@ class PlanDeImposicionController extends AbstractController
      */
     public function planImposicionImportadoAutomaticamente()
     {
-
-        //"https://gms.upu.org/STAR/login/Login.aspx?ReturnUrl=%2fSTAR%2fcontrols%2f"
-        echo $this->grab_page("https://gms.upu.org/STAR/login/Login.aspx?ReturnUrl=%2fSTAR%2fcontrols%2f");
+        //mostrar página
+        //echo $this->grab_page("https://gms.upu.org/STAR/login/Login.aspx?ReturnUrl=%2fSTAR%2fcontrols%2f");
+        echo $this->login("https://gms.upu.org/STAR/login/Login.aspx?ReturnUrl=%2fSTAR%2fcontrols%2f", "__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwULLTE3MjI5OTA1MjMPZBYCAgMPZBYEZg9kFgoCAQ8PFgIeBFRleHRlZGQCBQ8WAh8AZWQCBw8PFgIeB1Zpc2libGVoZGQCCQ8PFgIfAWhkZAILDw9kFgIeB29uQ2xpY2sFG1Nob3dIZWxwKCcnKTsgcmV0dXJuIGZhbHNlO2QCBg9kFgJmDw8WBB4FV2lkdGgbAAAAAAAAWUAHAAAAHgRfIVNCAoACZGRkliwzACI%2B6JETO7LQP4shi3HBek%2BwkUXIMSLamjYvNZE%3D&__VIEWSTATEGENERATOR=5E44CC24&__EVENTVALIDATION=%2FwEdAAQqg27aKwwC1zxuvxPOwBdy8x5TPe4Fb2SCxWQFXQqD6Fz4Ff%2FmRdr9eJovHJ26GXDQt9u8Yj9aTUScKk9HMLRqrpfSBPK4NdQKMsfw8XZbcan6SHrqwNeotXk%2BEl%2BJRaw%3D&Login1%24UserName=Amy&Login1%24Password=amy&Login1%24LoginButton=Login");
         return $this->render('plan_imposicion_csv/importacion_correcta.html.twig', [
             'encabezado' => "automatico",
             'alertas' => null

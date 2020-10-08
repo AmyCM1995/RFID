@@ -129,6 +129,9 @@
     "league/flysystem": {
         "version": "1.0.61"
     },
+    "league/mime-type-detection": {
+        "version": "1.5.0"
+    },
     "maennchen/zipstream-php": {
         "version": "2.1.0"
     },

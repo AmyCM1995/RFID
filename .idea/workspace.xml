@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/cookie.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/cookie.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GMS-RFIDv2.0.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GMS-RFIDv2.0.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpunit.xml.dist" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml.dist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlanDeImposicionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -189,6 +192,8 @@
       <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
       <path value="$PROJECT_DIR$/vendor/doctrine/sql-formatter" />
       <path value="$PROJECT_DIR$/vendor/beberlei/doctrineextensions" />
+      <path value="$PROJECT_DIR$/vendor/bin/.phpunit" />
+      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
     </include_path>
   </component>
   <component name="ProjectId" id="1T49G70Y0wIeSjxsVim6sNxgzqD" />
@@ -316,7 +321,10 @@
       <workItem from="1593888766416" duration="17048000" />
       <workItem from="1596545893653" duration="9233000" />
       <workItem from="1598478464966" duration="4431000" />
-      <workItem from="1600711274349" duration="1253000" />
+      <workItem from="1600711274349" duration="3304000" />
+      <workItem from="1600796820471" duration="2037000" />
+      <workItem from="1601476648827" duration="2361000" />
+      <workItem from="1602166539727" duration="2051000" />
     </task>
     <servers />
   </component>
