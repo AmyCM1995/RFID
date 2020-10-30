@@ -36,10 +36,27 @@
                         <td>{{ arrTotalesPais }}</td>
                     {% endif %}
                 {% endfor %}
-                {% set nbIni = 'transpondedorInicial'~ sizePaisesDest %}
-                {% set nbFin = 'transpondedorFinal'~ sizePaisesDest %}
-                <td>Del <input type="text" id=nbIni maxlength="17" minlength="17">
-                    al <input type="text" id=nbFin maxlength="17" minlength="17">
+                <td>
+                    {% if sizePaisesDest == 1 %}
+                        Del <input type="text" id=transpondedorInicial1 maxlength="17" minlength="17">
+                        al <input type="text" id=transpondedorFinal1 maxlength="17" minlength="17">
+                    {% endif %}
+                    {% if sizePaisesDest == 2 %}
+                        Del <input type="text" id=transpondedorInicial2 maxlength="17" minlength="17">
+                        al <input type="text" id=transpondedorFinal2 maxlength="17" minlength="17">
+                    {% endif %}
+                    {% if sizePaisesDest == 3 %}
+                        Del <input type="text" id=transpondedorInicial3 maxlength="17" minlength="17">
+                        al <input type="text" id=transpondedorFinal3 maxlength="17" minlength="17">
+                    {% endif %}
+                    {% if sizePaisesDest == 4 %}
+                        Del <input type="text" id=transpondedorInicial4 maxlength="17" minlength="17">
+                        al <input type="text" id=transpondedorFinal4 maxlength="17" minlength="17">
+                    {% endif %}
+                    {% if sizePaisesDest == 5 %}
+                        Del <input type="text" id=transpondedorInicial5 maxlength="17" minlength="17">
+                        al <input type="text" id=transpondedorFinal5 maxlength="17" minlength="17">
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
@@ -52,8 +69,28 @@
                             <td>{{ arrTotalesPais }}</td>
                         {% endif %}
                     {% endfor %}
-                    <td>Del CU <input type="text" id="cartaInicio" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
-                        al CU <input type="text" id="cartaFinal" maxlength="6" minlength="6"> {{ paisDestino.codigo }}</td>
+                    <td>
+                        {% if sizePaisesDest == 1 %}
+                            Del CU <input type="text" id="cartaInicio1" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                            al CU <input type="text" id="cartaFinal1" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                        {% endif %}
+                        {% if sizePaisesDest == 2 %}
+                            Del CU <input type="text" id="cartaInicio2" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                            al CU <input type="text" id="cartaFinal2" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                        {% endif %}
+                        {% if sizePaisesDest == 3 %}
+                            Del CU <input type="text" id="cartaInicio3" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                            al CU <input type="text" id="cartaFinal3" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                        {% endif %}
+                        {% if sizePaisesDest == 4 %}
+                            Del CU <input type="text" id="cartaInicio4" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                            al CU <input type="text" id="cartaFinal4" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                        {% endif %}
+                        {% if sizePaisesDest == 5 %}
+                            Del CU <input type="text" id="cartaInicio5" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                            al CU <input type="text" id="cartaFinal5" maxlength="6" minlength="6"> {{ paisDestino.codigo }}
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             {% for paisDestino in paisesDestino %}
@@ -87,13 +124,41 @@
 
     <script type="text/javascript">
         function obtenerValoresMostrarExportar() {
-            alert("a");
-            var transpondedores = document.getElementById("transpondedorInicial1").value;
-            alert(transpondedores);
-
+            var transpondedoresIniciales = [document.getElementById("transpondedorInicial1").value,
+                document.getElementById("transpondedorInicial2").value,
+                document.getElementById("transpondedorInicial3").value,
+                document.getElementById("transpondedorInicial4").value];
+            if(document.getElementById("transpondedorInicial5") != null){
+                transpondedoresIniciales.push(document.getElementById("transpondedorInicial5").value);
+            }
+            alert(transpondedoresIniciales[3]);
+            var transpondedoresFinales = [document.getElementById("transpondedorFinal1").value,
+                document.getElementById("transpondedorFinal2").value,
+                document.getElementById("transpondedorFinal3").value,
+                document.getElementById("transpondedorFinal4").value];
+            if(document.getElementById("transpondedorFinal5") != null){
+                transpondedoresFinales.push(document.getElementById("transpondedorFinal5").value);
+            }
+            alert(transpondedoresFinales[3]);
+            var cartasIniciales = [document.getElementById("cartaIniciol1").value,
+                document.getElementById("cartaIniciol2").value,
+                document.getElementById("cartaIniciol3").value,
+                document.getElementById("cartaIniciol4").value];
+            if(document.getElementById("cartaIniciol5") != null){
+                transpondedoresIniciales.push(document.getElementById("cartaIniciol5").value);
+            }
+            alert(cartasIniciales[3]);
+            var cartasFinales = [document.getElementById("cartaFinal1").value,
+                document.getElementById("cartaFinal2").value,
+                document.getElementById("cartaFinal3").value,
+                document.getElementById("cartaFinal4").value];
+            if(document.getElementById("cartaFinal5") != null){
+                transpondedoresFinales.push(document.getElementById("cartaFinal5").value);
+            }
+            alert(cartasFinales[3]);
             //mostrar y ocultar botones
-            //document.getElementById("exportar").style.display = "block";
-            //document.getElementById("guardar").style.display = "none";
+            document.getElementById("exportar").style.display = "block";
+            document.getElementById("guardar").style.display = "none";
         }
     </script>
 

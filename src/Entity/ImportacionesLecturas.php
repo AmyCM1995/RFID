@@ -37,6 +37,7 @@ class ImportacionesLecturas
     {
         $this->lecturasCsvs = new ArrayCollection();
         $this->lecturas = new ArrayCollection();
+        $this->incidencias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,4 +118,6 @@ class ImportacionesLecturas
 
         return $this;
     }
+
+
 }

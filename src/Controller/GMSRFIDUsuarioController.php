@@ -87,14 +87,31 @@ class GMSRFIDUsuarioController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         //if ($this->isCsrfTokenValid('delete'.$gMSRFIDUsuario->getId(), $request->request->get('_token'))) {
+        $roles =$gMSRFIDUsuario->getRoles();
+        if($roles[0] == 'ROLE_ADMIN' && $this->cantidadAdministradoresAplicacion() == 1){// no borrar si es el ultimo admonistrador
+            echo "No se puede borrar el último administrador de la aplicaioón";
+        }else{//borrar
             $entityManager = $this->getDoctrine()->getManager();
             $gMSRFIDUsuario->setEsActivo(false);
             //$entityManager->remove($gMSRFIDUsuario);
             $entityManager->flush();
+        }
         //}
 
         return $this->redirectToRoute('g_m_s_r_f_i_d_usuario_index');
     }
-
+    public function cantidadAdministradoresAplicacion(){
+        $cant = 0;
+        $usuariosRepository = $this->getDoctrine()->getRepository(GMSRFIDUsuario::class);
+        $usuarios = $usuariosRepository->findAll();
+        $r = null;
+        foreach ($usuarios as $usuario){
+            $r = $usuario->getRoles();
+            if($r[0] == 'ROLE_ADMIN'){
+                $cant++;
+            }
+        }
+        return $cant;
+    }
 
 }

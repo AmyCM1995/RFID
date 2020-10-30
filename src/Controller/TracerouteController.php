@@ -23,18 +23,17 @@ class TracerouteController extends AbstractController
     public function manual(Lector $lector): Response
     {
         $ip = $this->getDoctrine()->getRepository(IPLectorCubano::class)->findOneByIdLector($lector->getId());
-        $tracert = "tracert -d ".$ip->getIp();
-        exec($tracert, $output);
-        //guardar en el historial
-        $resultado = $this->convertirOutputEnResultado($output);
-        $historialLector = new HistorialLectores();
-        $historialLector->setResultado($resultado);
-        $historialLector->setIpLector($ip);
-        $historialLector->setFechaHora(new \DateTime('now'));
-        $historialLector->setEstado("incognita");
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($historialLector);
-        $entityManager->flush();
+        $output = $this->tracert($ip->getIp());
+        return $this->render('traceroute/manual.html.twig', [
+            'output' => $output,
+        ]);
+    }
+    /**
+     * @Route("/manual/todos", name="traceroute_manual_todos", methods={"GET"})
+     */
+    public function manualTodos(): Response
+    {
+        $output = $this->tracertArr();
         return $this->render('traceroute/manual.html.twig', [
             'output' => $output,
         ]);
@@ -44,22 +43,10 @@ class TracerouteController extends AbstractController
      */
     public function automatico(): Response
     {
+        $this->setInterval($this->manualTodos(),5);
+        return $this->render('traceroute/manual.html.twig', [
 
-        $ips = $this->getDoctrine()->getRepository(IPLectorCubano::class)->findAll();
-        foreach ($ips as $ip){
-            $tracert = "tracert -d ".$ip->getIp();
-            exec($tracert, $output);
-            //guardar en el historial
-            $resultado = $this->convertirOutputEnResultado($output);
-            $historialLector = new HistorialLectores();
-            $historialLector->setResultado($resultado);
-            $historialLector->setIpLector($ip);
-            $historialLector->setFechaHora(new \DateTime('now'));
-            $historialLector->setEstado("incognita");
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($historialLector);
-            $entityManager->flush();
-        }
+        ]);
     }
     /**
      * @Route("/", name="traceroute_index", methods={"GET"})
@@ -88,5 +75,36 @@ class TracerouteController extends AbstractController
         }
         $resultado = utf8_encode($resultado);
         return $resultado;
+    }
+    public function tracert ($ip){
+        $tracert = "tracert -d ".$ip;
+        exec($tracert, $output);
+        //guardar en el historial
+        $resultado = $this->convertirOutputEnResultado($output);
+        $historialLector = new HistorialLectores();
+        $historialLector->setResultado($resultado);
+        $historialLector->setIpLector($ip);
+        $historialLector->setFechaHora(new \DateTime('now'));
+        $historialLector->setEstado("incognita");
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($historialLector);
+        $entityManager->flush();
+        return $output;
+    }
+    public function tracertArr (){
+        $ips = $this->getDoctrine()->getRepository(IPLectorCubano::class)->findAll();
+        $output[] = null;
+        $size = 0;
+        foreach ($ips as $ip){
+            $size++;
+            $output[$size] = $this->tracert($ip->getIp());
+        }
+        return $output;
+    }
+    function setInterval($f, $segundos){
+        while (true){
+            $f();
+            sleep($segundos);
+        }
     }
 }
