@@ -60,6 +60,11 @@ class Envio
      */
     private $area_destino;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $fechaRecibido;
+
     public function __construct()
     {
         $this->lecturas = new ArrayCollection();
@@ -181,6 +186,18 @@ class Envio
     public function setAreaDestino(?Area $area_destino): self
     {
         $this->area_destino = $area_destino;
+
+        return $this;
+    }
+
+    public function getFechaRecibido(): ?\DateTimeInterface
+    {
+        return $this->fechaRecibido;
+    }
+
+    public function setFechaRecibido(?\DateTimeInterface $fechaRecibido): self
+    {
+        $this->fechaRecibido = $fechaRecibido;
 
         return $this;
     }

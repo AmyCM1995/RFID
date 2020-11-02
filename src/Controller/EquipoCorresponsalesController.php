@@ -8,6 +8,7 @@ use App\Entity\EquipoCorresponsales;
 use App\Form\EquipoCorresponsalesType;
 use App\Repository\CantMiembrosEquipoRepository;
 use App\Repository\EquipoCorresponsalesRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,8 +24,10 @@ class EquipoCorresponsalesController extends AbstractController
      */
     public function index(EquipoCorresponsalesRepository $equipoCorresponsalesRepository): Response
     {
+        $existenCorresponsalesSinEquipo = $this->existeCorresponsalNoAsignado();
         return $this->render('equipo_corresponsales/index.html.twig', [
             'equipo_corresponsales' => $equipoCorresponsalesRepository->findByActivo(),
+            'existenCorresponsalesSinAsignarEquipo' => $existenCorresponsalesSinEquipo,
         ]);
     }
 
@@ -107,5 +110,17 @@ class EquipoCorresponsalesController extends AbstractController
         //}
 
         return $this->redirectToRoute('equipo_corresponsales_index');
+    }
+    public function existeCorresponsalNoAsignado(){
+        $result = false;
+        $corresponsalRepository = $this->getDoctrine()->getRepository(Corresponsal::class);
+        $corresponsales = $corresponsalRepository->findByActivo();
+        foreach ($corresponsales as $corresponsal){
+            if($corresponsal->getEquipo() == null){
+                $result = true;
+                break;
+            }
+        }
+        return $result;
     }
 }

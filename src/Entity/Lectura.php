@@ -88,6 +88,11 @@ class Lectura
      */
     private $envio;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ImportacionesLecturas::class, inversedBy="lecturas")
+     */
+    private $importacion;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -257,6 +262,18 @@ class Lectura
     public function setEnvio(?Envio $envio): self
     {
         $this->envio = $envio;
+
+        return $this;
+    }
+
+    public function getImportacion(): ?ImportacionesLecturas
+    {
+        return $this->importacion;
+    }
+
+    public function setImportacion(?ImportacionesLecturas $importacion): self
+    {
+        $this->importacion = $importacion;
 
         return $this;
     }

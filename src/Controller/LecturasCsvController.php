@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Area;
 use App\Entity\BorradoPropio;
+use App\Entity\Ciudad;
+use App\Entity\Envio;
 use App\Entity\ImportacionesLecturas;
 use App\Entity\Lector;
+use App\Entity\Lectura;
 use App\Entity\LecturasCsv;
 use App\Entity\PaisCorrespondencia;
-use App\Entity\SitioLector;
-use App\Form\LecturasCsvType;
 use App\Repository\LecturasCsvRepository;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -190,6 +192,10 @@ class LecturasCsvController extends AbstractController
                         if($lecturas[$i]->getHoraFechaLectura() == $horaFechaAnterior ||
                             $this->verificarMismaFechaHoraSinImportarSegundosYMilisegundos($horaFechaAnterior, $lecturas[$i]->getHoraFechaLectura())){
                             $criterio = $borradoRepository->findOneByCodigo(5);
+                        }else{
+                            $horaFechaAnterior = $lecturas[$i]->getHoraFechaLectura();
+                            $idTranspondedorAnterior = $lecturas[$i]->getIdTranspondedor();
+                            $idLectorAnterior = $lecturas[$i]->getIdLector();
                         }
                     }else{
                         $horaFechaAnterior = $lecturas[$i]->getHoraFechaLectura();
@@ -241,6 +247,7 @@ class LecturasCsvController extends AbstractController
         $criterio = null;
         foreach ($lecturas as $lectura){
             if($lectura->getCodigoBorradoPropio() == null){
+                $criterio = null;
                 if($this->esValidoPaisOrigen($lectura, $paisesActivos) == false){
                     $criterio = $borradoRepository->findOneByCodigo(8);
                 }elseif ($this->esValidoPaisDestino($lectura, $paisesActivos) == false){
@@ -419,8 +426,110 @@ class LecturasCsvController extends AbstractController
             }
         }
     }
-    public function guardarLecturaValida($lectura){
-        
+    public function guardarLecturaValida($lecturaCsv){
+        $lectura = null;
+        $areaOrigen = null;
+        $areaDestino = null;
+        $ciudadOrigen = null;
+        $ciudadDestino = null;
+        $entityManager = $this->getDoctrine()->getManager();
+        $paisRepository = $this->getDoctrine()->getRepository(PaisCorrespondencia::class);
+        //llenar datos de ciudad y país de origen y destino
+        $ciudadRepository = $this->getDoctrine()->getRepository(Ciudad::class);
+        $ciudadOrigen = $ciudadRepository->findOneByCodigo($lecturaCsv->getCodigoCiudadOrigen());
+        if($ciudadOrigen == null){
+            $ciudadOrigen = new Ciudad();
+            $ciudadOrigen->setCodigo($lecturaCsv->getCodigoCiudadOrigen());
+            $ciudadOrigen->setNombre($lecturaCsv->getNombreCiudadOrigen());
+            $paisOrigen = $paisRepository->findOneByCodigo($lecturaCsv->getCodigoPaisOrigen());
+            $ciudadOrigen->setPais($paisOrigen);
+            //persistir
+            $entityManager->persist($ciudadOrigen);
+            $entityManager->flush();
+        }
+        $ciudadDestino = $ciudadRepository->findOneByCodigo($lecturaCsv->getCodigoCiudadDestino());
+        if($ciudadDestino == null){
+            $ciudadDestino = new Ciudad();
+            $ciudadDestino->setCodigo($lecturaCsv->getCodigoCiudadDestino());
+            $ciudadDestino->setNombre($lecturaCsv->getNombreCiudadDestino());
+            $paisDestino = $paisRepository->findOneByCodigo($lecturaCsv->getCodigoPaisDestino());
+            $ciudadDestino->setPais($paisDestino);
+            //persistir
+            $entityManager->persist($ciudadDestino);
+            $entityManager->flush();
+        }
+        //llenar datos de áreas de origen y destino
+        $areaRepository = $this->getDoctrine()->getRepository(Area::class);
+        $areaOrigen = $areaRepository->findOneByCodigo($lecturaCsv->getCodigoAreaOrigen());
+        if($areaOrigen == null){
+            $areaOrigen = new Area();
+            $areaOrigen->setCodigo($lecturaCsv->getCodigoAreaOrigen());
+            $areaOrigen->setNombre($lecturaCsv->getNombreAreaOrigen());
+            $areaOrigen->setCiudad($ciudadOrigen);
+            $areaOrigen->setEsActivo(true);
+            //persistir
+            $entityManager->persist($areaOrigen);
+            $entityManager->flush();
+        }
+        $areaDestino = $areaRepository->findOneByCodigo($lecturaCsv->getCodigoAreaDestino());
+        if($areaDestino == null){
+            $areaDestino = new Area();
+            $areaDestino->setCodigo($lecturaCsv->getCodigoAreaDestino());
+            $areaDestino->setNombre($lecturaCsv->getNombreAreaDestino());
+            $areaDestino->setCiudad($ciudadDestino);
+            $areaDestino->setEsActivo(true);
+            //persistir
+            $entityManager->persist($areaDestino);
+            $entityManager->flush();
+        }
+        //llenar datos del envío ************************menos las lecturas
+        $envioRepository = $this->getDoctrine()->getRepository(Envio::class);
+        $envio = $envioRepository->findOneByCodigo($lecturaCsv->getIdEnvio());
+        if($envio == null){ //si no existe
+            $envio = new Envio();
+            $envio->setCodigo($lecturaCsv->getIdEnvio());
+            $envio->setCodigoTranspondedor($lecturaCsv->getIdTranspondedor());
+            $envio->setTipoMedida($lecturaCsv->getTipoDimension());
+            $envio->setFechaPlanEnviado(new \DateTime($lecturaCsv->getFechaPlanEnviada()));
+            if($lecturaCsv->getFechaRealEnviada() != null){
+                $envio->setFechaRealEnviado(new \DateTime($lecturaCsv->getFechaRealEnviada()));
+            }
+            $envio->setAreaOrigen($areaOrigen);
+            $envio->setAreaDestino($areaDestino);
+        }
+        //llenar datos del lector y sitio
+        if($lecturaCsv->getIdLector() != null){ //tiene los datos de la lectura
+            $lectorRepository = $this->getDoctrine()->getRepository(Lector::class);
+            $lector = $lectorRepository->findOneByCodigo($lecturaCsv->getIdLector());
+            //llenar datos de la lectura
+            $lectura = new Lectura();
+            $lectura->setFechaHora(new \DateTime($lecturaCsv->getHoraFechaLectura()));
+            $lectura->setDia($lecturaCsv->getDiaLectura());
+            $lectura->setValidada($lecturaCsv->getValidado());
+            $lectura->setValida($lecturaCsv->getValido());
+            $lectura->setEsMarcadoComoTerminalDues($lecturaCsv->getEsMarcadoComoTerminalDues());
+            $lectura->setEsPrimeroCalcularHTD($lecturaCsv->getEsPrimeroCalcularHTD());
+            //****************Nota: me salto los datos de borrado de la UPU pq ya pasó por el filtro y esas lecturas no son guardadas
+            $lectura->setCtdLecturasLuegoEntregado((int) $lecturaCsv->getCtdLecturasLuegoEntregado());
+            $lectura->setTieneLecturasMarcadasComoTD($lecturaCsv->getTieneLecturasMarcadasComoTD());
+            $lectura->setCantLecturasEntreEnviadoYRecibido($lecturaCsv->getCantLecturasEntreEnviadoYRecibido());
+            $lectura->setCantLecturasDespuesRecibido($lecturaCsv->getCantLecturasDespuesRecibido());
+            $lectura->setLector($lector);
+            $lectura->setEnvio($envio);
+            $importacionRepository = $this->getDoctrine()->getRepository(ImportacionesLecturas::class);
+            $importacion = $importacionRepository->findUltimaImportacion();
+            $lectura->setImportacion($importacion);
+        }else{
+            $fecha = new \DateTime($lecturaCsv->getFechaRecibida());
+            $envio->setFechaRecibido($fecha);
+        }
+        //persistir datos
+        $entityManager->persist($envio);
+        $entityManager->flush();
+        if($lectura != null){
+            $entityManager->persist($lectura);
+            $entityManager->flush();
+        }
     }
 }
 

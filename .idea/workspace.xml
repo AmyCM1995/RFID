@@ -2,18 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a66a5ed-e2b1-4b69-a6f1-c637e54899bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/csv/2-GMS_Raw_RFID_Data_20181005_1616217143.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/IncidenciasType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/csv/Lecturas 1row.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/csv/Lecturas 1row.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/csv/Lecturas 5row.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/csv/Lecturas 5row.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GMSRFIDUsuarioController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EquipoCorresponsalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EquipoCorresponsalesController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LecturasCsvController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TracerouteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TracerouteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Envio.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Envio.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/ImportacionesLecturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/ImportacionesLecturas.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/materiales/pdf_materialesCorreaponsalIncompleto.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/materiales/pdf_materialesCorreaponsalIncompleto.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Lectura.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Lectura.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Lecturas.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/AreaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/AreaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/CiudadRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CiudadRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/EnvioRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/EnvioRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/LectorRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/LectorRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/equipo_corresponsales/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/equipo_corresponsales/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -335,7 +336,7 @@
       <workItem from="1602782087736" duration="568000" />
       <workItem from="1603313939672" duration="8620000" />
       <workItem from="1603803285442" duration="5983000" />
-      <workItem from="1604075688877" duration="259000" />
+      <workItem from="1604075688877" duration="22656000" />
     </task>
     <servers />
   </component>

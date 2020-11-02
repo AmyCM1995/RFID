@@ -57,7 +57,12 @@
     </table>
 
     {% if is_granted('ROLE_ESPECIALISTA_DC') %}
-        <a class="btn btn-primary"  href="{{ path('equipo_corresponsales_new') }}">Nuevo</a>
+        {% if existenCorresponsalesSinAsignarEquipo == true %}
+            <a class="btn btn-primary"  href="{{ path('equipo_corresponsales_new') }}">Nuevo</a>
+        {% else %}
+            <a class="btn btn-primary text-light" onclick="return alert('Los corresponsales existentes no pueben ser asignados a un nuevo equipo. Por favor, inserte la información de nuevos corresponsales')">Nuevo</a>
+        {% endif %}
     {% endif %}
+
 
 {% endblock %}

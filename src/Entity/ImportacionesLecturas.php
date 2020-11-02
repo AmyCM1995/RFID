@@ -29,9 +29,10 @@ class ImportacionesLecturas
     private $lecturasCsvs;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Lecturas", mappedBy="importacion")
+     * @ORM\OneToMany(targetEntity=Lectura::class, mappedBy="importacion")
      */
     private $lecturas;
+
 
     public function __construct()
     {
@@ -89,14 +90,14 @@ class ImportacionesLecturas
     }
 
     /**
-     * @return Collection|Lecturas[]
+     * @return Collection|Lectura[]
      */
     public function getLecturas(): Collection
     {
         return $this->lecturas;
     }
 
-    public function addLectura(Lecturas $lectura): self
+    public function addLectura(Lectura $lectura): self
     {
         if (!$this->lecturas->contains($lectura)) {
             $this->lecturas[] = $lectura;
@@ -106,7 +107,7 @@ class ImportacionesLecturas
         return $this;
     }
 
-    public function removeLectura(Lecturas $lectura): self
+    public function removeLectura(Lectura $lectura): self
     {
         if ($this->lecturas->contains($lectura)) {
             $this->lecturas->removeElement($lectura);
@@ -118,6 +119,4 @@ class ImportacionesLecturas
 
         return $this;
     }
-
-
 }

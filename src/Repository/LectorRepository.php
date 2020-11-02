@@ -37,6 +37,15 @@ class LectorRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+    public function findOneByCodigo($value): ?Lector
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.codigo = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 
     // /**
     //  * @return Lector[] Returns an array of Lector objects
