@@ -47,16 +47,6 @@ class Lectura
     private $es_primero_calcular_HTD;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $codigo_lectura_borrada;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $detalle_lectura_borrada;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $ctd_lecturas_luego_entregado;
@@ -166,30 +156,6 @@ class Lectura
     public function setEsPrimeroCalcularHTD(?bool $es_primero_calcular_HTD): self
     {
         $this->es_primero_calcular_HTD = $es_primero_calcular_HTD;
-
-        return $this;
-    }
-
-    public function getCodigoLecturaBorrada(): ?string
-    {
-        return $this->codigo_lectura_borrada;
-    }
-
-    public function setCodigoLecturaBorrada(?string $codigo_lectura_borrada): self
-    {
-        $this->codigo_lectura_borrada = $codigo_lectura_borrada;
-
-        return $this;
-    }
-
-    public function getDetalleLecturaBorrada(): ?string
-    {
-        return $this->detalle_lectura_borrada;
-    }
-
-    public function setDetalleLecturaBorrada(?string $detalle_lectura_borrada): self
-    {
-        $this->detalle_lectura_borrada = $detalle_lectura_borrada;
 
         return $this;
     }
