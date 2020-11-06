@@ -1,42 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Envio{% endblock %}
+{% block title %}{{ parent() }}{% endblock %}
 
-{% block body %}
-    <h1>Envio</h1>
+{% block contenido %}
+    {{ parent() }}
+    <h1>Envío {{ envio.codigo }}</h1>
 
-    <table class="table">
+    <table class="table table-borderless">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ envio.id }}</td>
-            </tr>
-            <tr>
-                <th>Codigo</th>
-                <td>{{ envio.codigo }}</td>
-            </tr>
-            <tr>
-                <th>Codigo_transpondedor</th>
+                <th>Transpondedor</th>
                 <td>{{ envio.codigoTranspondedor }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
-                <th>Tipo_medida</th>
-                <td>{{ envio.tipoMedida }}</td>
+                <th>Fecha planeada para enviar</th>
+                <td>{{ envio.fechaPlanEnviado ? envio.fechaPlanEnviado|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
-                <th>Fecha_plan_enviado</th>
-                <td>{{ envio.fechaPlanEnviado ? envio.fechaPlanEnviado|date('Y-m-d') : '' }}</td>
+                <th>Fecha real en que se envió</th>
+                <td>{{ envio.fechaRealEnviado ? envio.fechaRealEnviado|date('d-m-Y') : '' }}</td>
             </tr>
+        {% if envio.fechaRecibido != null %}
             <tr>
-                <th>Fecha_real_enviado</th>
-                <td>{{ envio.fechaRealEnviado ? envio.fechaRealEnviado|date('Y-m-d') : '' }}</td>
+                <th>Fecha recibido</th>
+                <td>{{ envio.fechaRecibido ? envio.fechaRecibido|date('d-m-Y') : '' }}</td>
             </tr>
+
+        {% endif %}
+        </tbody>
+    </table>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Día</th>
+            <th>Fecha y hora</th>
+            <th>País</th>
+            <th>Sitio</th>
+            <th>Lector</th>
+            <th>Propósito del lector</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for lectura in envio.lecturas %}
+            <tr>
+                {% if lectura.dia == 'Monday' %}
+                    <td>Lunes</td>
+                {% elseif  lectura.dia == 'Tuesday' %}
+                    <td>Martes</td>
+                {% elseif  lectura.dia == 'Wednesday' %}
+                    <td>Miércoles</td>
+                {% elseif  lectura.dia == 'Thursday' %}
+                    <td>Jueves</td>
+                {% elseif  lectura.dia == 'Friday' %}
+                    <td>Viernes</td>
+                {% elseif  lectura.dia == 'Saturday' %}
+                    <td>Sábado</td>
+                {% elseif  lectura.dia == 'Sunday' %}
+                    <td>Domingo</td>
+                {% endif %}
+                <td>{{ lectura.fechaHora ? lectura.fechaHora|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ lectura.lector.sitio.pais.nombre }}</td>
+                <td>{{ lectura.lector.sitio.nombre }}</td>
+                <td>{{ lectura.lector.nombre }}</td>
+                <td>{{ lectura.lector.proposito }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('envio_index') }}">back to list</a>
+    <a class="btn btn-primary" href="{{ path('envio_index') }}">Regresar</a>
 
-    <a href="{{ path('envio_edit', {'id': envio.id}) }}">edit</a>
-
-    {{ include('envio/_delete_form.html.twig') }}
 {% endblock %}

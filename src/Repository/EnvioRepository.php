@@ -46,5 +46,19 @@ class EnvioRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+    /**
+      * @return Envio[] Returns an array of Envio objects
+      */
+    public function findAfterDate($value){
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.fecha_plan_enviado >= :val')
+            ->setParameter('val', $value)
+            ->orderBy('e.id', 'ASC')
+            ->setMaxResults(1000)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
 }

@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Envio;
+use App\Entity\PlanImposicionCsv;
 use App\Form\EnvioType;
 use App\Repository\EnvioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\UnicodeString;
 
 /**
  * @Route("/envio")
@@ -20,8 +22,14 @@ class EnvioController extends AbstractController
      */
     public function index(EnvioRepository $envioRepository): Response
     {
+        $planCSVRepository = $this->getDoctrine()->getRepository(PlanImposicionCsv::class);
+        $fecha = $planCSVRepository->findPrimerPlan()->getFecha();
+        $envios = $envioRepository->findAfterDate($fecha);
+        $detalleEnvio = $this->detalleEnvios($envios);
         return $this->render('envio/index.html.twig', [
-            'envios' => $envioRepository->findAll(),
+            'envios' => $envios,
+            'fecha' => $fecha,
+            'detalles' => $detalleEnvio,
         ]);
     }
 
@@ -90,5 +98,37 @@ class EnvioController extends AbstractController
         }
 
         return $this->redirectToRoute('envio_index');
+    }
+    public function detalleEnvios($envios){
+        $detalle[] = null;
+        $size = 0;
+        foreach ($envios as $e){
+            if($e->getFechaRecibido() != null){ //verificar si ya llegó a su destino
+                $detalle[$size] = $this->verificarValidezEnvio($e);
+                $size++;
+            }else{ //si no ha llegado a su destino, mostrar datos de la última lectura
+                $lecturas = $e->getLecturas();
+                $u = sizeof($lecturas)-1;
+                $lectura = $lecturas[$u];
+                $tipoPuerta = null;
+                $proposito = new UnicodeString($lectura->getLector()->getProposito());
+                if(strpos($proposito, 'entrance') != false){
+                    if(strpos($proposito, 'exit') != false){
+                        $tipoPuerta = "puerta de entrada y salida";
+                    }
+                    $tipoPuerta = "puerta de entrada";
+                }elseif (strpos($proposito, 'exit') != false){
+                    $tipoPuerta = "puerta de salida";
+                }
+                $mensaje = "Última lectura en ".$lectura->getLector()->getSitio()->getNombre()." el día ".date_format($lectura->getFechaHora(), 'd-m-Y')." a las ".date_format($lectura->getFechaHora(), 'H:i')." en una ".$tipoPuerta;
+                $detalle[$size] = $mensaje;
+                $size++;
+            }
+        }
+        return $detalle;
+    }
+    public function verificarValidezEnvio($envio){
+        $resultado = "Válido";
+        return $resultado;
     }
 }

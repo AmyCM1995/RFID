@@ -46,5 +46,9 @@ class PlanImposicionCsvRepository extends ServiceEntityRepository
                 ->getOneOrNullResult()
             ;
         }
+        public function findPrimerPlan() :?PlanImposicionCsv{
+            $plan = $this->findAll()[0];
+            return $plan;
+        }
 
 }
