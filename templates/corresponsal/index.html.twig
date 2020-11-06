@@ -32,7 +32,11 @@
                     <td>{{ corresponsal.apellidos }}</td>
                     <td>{{ corresponsal.correo }}</td>
                     <td>{{ corresponsal.direccion }}</td>
-                    <td>{{ corresponsal.equipo.codigo }}</td>
+                    {% if corresponsal.equipo != null %}
+                        <td>{{ corresponsal.equipo.codigo }}</td>
+                        {% else %}
+                        <td>No asignado</td>
+                    {% endif %}
             {% if is_granted('ROLE_ESPECIALISTA_DC') %}
                     <td>
                         <a href="{{ path('corresponsal_edit', {'id': corresponsal.id}) }}">

@@ -46,25 +46,27 @@ class EquipoCorresponsalesController extends AbstractController
         $form = $this->createForm(EquipoCorresponsalesType::class, $equipoCorresponsale);
         $form->handleRequest($request);
 
-        if($equipoCorresponsale->getCantMiembros()->getCantidad() == sizeof($equipoCorresponsale->getCorresponsals())){
-            if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
+        if($form->isSubmitted()){
+            if ($equipoCorresponsale->getCantMiembros()->getCantidad() == sizeof($equipoCorresponsale->getCorresponsals())) {
+                if($form->isValid()){
+                    $entityManager = $this->getDoctrine()->getManager();
 
-                for ( $i = 0; $i < sizeof($equipoCorresponsale->getCorresponsals()); $i++){
-                    $corr = new Corresponsal();
-                    $corr = $equipoCorresponsale->getCorresponsals()[$i];
-                    $corr->setEquipo($equipoCorresponsale);
-                    $entityManager->persist($corr);
+                    for ( $i = 0; $i < sizeof($equipoCorresponsale->getCorresponsals()); $i++){
+                        $corr = new Corresponsal();
+                        $corr = $equipoCorresponsale->getCorresponsals()[$i];
+                        $corr->setEquipo($equipoCorresponsale);
+                        $entityManager->persist($corr);
+                        $entityManager->flush();
+                    }
+                    $equipoCorresponsale->setEsActivo(true);
+                    $entityManager->persist($equipoCorresponsale);
                     $entityManager->flush();
-                }
-                $equipoCorresponsale->setEsActivo(true);
-                $entityManager->persist($equipoCorresponsale);
-                $entityManager->flush();
 
-                return $this->redirectToRoute('equipo_corresponsales_index');
+                    return $this->redirectToRoute('equipo_corresponsales_index');
+                }
+            }else{
+                $alerta = "El equipo debe tener ".$cantRepository->findUltimo()->getCantidad()." miembros.";
             }
-        }else{
-            $alerta = "El equipo debe tener ".$cantRepository->findUltimo()->getCantidad()." miembros.";
         }
 
         return $this->render('equipo_corresponsales/new.html.twig', [

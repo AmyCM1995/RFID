@@ -35,6 +35,7 @@ class Corresponsal
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\EquipoCorresponsales", inversedBy="corresponsals")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $equipo;
 

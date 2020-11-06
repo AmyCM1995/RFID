@@ -1,5 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_row(form.codigo) }}
+{{ form_row(form.nombre) }}
+{{ form_row(form.apellidos) }}
+{{ form_row(form.direccion) }}
+{{ form_row(form.correo) }}
+<input type="checkbox" id="equipoCheck" onclick="mostrarSeleccionarEquipo()"> Agregar a un equipo
+<br>
+<div id = "equipo" style="display: none">
+    {{ form_widget(form.equipo) }}
+</div>
+
 <br>
 <button class="btn btn-primary">
     {{ button_label|default('Aceptar') }}
@@ -7,3 +17,13 @@
 <a class="btn btn-primary" href="{{ path('corresponsal_index') }}">Regresar</a>
 
 {{ form_end(form) }}
+
+<script type="text/javascript">
+    function mostrarSeleccionarEquipo() {
+        if(document.getElementById('equipoCheck').checked === true){
+            document.getElementById('equipo').style.display = 'block';
+        }else{
+            document.getElementById('equipo').style.display = 'none';
+        }
+    }
+</script>
